@@ -1,3 +1,28 @@
+--[[
+clangd depends on compile_commands.json file to be in the project working directory.
+Also, for project base confiuratin, you should add another file "clangd.json" in the project working directory.
+A sample file provided in the nvim configuration folder,
+{
+    "cmd": [
+        "clangd.exe",
+        "--all-scopes-completion",
+        "--background-index",
+        "--clang-tidy",
+        "--compile_args_from=filesystem",
+        "--compile-commands-dir=C:/VSCode/data/Projects/neoEsp32", -- project current working directory
+        "--enable-config",
+        "--completion-parse=always",
+        "--completion-style=detailed",
+        "--enable-config",
+        "--function-arg-placeholders",
+        "--header-insertion=iwyu",
+        "-j=12",
+        "--limit-results=0",
+        "--pch-storage=memory",
+        "--query-driver=C:/VSCode/data/.platformio/packages/toolchain-riscv32-esp/bin/riscv32-esp-elf-g++.exe"
+    ]
+}
+]]
 local opts = require 'custom.plugins.lsp.opts'
 local local_cap = opts.capabilities
 local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
