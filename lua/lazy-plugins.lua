@@ -42,7 +42,7 @@ require('lazy').setup({
   require 'kickstart/plugins/telescope',
   require 'kickstart/plugins/completion',
   require 'kickstart/plugins/barbecue',
-  require 'kickstart/plugins/bufdelete',
+  require 'kickstart/plugins/buffdelete',
   require 'kickstart/plugins/conform',
   require 'kickstart/plugins/colorscheme',
   require 'kickstart/plugins/todo-comments',
