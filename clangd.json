@@ -1,0 +1,20 @@
+{
+    "cmd": [
+        "clangd.exe",
+        "--all-scopes-completion",
+        "--background-index",
+        "--clang-tidy",
+        "--compile_args_from=filesystem",
+        "--compile-commands-dir=C:/VSCode/data/Projects/neoEsp32",
+        "--enable-config",
+        "--completion-parse=always",
+        "--completion-style=detailed",
+        "--enable-config",
+        "--function-arg-placeholders",
+        "--header-insertion=iwyu",
+        "-j=12",
+        "--limit-results=0",
+        "--pch-storage=memory",
+        "--query-driver=C:/VSCode/data/.platformio/packages/toolchain-riscv32-esp/bin/riscv32-esp-elf-g++.exe"
+    ]
+}
