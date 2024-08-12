@@ -32,7 +32,7 @@ require('lazy').setup({
   --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
   --
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua
@@ -41,8 +41,8 @@ require('lazy').setup({
   require 'kickstart/plugins/which-key',
   require 'kickstart/plugins/telescope',
   require 'kickstart/plugins/completion',
-  --require 'kickstart/plugins/cmp',
-  --require 'kickstart/plugins/lspconfig_v4',
+  require 'kickstart/plugins/barbecue',
+  require 'kickstart/plugins/bufdelete',
   require 'kickstart/plugins/conform',
   require 'kickstart/plugins/colorscheme',
   require 'kickstart/plugins/todo-comments',
@@ -67,7 +67,7 @@ require('lazy').setup({
   require 'kickstart.plugins.oil',
   require 'kickstart.plugins.bufferline',
   require 'kickstart.plugins.undotree',
---  require 'kickstart.plugins.nvim-platformio',
+  --  require 'kickstart.plugins.nvim-platformio',
   require 'kickstart.plugins.toggleterm',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
