@@ -1,6 +1,6 @@
 --[[
 clangd depends on compile_commands.json file to be in the project working directory.
-Also, for project base confiuratin, you should add another file "clangd.json" in the project working directory.
+Also, for project base configuratin, you should add another file "clangd.json" in the project working directory.
 A sample file provided in the nvim configuration folder,
 {
     "cmd": [
@@ -37,16 +37,11 @@ local rootPatterns = {
   '.git',
 }
 
-M = {
-  -- command = get_clangd_path(),
-  -- arguments = {
-  --   "--query-driver=/usr/bin/clang++",
-  --   "--background-index"
-  -- },
-  -- cmd = { 'clangd' },
+local clangdOPTS = {
+  cmd = { 'clangd' },
   on_atach = opts.on_attach,
   capabilities = local_cap,
-  single_file_support = true, -- must be either nil or true to have LSP server start even with no root_dir
+  single_file_support = true,
   filetypes = { 'c', 'h', 'cpp', 'hpp', 'objc', 'objcpp', 'cuda', 'proto' },
   init_options = {
     usePlaceholders = true,
@@ -64,10 +59,9 @@ M = {
         or require('lspconfig.util').path.dirname(fname)
     return path
   end,
-  -- commands = {},
 }
 
-M.on_new_config = function(config)
+clangdOPTS.on_new_config = function(config)
   -- opts.printTable(config)
   local uv = vim.uv or vim.loop
   local path = vim.fn.getcwd()
@@ -84,4 +78,4 @@ M.on_new_config = function(config)
   end
 end
 
-return M
+return clangdOPTS

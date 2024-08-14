@@ -2,7 +2,7 @@ local opts = require 'custom.plugins.lsp.opts'
 local local_cap = opts.capabilities
 local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
 
-N = {
+return {
   capabilities = local_cap,
   on_attach = opts.on_attach,
   settings = {
@@ -58,5 +58,3 @@ N = {
     })
   end,
 }
-
-return N
