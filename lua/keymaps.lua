@@ -2,7 +2,7 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local opts = { noremap = true, silent = true }
-local term_opts = { silent = true }
+local term_opts = { silent = true, buffer = 0 }
 
 -- Shorten function name
 -- local keymap = vim.api.nvim_set_keymap
@@ -96,13 +96,6 @@ keymap('x', 'K', ":move '<-2<CR>gv-gv", opts)
 keymap('x', '<A-j>', ":move '>+1<CR>gv-gv", opts)
 keymap('x', '<A-k>', ":move '<-2<CR>gv-gv", opts)
 
--- Terminal --
--- Better terminal navigation
-keymap('t', '<C-h>', '<C-\\><C-N><C-w>h', term_opts)
-keymap('t', '<C-j>', '<C-\\><C-N><C-w>j', term_opts)
-keymap('t', '<C-k>', '<C-\\><C-N><C-w>k', term_opts)
-keymap('t', '<C-l>', '<C-\\><C-N><C-w>l', term_opts)
-
 -- Command --
 -- Menu navigation
 keymap('c', '<C-j>', 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true })
@@ -111,14 +104,6 @@ keymap('c', '<C-k>', 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, nore
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 -- vim.opt.hlsearch = true -- already assigned in options.lua
 keymap('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -136,5 +121,27 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- toggleterm keymaps
+-- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
+-- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
+-- is not what someone will guess without a bit more experience.
+--
+-- -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+-- -- or just use <C-\><C-n> to exit terminal mode
+-- keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+-- function _G.set_terminal_keymaps()
+vim.keymap.set('t', '<esc>', [[<C-\><C-N>]], term_opts)
+-- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], term_opts)
+vim.keymap.set('t', '<C-h>', vim.cmd.wincmd 'h', term_opts)
+vim.keymap.set('t', '<C-j>', vim.cmd.wincmd 'j', term_opts)
+vim.keymap.set('t', '<C-k>', vim.cmd.wincmd 'k', term_opts)
+vim.keymap.set('t', '<C-l>', vim.cmd.wincmd 'l', term_opts)
+vim.keymap.set('t', '<C-w>', [[<C-\><C-N><C-W>]], term_opts)
+-- end
+
+-- if you only want these mappings for toggle term use term://*toggleterm#* instead
+-- vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
 
 -- vim: ts=2 sts=2 sw=2 et

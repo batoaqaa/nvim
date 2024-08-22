@@ -7,6 +7,9 @@
 --   avr_gcc = nil;
 -- end
 --
+
+-- term.env = vim.F.if_nil(term.env, conf.env)
+-- term.hidden = vim.F.if_nil(term.hidden, false)
 --
 -- if jit.os == 'Windows' then
 -- local on_windows = vim.loop.os_uname().version:match 'Windows'

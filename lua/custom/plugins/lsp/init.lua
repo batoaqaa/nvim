@@ -41,6 +41,8 @@ return {
               'biome',
               'clang-format',
               'isort',
+              'prettier',
+              'prettierd',
               'pyright',
               'shfmt',
               'stylua',
