@@ -1,5 +1,6 @@
 return {
-  'anurag3301/nvim-platformio.lua',
+  'batoaqaa/nvim-platformio.lua',
+  -- 'anurag3301/nvim-platformio.lua',
   lazy = false,
   dependencies = {
     { 'akinsho/nvim-toggleterm.lua' },
