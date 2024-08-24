@@ -26,12 +26,13 @@ return {
       on_create = function(t) -- function to run when the terminal is first created
         vim.cmd 'startinsert!'
         local opts = { buffer = t.bufnr, noremap = true, silent = true }
-        vim.keymap.set({ 'n', 't', 'i' }, '<esq><esq>', '<C-c><cmd>bd!<CR>', opts)
-        vim.keymap.set({ 'n', 't' }, '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-        vim.keymap.set({ 'n', 't' }, '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-        vim.keymap.set({ 'n', 't' }, '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-        vim.keymap.set({ 'n', 't' }, '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-        vim.keymap.set({ 'n', 't' }, '<C-w>', [[<C-\><C-n><C-w>]], opts)
+        -- vim.keymap.set({ 'n', 't', 'i' }, '<esq><esq>', '<C-c><cmd>bd!<CR>', opts)
+        -- vim.keymap.set({ 'n', 't' }, '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+        -- vim.keymap.set({ 'n', 't' }, '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+        -- vim.keymap.set({ 'n', 't' }, '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+        -- vim.keymap.set({ 'n', 't' }, '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+        -- vim.keymap.set({ 'n', 't' }, '<C-w>', [[<C-\><C-n><C-w>]], opts)
+
         -- vim.keymap.set({ 'n', 't', 'i' }, '<C-Up>', ':resize -2<CR>', opts)
         -- vim.keymap.set({ 'n', 't', 'i' }, '<C-Down>', ':resize +2<CR>', opts)
         -- vim.keymap.set({ 'n', 't', 'i' }, '<C-Left>', ':vertical resize -2<CR>', opts)
@@ -92,10 +93,10 @@ return {
         title_pos = 'center', -- | 'left' |  'right', position of the title of the floating window
       },
       winbar = {
-        enabled = true,
+        enabled = false,
         name_formatter = function(term) --  term: Terminal
-          -- return fmt("%d:%s", term.id, term:_display_name())
-          return term.name
+          -- return string.format('%d:%s', term.id, term:_display_name())
+          return term.display_name
         end,
       },
     }
