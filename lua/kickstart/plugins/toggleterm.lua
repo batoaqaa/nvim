@@ -36,23 +36,21 @@ return {
         -- vim.keymap.set({ 'n', 't', 'i' }, '<C-Down>', ':resize +2<CR>', opts)
         -- vim.keymap.set({ 'n', 't', 'i' }, '<C-Left>', ':vertical resize -2<CR>', opts)
         -- vim.keymap.set({ 'n', 't', 'i' }, '<C-Right>', ':vertical resize +2<CR>', opts)
+        -- local platformio = vim.api.nvim_create_augroup('platformio', { clear = true })
+        -- vim.api.nvim_create_autocmd({ 'QuitPre' }, {
+        --   group = platformio, --fmt_group,
+        --   desc = 'close terminl',
+        --   callback = function()
+        --     local wbuf = vim.api.nvim_win_get_buf(0)
+        --     if wbuf == t.bufnr then
+        --       -- nvim_win_get_number(0)
+        --       -- vim.api.nvim_win_get_buf(_)
+        --       vim.api.nvim_buf_delete(wbuf, { force = true })
+        --     end
+        --   end,
+        -- })
       end,
       --// on_open = fun(t: Terminal), -- function to run when the terminal opens
-      -- on_open = function(t)
-      --   if t.direction == 'float' then
-      --     return
-      --   end
-      --   local name = vim.fn.bufname 'neo-tree'
-      --   local winnr = vim.fn.bufwinnr(name)
-      --   if winnr ~= -1 then
-      --     vim.defer_fn(function()
-      --       local cmd = string.format 'Neotree toggle'
-      --       vim.cmd(cmd)
-      --       vim.cmd(cmd)
-      --       vim.cmd 'wincmd p'
-      --     end, 100)
-      --   end
-      -- end,
       --// on_close = fun(t: Terminal), -- function to run when the terminal closes
       --// on_stdout = fun(t: Terminal, job: number, data: string[], name: string), -- callback for processing output on stdout
       --// on_stderr = fun(t: Terminal, job: number, data: string[], name: string), -- callback for processing output on stderr
