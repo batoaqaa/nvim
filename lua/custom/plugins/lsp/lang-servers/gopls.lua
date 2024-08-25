@@ -1,7 +1,7 @@
 local opts = require 'custom.plugins.lsp.opts'
 return {
     capabilities = opts.capabilities,
-    on_attach = opts.on_attach,
+    -- on_attach = opts.on_attach,
     settings = {
         gopls = {
             completeUnimported = true,

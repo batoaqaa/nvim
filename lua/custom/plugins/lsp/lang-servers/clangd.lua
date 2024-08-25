@@ -26,7 +26,7 @@ A sample file provided in the nvim configuration folder,
 local opts = require 'custom.plugins.lsp.opts'
 local local_cap = opts.capabilities
 local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
-
+--
 local rootPatterns = {
   'compile_commands.json',
   '.clangd',
@@ -39,7 +39,6 @@ local rootPatterns = {
 
 local clangdOPTS = {
   cmd = { 'clangd' },
-  on_atach = opts.on_attach,
   capabilities = local_cap,
   single_file_support = true,
   filetypes = { 'c', 'h', 'cpp', 'hpp', 'objc', 'objcpp', 'cuda', 'proto' },

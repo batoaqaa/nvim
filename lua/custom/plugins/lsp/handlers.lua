@@ -18,29 +18,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     local buf_number = args.buf
-    -- --to replace on_attach start
-    -- if jit.os == 'Windows' then
-    --   vim.notify('Windows 11 Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number, vim.log.levels.INFO)
-    -- else
-    --   vim.notify('Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number, vim.log.levels.INFO)
-    --   -- print('Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number)
-    -- end
-    -- --on_attach end
     --
-    local bufkeymap = function(mode, keys, func, desc)
-      vim.keymap.set(mode, keys, func, { buffer = buf_number, noremap = true, silent = true, desc = 'LSP: ' .. desc })
-    end
-
-    -- Diagnostic keymaps
-    bufkeymap('n', '[d', vim.diagnostic.goto_prev, 'Go to previous [D]iagnostic message')
-    bufkeymap('n', ']d', vim.diagnostic.goto_next, 'Go to next [D]iagnostic message')
-    bufkeymap('n', '<leader>e', vim.diagnostic.open_float, 'Show diagnostic [E]rror messages')
-    bufkeymap('n', '<leader>q', vim.diagnostic.setloclist, 'Open diagnostic [Q]uickfix list')
-    --
-    -- local id = vim.tbl_get(args, 'data', 'client_id')
-    -- local client = id and vim.lsp.get_client_by_id(id)
     if client then
+      print('Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number)
       ------------------------------------------------------------------
+      -- if client.name == 'clangd' then
+      --   return
+      -- end
       -- if client.name == 'tsserver' then
       --   client.server_capabilities.documentFormattingProvider = false
       -- end
@@ -48,11 +32,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- if client.name == 'lua_ls' then
       --   client.server_capabilities.documentFormattingProvider = false
       -- end
-      --
-      -- if client.name == "clangd" then
-      --   client.server_capabilities.document_formatting = false
-      -- end
       ------------------------------------------------------------------
+      --
+      local bufkeymap = function(mode, keys, func, desc)
+        vim.keymap.set(mode, keys, func, { buffer = buf_number, noremap = true, silent = true, desc = 'LSP: ' .. desc })
+      end
+      -- Diagnostic keymaps
+      bufkeymap('n', '[d', vim.diagnostic.goto_prev, 'Go to previous [D]iagnostic message')
+      bufkeymap('n', ']d', vim.diagnostic.goto_next, 'Go to next [D]iagnostic message')
+      bufkeymap('n', '<leader>e', vim.diagnostic.open_float, 'Show diagnostic [E]rror messages')
+      bufkeymap('n', '<leader>q', vim.diagnostic.setloclist, 'Open diagnostic [Q]uickfix list')
+      --
+      -- stylua: ignore start
+      local trouble = require("trouble").toggle
+      bufkeymap('n', "<leader>tt", function() trouble() end, "Toggle Trouble")
+      bufkeymap('n', "<leader>tq", function() trouble("quickfix") end, "Quickfix List")
+      bufkeymap('n', "<leader>dr", function() trouble("lsp_references") end, "References")
+      bufkeymap('n', "<leader>dd", function() trouble("document_diagnostics") end, "Document Diagnostics")
+      bufkeymap('n', "<leader>dw", function() trouble("workspace_diagnostics") end, "Workspace Diagnostics")
+      -- stylua: ignore end
+      --
+      bufkeymap('n', '<leader>ds', '<cmd>vs | lua vim.lsp.buf.definition()<cr>', 'Goto definition (v-split)')
+      bufkeymap('n', '<leader>dh', '<cmd>sp | lua vim.lsp.buf.definition()<cr>', 'Goto definition (h-split)')
+      --
+      -- local id = vim.tbl_get(args, 'data', 'client_id')
+      -- local client = id and vim.lsp.get_client_by_id(id)
+      -- print('Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number)
       if client.server_capabilities.hoverProvider then
         bufkeymap('n', 'K', vim.lsp.buf.hover, 'Show documentation')
       end
@@ -126,7 +131,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
         bufkeymap('n', '<leader>lh', function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = buf_number }, { bufnr = buf_number })
-        end, '[T]oggle Inlay [H]ints')
+        end, '[l]sp [h]ints toggle')
       end
       --
       if client.server_capabilities.documentHighlightProvider then
@@ -181,18 +186,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     })
     --
     vim.cmd [[autocmd FileType * set formatoptions-=ro]]
-    --
-    -- stylua: ignore start
-    local trouble = require("trouble").toggle
-    bufkeymap('n', "<leader>tt", function() trouble() end, "Toggle Trouble")
-    bufkeymap('n', "<leader>tq", function() trouble("quickfix") end, "Quickfix List")
-    bufkeymap('n', "<leader>dr", function() trouble("lsp_references") end, "References")
-    bufkeymap('n', "<leader>dd", function() trouble("document_diagnostics") end, "Document Diagnostics")
-    bufkeymap('n', "<leader>dw", function() trouble("workspace_diagnostics") end, "Workspace Diagnostics")
-    -- stylua: ignore end
-    --
-    bufkeymap('n', '<leader>ds', '<cmd>vs | lua vim.lsp.buf.definition()<cr>', 'Goto definition (v-split)')
-    bufkeymap('n', '<leader>dh', '<cmd>sp | lua vim.lsp.buf.definition()<cr>', 'Goto definition (h-split)')
     --
   end,
 })

@@ -4,7 +4,7 @@ local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
 
 return {
   capabilities = local_cap,
-  on_attach = opts.on_attach,
+  -- on_attach = opts.on_attach,
   settings = {
     Lua = {},
   },

@@ -93,11 +93,7 @@ local cmp_nvim_lsp = require 'cmp_nvim_lsp'
 M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 --
 M.on_attach = function(client, bufnr)
-  if jit.os == 'Windows' then
-    print('Windows 11 Attaching to: ' .. client.name .. ' attached to buffer ' .. bufnr)
-  else
-    print('Attaching to: ' .. client.name .. ' attached to buffer ' .. bufnr)
-  end
+  print('Attaching to: ' .. client.name .. ' attached to buffer ' .. bufnr)
 end
 --
 return M

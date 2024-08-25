@@ -1,9 +1,20 @@
 -- table.unpack = table.unpack or unpack
 -- local lspconfig = require 'lspconfig'
+-- Hook vim.lsp.client.create to add completion capabilities by default
+--
+-- local _create = vim.lsp.client.create
+-- vim.lsp.client.create = function(config)
+--   local capabilities = vim.lsp.protocol.make_client_capabilities()
+--   return _create(vim.tbl_deep_extend('keep', config, {
+--     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
+--   }))
+-- end
+--
 local mason_lspconfig = require 'mason-lspconfig'
 --
 local lang_servers = require 'custom.plugins.lsp.lang-servers'
--- local opts = require 'custom.plugins.lsp.opts'
+--local opts =
+require 'custom.plugins.lsp.opts'
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(lang_servers),
   automatic_installation = true,
