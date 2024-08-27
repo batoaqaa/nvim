@@ -24,7 +24,7 @@ autocmd({ 'BufEnter' }, {
 })
 
 -- Highlight text on yank
-augroup('YankHighlight') --, { clear = true })
+augroup 'YankHighlight' --, { clear = true })
 autocmd('TextYankPost', {
   group = augroup 'YankHighlight',
   callback = function()
@@ -85,7 +85,7 @@ autocmd({ 'VimEnter', 'CursorMoved' }, {
   group = augroup 'yankpost',
   pattern = '*',
   callback = function()
-    cursor_pos = vim.fn.getpos '.'
+    Cursor_pos = vim.fn.getpos '.'
   end,
   desc = 'Stores cursor position',
 })
@@ -95,7 +95,7 @@ autocmd('TextYankPost', {
   group = augroup 'yankpost',
   callback = function()
     if vim.v.event.operator == 'y' then
-      vim.fn.setpos('.', cursor_pos)
+      vim.fn.setpos('.', Cursor_pos)
     end
   end,
 })

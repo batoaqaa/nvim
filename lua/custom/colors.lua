@@ -39,10 +39,9 @@ return {
   lightBlue = '#A3D4D5',
   waveAqua2 = '#7AA89F',
 
-  -- waveAqua2  = "#68AD99",
-  -- waveAqua4  = "#7AA880",
-  -- waveAqua5  = "#6CAF95",
-  -- waveAqua3  = "#68AD99",
+  waveAqua3 = '#68AD99',
+  waveAqua4 = '#7AA880',
+  waveAqua5 = '#6CAF95',
 
   springGreen = '#98BB6C',
   boatYellow1 = '#938056',

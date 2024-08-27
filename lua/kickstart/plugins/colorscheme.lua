@@ -164,6 +164,14 @@ return {
   --end,
   --]]
 
+  --[[ winteriscoming colorscheme /
+  'atmosuwiryo/vim-winteriscoming',
+  opts = {},
+  config = function()
+    vim.cmd.colorscheme 'WinterIscoming-dark-blue-color-theme'
+    -- end,
+    --]]
+
   --[[ Melange colorscheme /
   --//{ 'savq/melange-nvim', opts = { conf } },
   'savq/melange-nvim',
@@ -172,7 +180,7 @@ return {
   --end,
   --]]
 
-  ---[[ kanagawa colorscheme /
+  --[[ kanagawa colorscheme /
   'rebelot/kanagawa.nvim',
   opts = conf,
   config = function()
@@ -180,14 +188,14 @@ return {
     --end,
     --]]
 
-    --[[ material colorscheme /
+  --[[ material colorscheme /
   'sainnhe/sonokai',
   init = function()
     vim.cmd.colorscheme 'sonokai'
   --end,
   --]]
 
-    --[[ palenight colorscheme /
+  --[[ palenight colorscheme /
   'drewtempelmeyer/palenight.vim',
   opts = {},
   config = function()
@@ -195,7 +203,7 @@ return {
   --end,
   --]]
 
-    --[[ catppuccin colorscheme /
+  ---[[ catppuccin colorscheme /
   'catppuccin/nvim',
   opts = conf,
   name = 'catppuccin',

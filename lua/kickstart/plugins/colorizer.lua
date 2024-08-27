@@ -80,10 +80,11 @@ local opts = {
 }
 
 return {
-  -- "NvChad/nvim-colorizer.lua",
   'catgoose/nvim-colorizer.lua',
-  branch = 'tailwind_add_ring_prefixes',
-  opts = opts,
   event = 'BufReadPre',
   enabled = true,
+  config = function()
+    require('colorizer').setup(opts)
+  end,
+  -- opts = opts,
 }

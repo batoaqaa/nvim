@@ -18,5 +18,6 @@ return {
     'Piolib',
     'Piomon',
     'Piodebug',
+    'Piodb',
   },
 }

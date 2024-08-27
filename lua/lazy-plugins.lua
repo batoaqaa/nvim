@@ -45,6 +45,7 @@ require('lazy').setup({
   require 'kickstart/plugins/buffdelete',
   require 'kickstart/plugins/conform',
   require 'kickstart/plugins/colorscheme',
+  require 'kickstart/plugins/colorizer',
   require 'kickstart/plugins/todo-comments',
   require 'kickstart/plugins/mini',
   require 'kickstart/plugins/treesitter',

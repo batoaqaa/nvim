@@ -132,6 +132,33 @@ vim.api.nvim_create_autocmd('LspAttach', {
         bufkeymap('n', '<leader>lh', function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = buf_number }, { bufnr = buf_number })
         end, '[l]sp [h]ints toggle')
+        ------------------------------------------------------------------------------
+        -- Initial inlay hint display.
+        -- Idk why but without the delay inlay hints aren't displayed at the very start.
+        vim.defer_fn(function()
+          local mode = vim.api.nvim_get_mode().mode
+          vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_number })
+        end, 500)
+
+        --autocommands to only disable inlay_hint in insert mode and enabled in other modes
+        local inlay_hints_group = vim.api.nvim_create_augroup('toggle_inlay_hints', { clear = false })
+        vim.api.nvim_create_autocmd('InsertEnter', {
+          group = inlay_hints_group,
+          desc = 'Disable inlay hints',
+          buffer = buf_number,
+          callback = function()
+            vim.lsp.inlay_hint.enable(false, { bufnr = buf_number })
+          end,
+        })
+        vim.api.nvim_create_autocmd('InsertLeave', {
+          group = inlay_hints_group,
+          desc = 'Enable inlay hints',
+          buffer = buf_number,
+          callback = function()
+            vim.lsp.inlay_hint.enable(true, { bufnr = buf_number })
+          end,
+        })
+        ------------------------------------------------------------------------------
       end
       --
       if client.server_capabilities.documentHighlightProvider then
