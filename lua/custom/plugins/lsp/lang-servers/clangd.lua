@@ -54,9 +54,9 @@ local clangdOPTS = {
   },
   root_dir = function(fname)
     local path = require('lspconfig.util').root_pattern(table.unpack(rootPatterns))(fname)
-        or require('lspconfig.util').find_git_ancestor(fname)
-        or vim.fn.getcwd()
-        or require('lspconfig.util').path.dirname(fname)
+      or require('lspconfig.util').find_git_ancestor(fname)
+      or vim.fn.getcwd()
+      or require('lspconfig.util').path.dirname(fname)
     return path
   end,
 }

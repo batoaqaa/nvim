@@ -3,8 +3,7 @@ local _augroups = {}
 local get_augroup = function(client)
   if not _augroups[client.id] then
     local group_name = 'kickstart-lsp-format-' .. client.name
-    local id = vim.api.nvim_create_augroup(group_name, { clear = true })
-    _augroups[client.id] = id
+    _augroups[client.id] = vim.api.nvim_create_augroup(group_name, { clear = true })
   end
 
   return _augroups[client.id]
@@ -20,6 +19,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local buf_number = args.buf
     --
     if client then
+      vim.lsp.set_log_level 'trace'
       print('Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number)
       ------------------------------------------------------------------
       -- if client.name == 'clangd' then
@@ -103,29 +103,35 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       --
       if client.server_capabilities.documentFormattingProvider then
-        -- if client.supports_method 'textDocument/formatting' then
+        --   -- if client.supports_method 'textDocument/formatting' then
         bufkeymap({ 'n', 'x' }, '<F3>', function()
-          vim.lsp.buf.format { async = true }
+          -- vim.lsp.buf.format { bufnr = buf_number, async = true }
+          require("conform").format({ bufnr = args.buf, async = true })
         end, 'format buffer')
-        --
+        --   --
+        -- vim.api.nvim_clear_autocmds({
+        --   group = get_augroup(client),
+        --   buffer = buf_number,
+        -- })
+        -- --
         -- Format the current buffer on save
         --local fmt_group = vim.api.nvim_create_augroup('autoformat_cmds', { clear = true })
-        vim.api.nvim_create_autocmd('BufWritePre', {
-          buffer = buf_number,
-          group = get_augroup(client), --fmt_group,
-          desc = 'Fromat current buffer',
-          callback = function()
-            vim.lsp.buf.format {
-              bufnr = buf_number,
-              async = false,
-              timeout_ms = 10000,
-              id = client.id,
-              filter = function(c)
-                return c.id == client.id
-              end,
-            }
-          end,
-        })
+        --   vim.api.nvim_create_autocmd('BufWritePre', {
+        --     buffer = buf_number,
+        --     group = get_augroup(client), --fmt_group,
+        --     desc = 'Fromat current buffer',
+        --     callback = function()
+        --       vim.lsp.buf.format {
+        --         bufnr = buf_number,
+        --         async = false,
+        --         timeout_ms = 10000,
+        --         id = client.id,
+        --         filter = function(c)
+        --           return c.id == client.id
+        --         end,
+        --       }
+        --     end,
+        --   })
       end
       --
       if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
@@ -133,31 +139,31 @@ vim.api.nvim_create_autocmd('LspAttach', {
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = buf_number }, { bufnr = buf_number })
         end, '[l]sp [h]ints toggle')
         ------------------------------------------------------------------------------
-        -- Initial inlay hint display.
-        -- Idk why but without the delay inlay hints aren't displayed at the very start.
-        vim.defer_fn(function()
-          local mode = vim.api.nvim_get_mode().mode
-          vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_number })
-        end, 500)
-
-        --autocommands to only disable inlay_hint in insert mode and enabled in other modes
-        local inlay_hints_group = vim.api.nvim_create_augroup('toggle_inlay_hints', { clear = false })
-        vim.api.nvim_create_autocmd('InsertEnter', {
-          group = inlay_hints_group,
-          desc = 'Disable inlay hints',
-          buffer = buf_number,
-          callback = function()
-            vim.lsp.inlay_hint.enable(false, { bufnr = buf_number })
-          end,
-        })
-        vim.api.nvim_create_autocmd('InsertLeave', {
-          group = inlay_hints_group,
-          desc = 'Enable inlay hints',
-          buffer = buf_number,
-          callback = function()
-            vim.lsp.inlay_hint.enable(true, { bufnr = buf_number })
-          end,
-        })
+        -- -- Initial inlay hint display.
+        -- -- Idk why but without the delay inlay hints aren't displayed at the very start.
+        -- vim.defer_fn(function()
+        --   local mode = vim.api.nvim_get_mode().mode
+        --   vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_number })
+        -- end, 500)
+        --
+        -- --autocommands to only disable inlay_hint in insert mode and enabled in other modes
+        -- local inlay_hints_group = vim.api.nvim_create_augroup('toggle_inlay_hints', { clear = false })
+        -- vim.api.nvim_create_autocmd('InsertEnter', {
+        --   group = inlay_hints_group,
+        --   desc = 'Disable inlay hints',
+        --   buffer = buf_number,
+        --   callback = function()
+        --     vim.lsp.inlay_hint.enable(false, { bufnr = buf_number })
+        --   end,
+        -- })
+        -- vim.api.nvim_create_autocmd('InsertLeave', {
+        --   group = inlay_hints_group,
+        --   desc = 'Enable inlay hints',
+        --   buffer = buf_number,
+        --   callback = function()
+        --     vim.lsp.inlay_hint.enable(true, { bufnr = buf_number })
+        --   end,
+        -- })
         ------------------------------------------------------------------------------
       end
       --

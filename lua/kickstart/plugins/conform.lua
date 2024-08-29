@@ -24,14 +24,16 @@ return {
       --   -- Disable "format_on_save lsp_fallback" for languages that don't
       --   -- have a well standardized coding style. You can add additional
       --   -- languages here or re-enable it for the disabled ones.
-      --   local disable_filetypes = {} --c = true, cpp = true }
+      --   local disable_filetypes = { c = true, cpp = true }
       --   return {
       --     timeout_ms = 500,
       --     lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+      --     -- lsp_fallback = true,
       --   }
       -- end,
       formatters_by_ft = {
         cpp = { 'clang-format' },
+        c = { 'clang-format' },
         css = { 'biome' },
         html = { 'biome' },
         json = { 'prettier' },
@@ -44,6 +46,31 @@ return {
         javascript = { 'prettierd', 'prettier' },
         yaml = { 'yamlfmt' },
       },
+      -- formatters = {
+      --   clang_format = {
+      --     command = 'clang-format',
+      --     -- args = {
+      --     --   '--style={'
+      --     --     .. 'BasedOnStyle: microsoft,'
+      --     --     .. 'PointerAlignment: Left,'
+      --     --     .. 'BreakStringLiterals: false,'
+      --     --     .. 'ColumnLimit: 0,'
+      --     --     .. 'IndentWidth: 2,'
+      --     --     .. 'ObjCBlockIndentWidth: 2,'
+      --     --     .. 'ConstructorInitializerIndentWidth: 2 ,'
+      --     --     .. 'ContinuationIndentWidth: 2 ,'
+      --     --     .. 'ObjCSpaceBeforeProtocolList: false,'
+      --     --     .. 'PenaltyBreakComment: 0,'
+      --     --     .. 'SortIncludes: true,'
+      --     --     .. 'TabWidth: 2,'
+      --     --     .. 'UseTab: Never' --ForIndentation'
+      --     --     .. '}',
+      --     --   '--fallback-style=LLVM',
+      --     -- },
+      --     -- prepend_args = { '--style=file', '--fallback-style=LLVM' },         --OK
+      --     -- prepend_args = { '--style=mozilla', '--fallback-style=LLVM' },    --OK
+      --   },
+      -- },
     },
   },
 }
