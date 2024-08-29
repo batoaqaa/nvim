@@ -16,22 +16,22 @@ return {
     {
       '\\',
       function()
-        require('neo-tree.command').execute({
+        require('neo-tree.command').execute {
           toggle = true,
           source = 'filesystem',
           position = 'left',
-        })
+        }
       end,
       desc = 'Filesystem (root dir)',
     },
     {
       '<leader>bf',
       function()
-        require('neo-tree.command').execute({
+        require('neo-tree.command').execute {
           toggle = true,
           source = 'filesystem',
           position = 'float',
-        })
+        }
       end,
       desc = 'Filesystem (root dir)',
     },
@@ -51,12 +51,12 @@ return {
     --     },
     --   },
     -- },
-    popup_border_style = "rounded",
+    popup_border_style = 'rounded',
     sources = {
       'filesystem',
       'buffers',
     },
-    default_source = "filesystem",
+    default_source = 'filesystem',
 
     source_selector = {
       winbar = false,
@@ -65,7 +65,7 @@ return {
         { source = 'filesystem' },
         { source = 'buffers' },
       },
-      separator = { left = "▏", right = "▕" },
+      separator = { left = '▏', right = '▕' },
     },
 
     --window = { position = 'left' },
@@ -90,27 +90,27 @@ return {
     buffers = {
       bind_to_cwd = true,
       follow_current_file = {
-        enabled = true,          -- This will find and focus the file in the active buffer every time
+        enabled = true, -- This will find and focus the file in the active buffer every time
         --              -- the current file is changed while the tree is open.
         leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
       },
-      group_empty_dirs = true,   -- when true, empty directories will be grouped together
-      show_unloaded = false,     -- When working with sessions, for example, restored but unfocused buffers
+      group_empty_dirs = true, -- when true, empty directories will be grouped together
+      show_unloaded = false, -- When working with sessions, for example, restored but unfocused buffers
       -- are mark as "unloaded". Turn this on to view these unloaded buffer.
-      terminals_first = false,   -- when true, terminals will be listed before file buffers
+      terminals_first = false, -- when true, terminals will be listed before file buffers
       window = {
         mappings = {
-          ["<bs>"] = "navigate_up",
-          ["."] = "set_root",
-          ["bd"] = "buffer_delete",
-          ["i"] = "show_file_details",
-          ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
-          ["oc"] = { "order_by_created", nowait = false },
-          ["od"] = { "order_by_diagnostics", nowait = false },
-          ["om"] = { "order_by_modified", nowait = false },
-          ["on"] = { "order_by_name", nowait = false },
-          ["os"] = { "order_by_size", nowait = false },
-          ["ot"] = { "order_by_type", nowait = false },
+          ['<bs>'] = 'navigate_up',
+          ['.'] = 'set_root',
+          ['bd'] = 'buffer_delete',
+          ['i'] = 'show_file_details',
+          ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
+          ['oc'] = { 'order_by_created', nowait = false },
+          ['od'] = { 'order_by_diagnostics', nowait = false },
+          ['om'] = { 'order_by_modified', nowait = false },
+          ['on'] = { 'order_by_name', nowait = false },
+          ['os'] = { 'order_by_size', nowait = false },
+          ['ot'] = { 'order_by_type', nowait = false },
         },
       },
     },
