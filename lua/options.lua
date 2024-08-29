@@ -83,10 +83,10 @@ opt.fillchars = {
 opt.foldlevel = 99
 
 -- LazyVim auto format
--- vim.g.autoformat = true
--- opt.formatexpr = "v:lua.require'lazyvim.util'.format.formatexpr()" --require('conform').formatexpr --
--- opt.formatoptions = 'jcroqlnt' -- tcqj
--- opt.grepformat = '%f:%l:%c:%m'
+vim.g.autoformat = true
+opt.formatexpr = "v:lua.require'conform'.formatexpr()" --"v:lua.require'lazyvim.util'.format.formatexpr()"
+opt.formatoptions = 'jcroqlnt' -- tcqj
+opt.grepformat = '%f:%l:%c:%m'
 --
 opt.grepprg = 'rg --vimgrep'
 opt.ignorecase = true -- Ignore case

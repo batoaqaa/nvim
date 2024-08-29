@@ -15,11 +15,11 @@ return {
     opts = {
       notify_on_error = false,
 
-      format_on_save = {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      },
+      -- format_on_save = {
+      --   lsp_fallback = true,
+      --   async = false,
+      --   timeout_ms = 1000,
+      -- },
       -- format_on_save = function(bufnr)
       --   -- Disable "format_on_save lsp_fallback" for languages that don't
       --   -- have a well standardized coding style. You can add additional
@@ -49,29 +49,53 @@ return {
       -- formatters = {
       --   clang_format = {
       --     command = 'clang-format',
-      --     -- args = {
-      --     --   '--style={'
-      --     --     .. 'BasedOnStyle: microsoft,'
-      --     --     .. 'PointerAlignment: Left,'
-      --     --     .. 'BreakStringLiterals: false,'
-      --     --     .. 'ColumnLimit: 0,'
-      --     --     .. 'IndentWidth: 2,'
-      --     --     .. 'ObjCBlockIndentWidth: 2,'
-      --     --     .. 'ConstructorInitializerIndentWidth: 2 ,'
-      --     --     .. 'ContinuationIndentWidth: 2 ,'
-      --     --     .. 'ObjCSpaceBeforeProtocolList: false,'
-      --     --     .. 'PenaltyBreakComment: 0,'
-      --     --     .. 'SortIncludes: true,'
-      --     --     .. 'TabWidth: 2,'
-      --     --     .. 'UseTab: Never' --ForIndentation'
-      --     --     .. '}',
-      --     --   '--fallback-style=LLVM',
-      --     -- },
+      --     args = {
+      --       '--style={'
+      --         .. 'BasedOnStyle: mozilla,'
+      --         .. 'PointerAlignment: Left,'
+      --         .. 'BreakStringLiterals: false,'
+      --         .. 'ColumnLimit: 0,'
+      --         .. 'IndentWidth: 2,'
+      --         .. 'ObjCBlockIndentWidth: 2,'
+      --         .. 'ConstructorInitializerIndentWidth: 2 ,'
+      --         .. 'ContinuationIndentWidth: 2 ,'
+      --         .. 'ObjCSpaceBeforeProtocolList: false,'
+      --         .. 'PenaltyBreakComment: 0,'
+      --         .. 'SortIncludes: true,'
+      --         .. 'TabWidth: 2,'
+      --         .. 'UseTab: Never' --ForIndentation'
+      --         .. '}',
+      --       '--fallback-style=LLVM',
+      --     }, --OK
       --     -- prepend_args = { '--style=file', '--fallback-style=LLVM' },         --OK
       --     -- prepend_args = { '--style=mozilla', '--fallback-style=LLVM' },    --OK
       --   },
       -- },
     },
+    config = function(_, opts)
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = vim.tbl_keys(require('conform').formatters_by_ft),
+        group = vim.api.nvim_create_augroup('conform_formatexpr', { clear = true }),
+        callback = function()
+          vim.opt_local.formatexpr = 'v:lua.require("conform").formatexpr()'
+        end,
+      })
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      require('conform').setup(opts)
+      vim.g.auto_conform_on_save = true
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*',
+        callback = function(args)
+          if vim.g.auto_conform_on_save then
+            require('conform').format { bufnr = args.buf, timeout_ms = nil }
+          end
+        end,
+      })
+      vim.api.nvim_create_user_command('ConformToggleOnSave', function()
+        vim.g.auto_conform_on_save = not vim.g.auto_conform_on_save
+        vim.notify('Auto-Conform on save: ' .. (vim.g.auto_conform_on_save and 'Enabled' or 'Disabled'))
+      end, {})
+    end,
   },
 }
 -- vim: ts=2 sts=2 sw=2 et
