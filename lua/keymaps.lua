@@ -2,7 +2,6 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local opts = { noremap = true, silent = true }
-local term_opts = { silent = true, buffer = 0 }
 
 -- Shorten function name
 -- local keymap = vim.api.nvim_set_keymap
@@ -118,10 +117,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank {
+      higroup = 'IncSearch', -- see `:highlight` for more options
+      timeout = 200,
+    }
   end,
 })
-
+--
 -- toggleterm keymaps
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -130,16 +132,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- -- or just use <C-\><C-n> to exit terminal mode
 -- keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- function _G.set_terminal_keymaps()
-vim.keymap.set('t', '<esc>', [[<C-\><C-N>]], term_opts)
--- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], term_opts)
-vim.keymap.set('t', '<C-h>', vim.cmd.wincmd 'h', term_opts)
-vim.keymap.set('t', '<C-j>', vim.cmd.wincmd 'j', term_opts)
-vim.keymap.set('t', '<C-k>', vim.cmd.wincmd 'k', term_opts)
-vim.keymap.set('t', '<C-l>', vim.cmd.wincmd 'l', term_opts)
-vim.keymap.set('t', '<C-w>', [[<C-\><C-N><C-W>]], term_opts)
--- end
 
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 -- vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'

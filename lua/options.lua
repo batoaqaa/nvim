@@ -33,7 +33,7 @@ vim.g.lazyvim_statuscolumn = {
 -- * pwsh
 -- * powershell
 -- LazyVim.terminal.setup("pwsh")
-vim.g.shell = vim.fn.executable 'pwsh' and 'pwsh-preview' or 'powershell'
+vim.g.shell = vim.fn.executable 'pwsh' and 'pwsh' or 'powershell'
 vim.g.shellcmdflag =
   '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[Out-File:Encoding]=utf8;Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
 vim.g.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'

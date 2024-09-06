@@ -1,4 +1,9 @@
 return {
+  -- { 'filNaj/tree-setter', opts = {
+  --   tree_setter = {
+  --     enable = true,
+  --   },
+  -- } },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
