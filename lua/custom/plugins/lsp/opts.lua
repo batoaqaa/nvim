@@ -85,15 +85,17 @@ function M.dump(o) -- return a string respresenting of a table
 end
 
 --
-local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
--- capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
-capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
-local cmp_nvim_lsp = require 'cmp_nvim_lsp'
-M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
---
 M.on_attach = function(client, bufnr)
   print('Attaching to: ' .. client.name .. ' attached to buffer ' .. bufnr)
 end
 --
+local has_cmp_lsp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
+if has_cmp_lsp then
+  capabilities = cmp_lsp.default_capabilities(capabilities)
+end
+M.capabilities = capabilities
+--
+
 return M

@@ -143,7 +143,7 @@ return {
   --//   priority = 1000,
   --// }
   priority = 1000, -- Make sure to load this before all the other start plugins.
-  lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+  lazy = false, -- make sure we load this during startup if it is your main colorscheme
 
   --[[ github colorscheme /
   -- github_dark
