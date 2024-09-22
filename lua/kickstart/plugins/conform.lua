@@ -49,24 +49,24 @@ return {
       -- formatters = {
       --   clang_format = {
       --     command = 'clang-format',
-      --     args = {
-      --       '--style={'
-      --         .. 'BasedOnStyle: mozilla,'
-      --         .. 'PointerAlignment: Left,'
-      --         .. 'BreakStringLiterals: false,'
-      --         .. 'ColumnLimit: 0,'
-      --         .. 'IndentWidth: 2,'
-      --         .. 'ObjCBlockIndentWidth: 2,'
-      --         .. 'ConstructorInitializerIndentWidth: 2 ,'
-      --         .. 'ContinuationIndentWidth: 2 ,'
-      --         .. 'ObjCSpaceBeforeProtocolList: false,'
-      --         .. 'PenaltyBreakComment: 0,'
-      --         .. 'SortIncludes: true,'
-      --         .. 'TabWidth: 2,'
-      --         .. 'UseTab: Never' --ForIndentation'
-      --         .. '}',
-      --       '--fallback-style=LLVM',
-      --     }, --OK
+      --     -- args = {
+      --     --   '--style={'
+      --     --     .. 'BasedOnStyle: microsoft,'
+      --     --     .. 'PointerAlignment: Left,'
+      --     --     .. 'BreakStringLiterals: false,'
+      --     --     .. 'ColumnLimit: 0,'
+      --     --     .. 'IndentWidth: 2,'
+      --     --     .. 'ObjCBlockIndentWidth: 2,'
+      --     --     .. 'ConstructorInitializerIndentWidth: 2 ,'
+      --     --     .. 'ContinuationIndentWidth: 2 ,'
+      --     --     .. 'ObjCSpaceBeforeProtocolList: false,'
+      --     --     .. 'PenaltyBreakComment: 0,'
+      --     --     .. 'SortIncludes: true,'
+      --     --     .. 'TabWidth: 2,'
+      --     --     .. 'UseTab: Never' --ForIndentation'
+      --     --     .. '}',
+      --     --   '--fallback-style=LLVM',
+      --     -- },
       --     -- prepend_args = { '--style=file', '--fallback-style=LLVM' },         --OK
       --     -- prepend_args = { '--style=mozilla', '--fallback-style=LLVM' },    --OK
       --   },
