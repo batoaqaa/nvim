@@ -24,6 +24,7 @@ return {
   },
   -- rust_analyzer = require 'custom.plugins.lsp.lang-servers.rust_analyzer',
   -- terraformls = { filetypes = { 'terraform', 'tf' } },
-  tsserver = require 'custom.plugins.lsp.lang-servers.tsserver',
+  -- tsserver = require 'custom.plugins.lsp.lang-servers.tsserver',
+  ts_ls = require 'custom.plugins.lsp.lang-servers.tsserver',
   yamlls = require 'custom.plugins.lsp.lang-servers.yamlls',
 }
