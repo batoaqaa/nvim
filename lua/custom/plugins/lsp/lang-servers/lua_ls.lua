@@ -24,10 +24,10 @@ return {
           callSnippet = 'Replace',
           keywordSnippet = 'Replace',
           showWord = 'Disable', -- don't suggest common words as fallback
-          postfix = '.',        -- useful for `table.insert` and the like
+          postfix = '.', -- useful for `table.insert` and the like
         },
         diagnostics = {
-          globals = { 'vim' },            -- when contributing to nvim plugins missing a `.luarc.json`
+          globals = { 'vim' }, -- when contributing to nvim plugins missing a `.luarc.json`
           disable = { 'trailing-space' }, -- formatter already does that
         },
         doc = {
