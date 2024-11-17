@@ -15,11 +15,11 @@ return {
     opts = {
       notify_on_error = false,
 
-      -- format_on_save = {
-      --   lsp_fallback = true,
-      --   async = false,
-      --   timeout_ms = 1000,
-      -- },
+      format_on_save = {
+        lsp_fallback = true,
+        async = false,
+        timeout_ms = 1000,
+      },
       -- format_on_save = function(bufnr)
       --   -- Disable "format_on_save lsp_fallback" for languages that don't
       --   -- have a well standardized coding style. You can add additional
@@ -34,8 +34,11 @@ return {
       formatters_by_ft = {
         cpp = { 'clang-format' },
         c = { 'clang-format' },
-        css = { 'biome' },
-        html = { 'biome' },
+        css = { { 'prettierd', 'prettier' } },
+        scss = { { 'prettierd', 'prettier' } },
+
+        html = { 'htmlbeautifier' },
+        -- html = { 'prettier' },
         json = { 'prettier' },
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially

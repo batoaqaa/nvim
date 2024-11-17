@@ -3,6 +3,12 @@ return {
   biome = {
     capabilities = opts.capabilities,
   },
+  cssls = {
+    capabilities = opts.capabilities,
+  },
+  html = {
+    capabilities = opts.capabilities,
+  },
   clangd = require 'custom.plugins.lsp.lang-servers.clangd',
   -- dockerls = {
   --   on_attach = opts.on_attach,
