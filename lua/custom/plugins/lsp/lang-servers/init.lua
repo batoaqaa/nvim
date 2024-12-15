@@ -26,5 +26,6 @@ return {
   -- terraformls = { filetypes = { 'terraform', 'tf' } },
   -- tsserver = require 'custom.plugins.lsp.lang-servers.tsserver',
   ts_ls = require 'custom.plugins.lsp.lang-servers.tsserver',
+  --  run 'npm i -g typescript'
   yamlls = require 'custom.plugins.lsp.lang-servers.yamlls',
 }
