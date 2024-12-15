@@ -27,5 +27,6 @@ return {
   -- tsserver = require 'custom.plugins.lsp.lang-servers.tsserver',
   ts_ls = require 'custom.plugins.lsp.lang-servers.tsserver',
   --  run 'npm i -g typescript'
+  --  or run 'npm install --global typescript'
   yamlls = require 'custom.plugins.lsp.lang-servers.yamlls',
 }
