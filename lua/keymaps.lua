@@ -30,6 +30,7 @@ local keymap = vim.keymap.set
 --  S = Shift <S-j> = Shift+j
 
 keymap('v', '/', "\"fy/\\V<C-R>f<CR>" )
+keymap('v', '*', "\"fy/\\V<C-R>f<CR>" )
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
