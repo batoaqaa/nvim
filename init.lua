@@ -45,9 +45,17 @@ if not vim.loop.fs_stat(pynvim_env) then
   })
 end
 
-local pynvim_python = pynvim_env .. '/bin/python'
+local pynvim_python
+local pynvim_lib
+if jit.os == 'Windows' then
+  pynvim_python = pynvim_env .. '/Scripts/python.exe'
+  pynvim_lib = pynvim_env .. '/Lib/' .. '/site-packages/pynvim'
+else
+  pynvim_python = pynvim_env .. '/bin/python'
+  pynvim_lib = pynvim_env .. '/lib/' .. python_version .. '/site-packages/pynvim'
+end
 
-local pynvim_lib = pynvim_env .. '/lib/' .. python_version .. '/site-packages/pynvim'
+--local pynvim_lib = pynvim_env .. '/lib/' .. python_version .. '/site-packages/pynvim'
 if not vim.loop.fs_stat(pynvim_lib) then
   vim.fn.system({
     pynvim_python,
