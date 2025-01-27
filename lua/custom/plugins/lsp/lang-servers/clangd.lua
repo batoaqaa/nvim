@@ -23,7 +23,7 @@ A sample file provided in the nvim configuration folder,
     ]
 }
 ]]
-local opts = require 'custom.plugins.lsp.opts'
+local opts = require('custom.plugins.lsp.opts')
 local local_cap = opts.capabilities
 local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
 --
@@ -71,9 +71,11 @@ local clangdOPTS = {
   },
   root_dir = function(fname)
     local path = require('lspconfig.util').root_pattern(table.unpack(rootPatterns))(fname)
-      or require('lspconfig.util').find_git_ancestor(fname)
+      or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+      --or require('lspconfig.util').find_git_ancestor(fname)
       or vim.fn.getcwd()
-      or require('lspconfig.util').path.dirname(fname)
+      or vim.fs.dirname(fname)
+    --or require('lspconfig.util').path.dirname(fname)
     return path
   end,
 }
