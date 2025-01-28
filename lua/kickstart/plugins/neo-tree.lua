@@ -16,22 +16,22 @@ return {
     {
       '\\',
       function()
-        require('neo-tree.command').execute {
+        require('neo-tree.command').execute({
           toggle = true,
           source = 'filesystem',
           position = 'left',
-        }
+        })
       end,
       desc = 'Filesystem (root dir)',
     },
     {
       '<leader>bf',
       function()
-        require('neo-tree.command').execute {
+        require('neo-tree.command').execute({
           toggle = true,
           source = 'filesystem',
           position = 'float',
-        }
+        })
       end,
       desc = 'Filesystem (root dir)',
     },

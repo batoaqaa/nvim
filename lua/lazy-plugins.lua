@@ -31,12 +31,12 @@ require('lazy').setup({
   --  This is equivalent to:
   --    require('Comment').setup({})
 
+  -- transparent background
+  { 'xiyaowong/transparent.nvim', opst = { lazy = false } },
+  --
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
   --
-  -- transparent background
-  { 'xiyaowong/transparent.nvim', lazy = false },
-
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua
 
@@ -76,6 +76,7 @@ require('lazy').setup({
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
+
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
