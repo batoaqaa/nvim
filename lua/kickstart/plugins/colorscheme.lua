@@ -1,5 +1,5 @@
 local overrides = function() --// colors)
-  local p = require 'custom.colors'
+  local p = require('custom.colors')
   --// local p = colors.palette
   return {
     CursorLine = {
@@ -87,6 +87,7 @@ local conf = {
   transparent = false,
   dimInactive = true,
   terminalColors = true,
+  transparent_background = true,
   colors = {
     palette = {},
     theme = {
@@ -208,7 +209,7 @@ return {
   opts = conf,
   name = 'catppuccin',
   init = function()
-    vim.cmd.colorscheme 'catppuccin'
+    vim.cmd.colorscheme('catppuccin')
     --end,
     --]]
 
@@ -228,7 +229,7 @@ return {
   --end,
   --]]
 
-    vim.cmd.hi 'Comment gui=none'
+    vim.cmd.hi('Comment gui=none')
   end,
   --]]
 }
