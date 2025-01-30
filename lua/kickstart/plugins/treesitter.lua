@@ -51,6 +51,27 @@ return {
       --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+
+      ----------------------------------------
+      -- [[https://ibrahimshahzad.github.io/posts/parsing_kamailio_cfg/]]
+      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+      parser_config.kamailio = {
+        install_info = {
+          url = 'https://github.com/batoaqaa/tree-sitter-kamailio', --'/home/batoaqaa/tree-sitter-kamailio', --
+          files = { 'src/parser.c' }, -- note that some parsers also require src/scanner.c or src/scanner.cc
+          -- optional entries:
+          branch = 'main', -- default branch in case of git repo if different from master
+          generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+          requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+        },
+        filetype = 'cfg', -- if filetype does not match the parser name
+      }
+      vim.filetype.add({
+        extension = {
+          kamailiocfg = 'cfg',
+        },
+      })
+      ----------------------------------------
     end,
   },
 }

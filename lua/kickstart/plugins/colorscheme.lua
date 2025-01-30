@@ -204,7 +204,7 @@ return {
   --end,
   --]]
 
-  ---[[ catppuccin colorscheme /
+  --[[ catppuccin colorscheme /
   'catppuccin/nvim',
   opts = conf,
   name = 'catppuccin',
@@ -213,13 +213,13 @@ return {
     --end,
     --]]
 
-    --[[ tokyonight colorscheme /
+  ---[[ tokyonight colorscheme /
   'folke/tokyonight.nvim',
   opts = conf,
   init = function()
-    vim.cmd.colorscheme 'tokyonight-night'
-  --end,
-  --]]
+    vim.cmd.colorscheme('tokyonight-night')
+    --end,
+    --]]
 
     --[[ gruvbox colorscheme /
   'ellisonleao/gruvbox.nvim',

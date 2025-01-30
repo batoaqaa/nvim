@@ -59,7 +59,9 @@ end
 vim.g.python_host_prog = pynvim_python
 vim.g.python3_host_prog = pynvim_python
 ------------------------
-
+-- [[https://ibrahimshahzad.github.io/posts/writing_lsp_for_kamailio_cfg_p1/]]
+require('kamailio')
+------------------------
 -- [[ Setting options ]]
 require('options')
 

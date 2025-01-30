@@ -25,7 +25,7 @@ A sample file provided in the nvim configuration folder,
 ]]
 local opts = require('custom.plugins.lsp.opts')
 local local_cap = opts.capabilities
-local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
+--local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
 --
 local rootPatterns = {
   'compile_commands.json',
