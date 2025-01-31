@@ -2,6 +2,7 @@ local M = {}
 
 -- Define default configuration settings
 M.config = {
+  enableDeprecatedCommentHint = false, -- to enable hints for '#' comments
   KamailioSourcePath = vim.fn.getcwd(),
   loglevel = 3,
 }
