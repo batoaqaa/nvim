@@ -1,11 +1,4 @@
 local opts = require('custom.plugins.lsp.opts')
--- local M = {}
-
-local config = require('kamaizen.config')
-
--- function M.setup(user_config)
-config.setup({})
---config.setup(user_config)
 
 local lsp_config = {
   name = 'KamaiZen',
@@ -14,7 +7,11 @@ local lsp_config = {
   root_dir = vim.fn.getcwd(),
   capabilities = opts.capabilities,
   settings = {
-    kamaizen = config.config,
+    kamaizen = {
+      enableDeprecatedCommentHint = false, -- to enable hints for '#' comments
+      KamailioSourcePath = vim.fn.getcwd(),
+      loglevel = 3,
+    },
   },
   -- handlers = {
   --   ['workspace/configuration'] = function(_, _, params)
@@ -35,16 +32,5 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'cfg',
   callback = function(args)
     vim.lsp.buf_attach_client(args.buf, client)
-    print(args.buf)
   end,
 })
--- end
--- vim.api.nvim_create_autocmd('FileType', {
---   --pattern = 'kamailio_cfg',
---   pattern = 'cfg',
---   callback = function(args)
---     require('kamaizen').setup(args)
---   end,
--- })
-
--- return M
