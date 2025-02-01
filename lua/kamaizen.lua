@@ -2,7 +2,8 @@ local opts = require('custom.plugins.lsp.opts')
 
 local lsp_config = {
   name = 'KamaiZen',
-  cmd = { '/home/batoaqaa/.local/bin/KamaiZen' },
+  --cmd = { '/home/batoaqaa/.local/bin/KamaiZen' },
+  cmd = { '/home/batoaqaa/KamaiZen/KamaiZen' },
   filetypes = { 'cfg', 'kamailio_cfg', 'kamailio' },
   root_dir = vim.fn.getcwd(),
   capabilities = opts.capabilities,

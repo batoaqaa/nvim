@@ -40,7 +40,7 @@ local rootPatterns = {
 
 local clangdOPTS = {
   cmd = {
-    'C:/VSCode/esp-clang/bin/clangd.exe',
+    'clangd',
     '--all-scopes-completion',
     '--background-index',
     '--clang-tidy',

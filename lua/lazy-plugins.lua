@@ -51,6 +51,7 @@ require('lazy').setup({
   require('kickstart/plugins/colorizer'),
   require('kickstart/plugins/todo-comments'),
   require('kickstart/plugins/mini'),
+  require('kickstart/plugins/bigfile'),
   require('kickstart/plugins/treesitter'),
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
