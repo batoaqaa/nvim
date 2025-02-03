@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     local buf_number = args.buf
 
-    local lspkeymaps = require 'custom.plugins.lsp.lspkeymaps'
+    local lspkeymaps = require('custom.plugins.lsp-config.lspkeymaps')
     --
     if client then
       -- vim.lsp.set_log_level 'trace'
@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
           group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
           callback = function(event)
             vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event.buf }
+            vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = event.buf })
           end,
         })
         --
@@ -81,7 +81,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       update_in_insert = true,
     })
     --
-    vim.cmd [[autocmd FileType * set formatoptions-=ro]]
+    vim.cmd([[autocmd FileType * set formatoptions-=ro]])
     --
   end,
 })

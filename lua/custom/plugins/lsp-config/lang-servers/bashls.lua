@@ -1,4 +1,4 @@
-local opts = require('custom.plugins.lsp.opts')
+local opts = require('custom.plugins.lsp-config.opts')
 return {
   capabilities = opts.capabilities,
   default_config = {

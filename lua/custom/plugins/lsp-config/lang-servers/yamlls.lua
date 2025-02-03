@@ -1,4 +1,4 @@
-local opts = require 'custom.plugins.lsp.opts'
+local opts = require('custom.plugins.lsp-config.opts')
 return {
   capabilities = opts.capabilities,
   -- on_attach = opts.on_attach,

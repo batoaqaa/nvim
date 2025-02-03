@@ -2,7 +2,7 @@
 -- local lspconfig = require 'lspconfig'
 
 -- Hook vim.lsp.client.create to add completion capabilities by default
--- local opts = require 'custom.plugins.lsp.opts'
+-- local opts = require 'custom.plugins.lsp-config.opts'
 --
 -- local _create = vim.lsp.client.create
 -- vim.lsp.client.create = function(config)
@@ -13,11 +13,11 @@
 --   }))
 -- end
 --
-local mason_lspconfig = require 'mason-lspconfig'
+local mason_lspconfig = require('mason-lspconfig')
 --
-local lang_servers = require 'custom.plugins.lsp.lang-servers'
+local lang_servers = require('custom.plugins.lsp-config.lang-servers')
 --local opts =
-mason_lspconfig.setup {
+mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(lang_servers),
   automatic_installation = true,
 
@@ -42,4 +42,4 @@ mason_lspconfig.setup {
     --   -- require('lspconfig').lua_ls.setup {}
     -- end,
   },
-}
+})

@@ -45,10 +45,7 @@ require('lazy-bootstrap')
 require('lazy-plugins')
 
 ------------------------
--- [[https://ibrahimshahzad.github.io/posts/writing_lsp_for_kamailio_cfg_p1/]]
--- require('kamailio')
-require('kamaizen')
-------------------------
+-- [[ Configure python env ]]
 require('pynvim')
 ------------------------
 -- The line beneath this is called `modeline`. See `:help modeline`

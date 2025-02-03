@@ -22,8 +22,8 @@ return {
     lazy = false,
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
-      require('custom.plugins.lsp.handlers')
-      require('custom.plugins.lsp.config')
+      require('custom.plugins.lsp-config.handlers')
+      require('custom.plugins.lsp-config.config')
     end,
     dependencies = {
       'RRethy/vim-illuminate',

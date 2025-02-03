@@ -41,9 +41,10 @@ return {
     },
     --
     config = function()
-      local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
-      luasnip.config.setup {}
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+      require('luasnip.loaders.from_vscode').lazy_load()
+      luasnip.config.setup({})
       --
       local kind_icons = {
         Text = '',
@@ -73,7 +74,7 @@ return {
         TypeParameter = ' ',
       }
 
-      cmp.setup {
+      cmp.setup({
 
         -- preselect = require('cmp.types').cmp.PreselectMode.Item,
         -- completion = {
@@ -117,21 +118,21 @@ return {
           disallow_symbol_nonprefix_matching = true,
         },
 
-        mapping = cmp.mapping.preset.insert {
+        mapping = cmp.mapping.preset.insert({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
-          ['<CR>'] = cmp.mapping.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace },
+          ['<C-Space>'] = cmp.mapping.complete({}),
+          ['<CR>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
           ['<Tab>'] = cmp.mapping.select_next_item(),
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
           --
-          ['<C-e>'] = cmp.mapping {
+          ['<C-e>'] = cmp.mapping({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
-          },
+          }),
           --
           -- <c-l> will move you to the right of each of the expansion locations.
           -- <c-h> is similar, except moving you backwards.
@@ -145,13 +146,13 @@ return {
               luasnip.jump(-1)
             end
           end, { 'i', 's' }),
-        },
+        }),
 
         snippet = {
-          expand = vim.fn.has 'nvim-0.10' == 1 and function(args)
+          expand = vim.fn.has('nvim-0.10') == 1 and function(args)
             vim.snippet.expand(args.body)
           end or function(_)
-            error 'snippet engine is not configured.'
+            error('snippet engine is not configured.')
           end,
         },
         duplicates = {
@@ -160,7 +161,7 @@ return {
           buffer = 1,
           path = 1,
         },
-        sources = cmp.config.sources {
+        sources = cmp.config.sources({
           { name = 'nvim_lsp', priority = 9 },
           { name = 'nvim_lua', priority = 8 },
           { name = 'buffer', priority = 7, keyword_length = 3, max_item_count = 10 },
@@ -170,7 +171,7 @@ return {
           { name = 'calc', priority = 3 },
           { name = 'luasnip', keyword_length = 2 },
           { name = 'buffer', keyword_length = 3 },
-        },
+        }),
         --
         formatting = {
           expandable_indicator = true,
@@ -214,12 +215,12 @@ return {
             cmp.config.compare.offset,
             cmp.config.compare.order,
             cmp.config.compare.length,
-            require 'clangd_extensions.cmp_scores',
+            require('clangd_extensions.cmp_scores'),
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
           },
         },
-      }
+      })
     end,
   },
 }
