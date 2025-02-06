@@ -10,15 +10,15 @@
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  --   {
-  --     'vhyrro/luarocks.nvim',
-  --     priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
-  --     --config = true,
-  --     opts = {
-  --       --rocks = { 'jsregexp' }, -- specifies a list of rocks to install
-  --       -- luarocks_build_args = { "--with-lua=/my/path" }, -- extra options to pass to luarocks's configuration script
-  --     },
+  -- {
+  --   'vhyrro/luarocks.nvim',
+  --   priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+  --   --config = true,
+  --   opts = {
+  --     rocks = { 'kamailio-nvim' }, -- specifies a list of rocks to install
+  --     -- luarocks_build_args = { '--with-lua=/my/path' }, -- extra options to pass to luarocks's configuration script
   --   },
+  -- },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -73,7 +73,7 @@ require('lazy').setup({
   require('kickstart.plugins.bufferline'),
   require('kickstart.plugins.undotree'),
   require('kickstart.plugins.nvim-platformio'),
-  require('kickstart.plugins.kamailio'),
+  require('kickstart.plugins.kamailio-lsp'),
   require('kickstart.plugins.toggleterm'),
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
