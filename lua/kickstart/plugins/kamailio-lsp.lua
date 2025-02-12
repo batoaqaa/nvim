@@ -1,6 +1,10 @@
 return {
-  'batoaqaa/KamaiZen',
-  dependencies = { 'batoaqaa/KamaiZen', build = 'go build' },
+  'batoaqaa/kamailio-lsp',
+  -- 'batoaqaa/kamaizen.nvim',
+  dependencies = {
+    { 'IbrahimShahzad/KamaiZen', build = 'go build' },
+  },
+  -- lazy = true,
   opts = {
     settings = {
       kamaizen = {

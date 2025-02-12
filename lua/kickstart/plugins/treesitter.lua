@@ -21,6 +21,7 @@ return {
         'lua',
         'luadoc',
         'markdown',
+        'sql',
         'typescript',
         'vim',
         'vimdoc',
