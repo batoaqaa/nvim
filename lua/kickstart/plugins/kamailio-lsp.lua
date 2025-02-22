@@ -4,7 +4,7 @@ return {
   dependencies = {
     { 'IbrahimShahzad/KamaiZen', build = 'go build' },
   },
-  lazy = true,
+  -- lazy = true,
   opts = {
     settings = {
       kamaizen = {
