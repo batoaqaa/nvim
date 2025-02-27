@@ -1,6 +1,6 @@
 K = {}
 
-function K.LspKeymaps(client, bufnr)
+function K.lspKeymaps(client, bufnr)
   local bufkeymap = function(mode, keys, func, desc)
     vim.keymap.set(mode, keys, func, { buffer = bufnr, noremap = true, silent = true, desc = 'LSP: ' .. desc })
   end
@@ -74,7 +74,7 @@ function K.LspKeymaps(client, bufnr)
     --   -- if client.supports_method 'textDocument/formatting' then
     bufkeymap({ 'n', 'x' }, '<F3>', function()
       -- vim.lsp.buf.format { bufnr = buf_number, async = true }
-      require('conform').format { bufnr = bufnr, async = true }
+      require('conform').format({ bufnr = bufnr, async = true })
     end, 'format buffer')
     --   --
     -- vim.api.nvim_clear_autocmds({
@@ -104,7 +104,7 @@ function K.LspKeymaps(client, bufnr)
   --
   if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
     bufkeymap('n', '<leader>lh', function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
     end, '[l]sp [h]ints toggle')
     ------------------------------------------------------------------------------
     -- -- Initial inlay hint display.

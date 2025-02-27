@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- end
       ------------------------------------------------------------------
       --
-      lspkeymaps.LspKeymaps(client, buf_number)
+      lspkeymaps.lspKeymaps(client, buf_number)
       --
       if client.server_capabilities.documentHighlightProvider then
         local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
