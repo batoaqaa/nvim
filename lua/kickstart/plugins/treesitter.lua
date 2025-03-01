@@ -27,9 +27,12 @@ return {
         'vimdoc',
         'yaml',
       },
+      -- ignore_install = { 'query' },
+
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
+        -- disable = { 'query' },
         enable = true,
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
