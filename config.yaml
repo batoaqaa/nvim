@@ -1,16 +1,78 @@
 CompileFlags:
-  Compiler: 'C:/VSCode/data/.platformio/packages/toolchain-riscv32-esp/bin/riscv32-esp-elf-g++.exe'
-  Add: [xc++,
+  # Compiler: 'C:/VSCode/data/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-g++'
+  # # CompilationDatabase: 'C:/VSCode/data/Projects/neoEsp32'
+  # CompilationDatabase: 'C:/VSCode/data/Projects/Digital Wall Clock SQUARE ESP32 MultiTasking Pray5'
+  Add: [
     #
-    -Wall,
+    xc++,
+    #
+    --target=riscv32-esp-elf,
+    #
+    # -Wall,
     #
     -std=c++20,
     #
-    # '--sysroot=C:/DevelopCode/VSCode/data/.platformio',
+    # '--sysroot=C:/VSCode/data/.platformio/packages/toolchain-riscv32-esp/bin/',
     #
-    -std=c++17,
+    # -std=c++17,
     #
-    '-isystemC:/VSCode/data/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/freertos/include/freertos']
-  Remove: [-misc-definitions-in-headers, -fno-tree-switch-conversion, -mtext-section-literals, -mlongcalls, -fstrict-volatile-bitfields]
+    # '-isystemC:/VSCode/data/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/freertos/include/freertos',
+    # '-isystemC:/VSCode/data/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos',
+    #
+  ]
+  Remove: [
+    # 
+    -misc-definitions-in-headers,
+    #
+    -fno-tree-switch-conversion,
+    #
+    -mtext-section-literals,
+    #
+    -mlongcalls,
+    #
+    -fstrict-volatile-bitfields,
+    #
+  ]
 Diagnostics:
-  Suppress: ["misc-definitions-in-headers", "pp_including_mainfile_in_preamble", "misc-unused-using-decls"]
+  Suppress: [
+    #
+    "misc-definitions-in-headers",
+    #
+    "pp_including_mainfile_in_preamble",
+    #
+    "misc-unused-using-decls",
+    #
+    "unused-includes",
+    #
+  ]
+InlayHints:
+  BlockEnd: Yes
+  Designators: Yes
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+  TypeNameLimit: 24
+---
+If:
+  PathMatch: ["C:/VSCode/data/Projects/Digital Wall Clock SQUARE ESP32 MultiTasking Pray5/.*"]
+CompileFlags:
+  Compiler: 'C:/VSCode/data/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-g++'
+  # Add: ['-isystemC:/VSCode/data/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/freertos']
+---
+If:
+  PathMatch: [
+    #
+    "C:/VSCode/data/Projects/neoEsp32/.*",
+    #
+    "C:/VSCode/data/Projects/bw16/.*",
+    #
+    "C:/VSCode/data/Projects/Digital Wall Clock CIRCLE ESP32-C3 Pray5/.*",
+    #
+    "C:/VSCode/data/Projects/Digital Wall Clock SQUARE ESP32-C3 Pray5/.*",
+    #
+    "C:/VSCode/data/Projects/Digital Wall Clock Long ESP32-C3 Pray5/.*",
+    #
+  ]
+CompileFlags:
+  Compiler: 'C:/VSCode/data/.platformio/packages/toolchain-riscv32-esp/bin/riscv32-esp-elf-g++'
+  # Add: ['-isystemC:/VSCode/data/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/freertos/include/freertos']
