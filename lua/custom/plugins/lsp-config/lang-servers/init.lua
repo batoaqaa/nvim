@@ -22,6 +22,9 @@ return {
   lua_ls = require('custom.plugins.lsp-config.lang-servers.lua_ls'),
   pyright = {
     capabilities = opts.capabilities,
+    before_init = function(_, config)
+      config.settings.python.pythonPath = vim.g.python_host_prog
+    end,
   },
   -- rust_analyzer = require 'custom.plugins.lsp-config.lang-servers.rust_analyzer',
   -- terraformls = { filetypes = { 'terraform', 'tf' } },
@@ -30,4 +33,7 @@ return {
   --  run 'npm i -g typescript'
   --  or run 'npm install --global typescript'
   yamlls = require('custom.plugins.lsp-config.lang-servers.yamlls'),
+  arduino_language_server = {
+    capabilities = opts.capabilities,
+  },
 }
