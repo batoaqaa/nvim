@@ -1,7 +1,4 @@
-------------------------
 local python_version = 'python3.13'
---
---local pynvim_env = vim.fn.stdpath('data') .. '/pynvim_env'
 --
 --global environment variable PLATFORMIO_CORE_DIR
 --    Unix ~/.platformio
@@ -9,10 +6,7 @@ local python_version = 'python3.13'
 
 --:lua os.execute("setx PLATFORMIO_CORE_DIR %HOMEPATH%/.platformio")
 --:lua os.execute("setx PLATFORMIO_CORE_DIR %userprofile%/.platformio")
---:lua os.execute("setx PLATFORMIO_CORE_DIR %localappdata%/.platformio")
 --:lua print(os.getenv("userprofile"))
---:lua os.execute("setx PLATFORMIO_CORE_DIR C:/VSCode/data/.platformiooooo")
---os.execute("setx PLATFORMIO_CORE_DIR C:/VSCode/data/.platformiooooo")
 local platformio_core_dir, pynvim_env, pynvim_python, pynvim_lib, pynvim_bin, pynvim_activate
 if jit.os == 'Windows' then
   platformio_core_dir = os.getenv('userprofile') .. '\\.platformio'
@@ -34,7 +28,6 @@ else
   pynvim_lib = pynvim_env .. '/lib/' .. python_version .. '/site-packages/pynvim'
 end
 
---if not vim.uv.fs_stat(platformio_core_dir) then
 if vim.fn.isdirectory(platformio_core_dir) == 0 then
   os.execute('mkdir ' .. platformio_core_dir)
 end
@@ -42,7 +35,6 @@ os.execute('setx PLATFORMIO_CORE_DIR ' .. platformio_core_dir)
 
 if not vim.uv.fs_stat(pynvim_env) then
   vim.fn.system({ 'python', '-m', 'venv', pynvim_env })
-  -- os.execute('python -m venv ' .. pynvim_env)
 end
 vim.fn.system({ pynvim_activate })
 
