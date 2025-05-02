@@ -1,16 +1,32 @@
 ------------------------
 local python_version = 'python3.13'
 --
-local pynvim_env = vim.fn.stdpath('data') .. '/pynvim_env'
+--local pynvim_env = vim.fn.stdpath('data') .. '/pynvim_env'
+--
+--global environment variable PLATFORMIO_CORE_DIR
+--    Unix ~/.platformio
+--    Windows %HOMEPATH%\.platformio
 
-local pynvim_python, pynvim_lib, pynvim_bin, pynvim_activate
+--:lua os.execute("setx PLATFORMIO_CORE_DIR %HOMEPATH%/.platformio")
+--:lua os.execute("setx PLATFORMIO_CORE_DIR %userprofile%/.platformio")
+--:lua os.execute("setx PLATFORMIO_CORE_DIR %localappdata%/.platformio")
+--:lua print(os.getenv("userprofile"))
+--:lua os.execute("setx PLATFORMIO_CORE_DIR C:/VSCode/data/.platformiooooo")
+--os.execute("setx PLATFORMIO_CORE_DIR C:/VSCode/data/.platformiooooo")
+local platformio_core_dir, pynvim_env, pynvim_python, pynvim_lib, pynvim_bin, pynvim_activate
 if jit.os == 'Windows' then
-  pynvim_bin = pynvim_env .. '/Scripts'
-  pynvim_python = pynvim_bin .. '/python.exe'
-  pynvim_activate = pynvim_bin .. '/activate'
+  platformio_core_dir = os.getenv('userprofile') .. '\\.platformio'
 
-  pynvim_lib = pynvim_env .. '/Lib/' .. '/site-packages/pynvim'
+  pynvim_env = platformio_core_dir .. '/penv'
+  pynvim_bin = pynvim_env .. '\\Scripts'
+  pynvim_python = pynvim_bin .. '\\python.exe'
+  pynvim_activate = pynvim_bin .. '\\activate'
+
+  pynvim_lib = pynvim_env .. '\\Lib\\' .. '\\site-packages\\pynvim'
 else
+  platformio_core_dir = '~/.platformio'
+
+  pynvim_env = platformio_core_dir .. '/penv'
   pynvim_bin = pynvim_env .. '/bin'
   pynvim_python = pynvim_bin .. '/python'
   pynvim_activate = 'source' .. pynvim_bin .. '/activate'
@@ -18,12 +34,19 @@ else
   pynvim_lib = pynvim_env .. '/lib/' .. python_version .. '/site-packages/pynvim'
 end
 
-if not vim.loop.fs_stat(pynvim_env) then
+--if not vim.uv.fs_stat(platformio_core_dir) then
+if vim.fn.isdirectory(platformio_core_dir) == 0 then
+  os.execute('mkdir ' .. platformio_core_dir)
+end
+os.execute('setx PLATFORMIO_CORE_DIR ' .. platformio_core_dir)
+
+if not vim.uv.fs_stat(pynvim_env) then
   vim.fn.system({ 'python', '-m', 'venv', pynvim_env })
+  -- os.execute('python -m venv ' .. pynvim_env)
 end
 vim.fn.system({ pynvim_activate })
 
-if not vim.loop.fs_stat(pynvim_lib) then
+if not vim.uv.fs_stat(pynvim_lib) then
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'pynvim' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'neovim' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'debugpy' })
