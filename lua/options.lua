@@ -33,7 +33,7 @@ vim.g.lazyvim_statuscolumn = {
 -- * pwsh
 -- * powershell
 -- LazyVim.terminal.setup("pwsh")
-vim.g.shell = vim.fn.executable 'pwsh' and 'pwsh' or 'powershell'
+vim.g.shell = vim.fn.executable('pwsh') and 'pwsh' or 'powershell'
 vim.g.shellcmdflag =
   '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[Out-File:Encoding]=utf8;Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
 vim.g.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
@@ -102,13 +102,13 @@ opt.pumheight = 10 -- Maximum number of entries in a popup
 opt.relativenumber = true -- Relative line numbers
 opt.scrolloff = 4 -- Lines of context
 opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
-opt.shortmess:append { W = true, I = true, c = true, C = true }
+opt.shortmess:append({ W = true, I = true, c = true, C = true })
 opt.showmode = false -- Dont show mode since we have a statusline
 opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = 'yes' -- Always show the signcolumn, otherwise it would shift the text each time
 opt.smartcase = true -- Don't ignore case with capitals
 opt.spelllang = { 'en' }
-opt.spelloptions:append 'noplainbuffer'
+opt.spelloptions:append('noplainbuffer')
 opt.splitbelow = true -- Put new windows below current
 opt.splitkeep = 'screen'
 opt.splitright = true -- Put new windows right of current
@@ -130,7 +130,7 @@ opt.wildmode = 'longest:full,full' -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
 
-if vim.fn.has 'nvim-0.10' == 1 then
+if vim.fn.has('nvim-0.10') == 1 then
   opt.smoothscroll = true
   opt.foldexpr = 'nvim_treesitter#foldexpr()'
   --opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
