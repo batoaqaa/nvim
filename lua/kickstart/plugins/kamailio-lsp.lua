@@ -1,6 +1,6 @@
 return {
-  'IbrahimShahzad/KamaiZen',
-  -- 'batoaqaa/KamaiZen',
+  -- 'IbrahimShahzad/KamaiZen',
+  'batoaqaa/KamaiZen',
   tag = 'v0.1.2', -- or branch = 'master'
   build = 'go build',
   opts = {
