@@ -36,7 +36,6 @@ os.execute('setx PLATFORMIO_CORE_DIR ' .. platformio_core_dir)
 if not vim.uv.fs_stat(pynvim_env) then
   vim.fn.system({ 'python', '-m', 'venv', pynvim_env })
 end
-vim.fn.system({ pynvim_activate })
 
 if not vim.uv.fs_stat(pynvim_lib) then
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'pynvim' })
@@ -50,4 +49,6 @@ end
 vim.g.python_host_prog = pynvim_python
 vim.g.python3_host_prog = pynvim_python
 vim.env.VIRTUAL_ENV = pynvim_env
+
+vim.fn.system({ pynvim_activate })
 ------------------------
