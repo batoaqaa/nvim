@@ -25,7 +25,8 @@ A sample file provided in the nvim configuration folder,
 ]]
 local opts = require('custom.plugins.lsp-config.opts')
 local local_cap = opts.capabilities
---local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
+-- local_cap.offsetEncoding = { 'utf-8' }
+local_cap.offsetEncoding = { 'utf-8', 'utf-16' }
 --
 local rootPatterns = {
   'compile_commands.json',
@@ -56,6 +57,27 @@ local clangdOPTS = {
     '--pch-storage=memory',
   },
   -- cmd = { 'clangd' },
+  -- settings = {
+  --   clangd = {
+  --     arguments = {
+  --       "--log=verbose" -- for debugging
+  --       '--all-scopes-completion',
+  --       '--background-index',
+  --       '--clang-tidy',
+  --       '--compile_args_from=filesystem',
+  --       '--enable-config',
+  --       '--completion-parse=always',
+  --       '--completion-style=detailed',
+  --       '--enable-config',
+  --       '--function-arg-placeholders',
+  --       '--header-insertion=iwyu',
+  --       '-j=12',
+  --       '--limit-results=0',
+  --       '--pch-storage=memory',
+  --     }
+  --   }
+  -- },
+
   capabilities = local_cap,
   single_file_support = true,
   filetypes = { 'c', 'h', 'cpp', 'hpp', 'objc', 'objcpp', 'cuda', 'proto' },
