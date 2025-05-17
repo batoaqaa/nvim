@@ -1,13 +1,13 @@
 return {
   -- 'IbrahimShahzad/KamaiZen',
   'batoaqaa/KamaiZen',
-  tag = 'v0.1.2', -- or branch = 'master'
+  -- tag = 'v0.1.2', -- or branch = 'master'
   build = 'go build',
   opts = {
     settings = {
       kamaizen = {
-        enableDeprecatedCommentHint = false, -- to enable hints for '#' comments
-        enableDiagnostics = true, -- to enable/disable diagnostics
+        enableDeprecatedCommentHint = false,      -- to enable hints for '#' comments
+        enableDiagnostics = true,                 -- to enable/disable diagnostics
         KamailioSourcePath = '/path/to/kamailio', -- or use current dir vim.fn.getcwd()
         loglevel = 3,
       },

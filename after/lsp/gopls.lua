@@ -1,11 +1,11 @@
+---@type vim.lsp.Config
 local opts = require('custom.plugins.lsp-config.opts')
-local util = require('lspconfig/util')
 return {
   capabilities = opts.capabilities,
   -- on_attach = opts.on_attach,
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-  root_dir = util.root_pattern('go.work', 'go.mod', '.git'),
+  root_markers = { '.git', 'go.mod', 'go.work', vim.uv.cwd() },
 
   settings = {
     gopls = {

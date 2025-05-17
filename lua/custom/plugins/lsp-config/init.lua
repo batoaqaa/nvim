@@ -91,9 +91,13 @@ return {
             end)
           end,
         }, --End mason.nvim
-      },
-    },
-  },
+        -- opts = {
+        --   ensure_installed = vim.tbl_keys(lang_servers),
+        --   automatic_enable = true,
+        -- },
+      }, --End mason-lspconfig
+    },   -- End RRethy/vim-illuminate
+  },     -- End neovim/nvim-lspconfig
   {
     'folke/trouble.nvim',
     event = 'LspAttach',
@@ -112,7 +116,7 @@ return {
   {
     'p00f/clangd_extensions.nvim',
     lazy = true,
-    config = function() end,
+    -- config = function() end,
     opts = {
       inlay_hints = {
         inline = true,

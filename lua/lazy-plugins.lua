@@ -35,7 +35,7 @@ require('lazy').setup({
   { 'xiyaowong/transparent.nvim', opst = { lazy = false } },
   --
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',      opts = {} },
   --
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua

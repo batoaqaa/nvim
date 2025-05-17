@@ -1,45 +1,41 @@
--- table.unpack = table.unpack or unpack
--- local lspconfig = require 'lspconfig'
-
--- Hook vim.lsp.client.create to add completion capabilities by default
--- local opts = require 'custom.plugins.lsp-config.opts'
---
--- local _create = vim.lsp.client.create
--- vim.lsp.client.create = function(config)
---   -- local capabilities = vim.lsp.protocol.make_client_capabilities()
---   local capabilities = opts.capabilities
---   return _create(vim.tbl_deep_extend('keep', config, {
---     capabilities = capabilities,
---   }))
--- end
---
-local mason_lspconfig = require('mason-lspconfig')
---
-local lang_servers = require('custom.plugins.lsp-config.lang-servers')
---local opts =
-mason_lspconfig.setup({
-  ensure_installed = vim.tbl_keys(lang_servers),
-  automatic_installation = true,
-
-  handlers = {
-    function(server_name)
-      require('lspconfig')[server_name].setup(lang_servers[server_name])
-      -- require('lspconfig')[server_name].setup { --(lang_servers[server_name])
-      --   on_attach = opts.on_attach,
-      --   capabilities = opts.capabilities,
-      --   -- settings = servers[server_name],
-      --   -- filetypes = (servers[server_name] or {}).filetypes,
-      --   settings = lang_servers[server_name],
-      --   filetypes = (lang_servers[server_name] or {}).filetypes,
-      -- }
-    end,
-    -- clangd = function(server_name)
-    --   require('lspconfig')[server_name].setup(lang_servers[server_name])
-    --   --   -- require('lspconfig').clangd.setup{}
-    -- end,
-    -- lua_ls = function(server_name)
-    --   require('lspconfig')[server_name].setup(lang_servers[server_name])
-    --   -- require('lspconfig').lua_ls.setup {}
-    -- end,
+-- -- INFO: 1
+vim.lsp.config('*', {
+  capabilities = {
+    textDocument = {
+      semanticTokens = {
+        multilineTokenSupport = true,
+      },
+    },
   },
+  root_markers = { '.git' },
 })
+--
+-- INFO: 2 Defined in <rtp>/lsp/clangd.lua        override 1
+-- INFO: 4 Defined in <rtp>/after/lsp/clangd.lua  override 1 & 2 & 3
+-- suggest setting it in the after/ if you want to be sure it is setting your config and not overwritten by a default from a plugin.
+local lsp_files = {}
+local lsp_dir = vim.fn.stdpath('config') .. '/after/lsp/'
+for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
+  -- Read the first line of the file
+  local f = io.open(file, 'r')
+  local first_line = f and f:read('*l') or ''
+  if f then
+    f:close()
+  end
+  -- Only include the file if it doesn't start with "-- disable"
+  if not first_line:match('^%-%- disable') then
+    local name = vim.fn.fnamemodify(file, ':t:r') -- `:t` gets filename, `:r` removes extension
+    table.insert(lsp_files, name)
+  end
+end
+vim.lsp.enable(lsp_files)
+
+-- INFO: 3 Defined in custom/plugins/lsp-config/lang-servers.lua     override 1 & 2
+local lang_servers = require('custom.plugins.lsp-config.lang-servers')
+for srv_name, _ in pairs(lang_servers) do
+  local lsp_server_settings = lang_servers[srv_name]
+  -- vim.notify(opts.dump(lsp_server_settings))
+  -- vim.notify(srv_name)
+  vim.lsp.config(srv_name, lsp_server_settings)
+end
+vim.lsp.enable(vim.tbl_keys(lang_servers))

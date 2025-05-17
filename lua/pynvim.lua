@@ -11,7 +11,7 @@ local platformio_core_dir, pynvim_env, pynvim_python, pynvim_lib, pynvim_bin, py
 if jit.os == 'Windows' then
   platformio_core_dir = os.getenv('userprofile') .. '\\.platformio'
 
-  pynvim_env = platformio_core_dir .. '/penv'
+  pynvim_env = platformio_core_dir .. '/nenv'
   pynvim_bin = pynvim_env .. '\\Scripts'
   pynvim_python = pynvim_bin .. '\\python.exe'
   pynvim_activate = pynvim_bin .. '\\activate'
@@ -20,7 +20,7 @@ if jit.os == 'Windows' then
 else
   platformio_core_dir = '~/.platformio'
 
-  pynvim_env = platformio_core_dir .. '/penv'
+  pynvim_env = platformio_core_dir .. '/nenv'
   pynvim_bin = pynvim_env .. '/bin'
   pynvim_python = pynvim_bin .. '/python'
   pynvim_activate = 'source' .. pynvim_bin .. '/activate'
@@ -51,4 +51,9 @@ vim.g.python3_host_prog = pynvim_python
 vim.env.VIRTUAL_ENV = pynvim_env
 
 vim.fn.system({ pynvim_activate })
+
+-- uv.os_getenv({name} [, {size}])                                 *uv.os_getenv()*
+-- uv.os_setenv({name}, {value})                                   *uv.os_setenv()*
+-- uv.os_unsetenv({name})                                        *uv.os_unsetenv()*
+-- uv.os_environ()                                                *uv.os_environ()*
 ------------------------

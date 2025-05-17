@@ -32,8 +32,8 @@ function K.lspKeymaps(client, bufnr)
     bufkeymap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   end
   if client.server_capabilities.definitionProvider then
-    -- bufkeymap('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
-    bufkeymap('n', 'gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+    bufkeymap('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
+    -- bufkeymap('n', 'gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   end
   if client.server_capabilities.typeDefinitionProvider then
     bufkeymap('n', 'gt', vim.lsp.buf.type_definition, '[G]oto [T]ype definition')
@@ -42,8 +42,8 @@ function K.lspKeymaps(client, bufnr)
     bufkeymap('n', 'gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   end
   if client.server_capabilities.referencesProvider then
-    -- bufkeymap('n', 'gr', vim.lsp.buf.references, 'List references')
-    bufkeymap('n', 'gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    bufkeymap('n', 'gr', vim.lsp.buf.references, 'List references')
+    -- bufkeymap('n', 'gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   end
   if client.server_capabilities.renameProvider then
     -- bufkeymap('n', '<F2>', vim.lsp.buf.rename, 'Rename symbol')
@@ -55,12 +55,12 @@ function K.lspKeymaps(client, bufnr)
   end
 
   if client.server_capabilities.documentSymbolProvider then
-    -- bufkeymap('n', '<leader>ds', vim.lsp.buf.document_symbol, '[D]ocument [S]ymbols' )
-    bufkeymap('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    bufkeymap('n', '<leader>ds', vim.lsp.buf.document_symbol, '[D]ocument [S]ymbols')
+    -- bufkeymap('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   end
   if client.server_capabilities.workspaceSymbolProvider then
-    -- bufkeymap('n', '<leader>ws', vim.lsp.buf.workspace_symbol, 'List workspace symbols')
-    bufkeymap('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    bufkeymap('n', '<leader>ws', vim.lsp.buf.workspace_symbol, 'List workspace symbols')
+    -- bufkeymap('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
   end
   if client.server_capabilities.workspace then
     bufkeymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd folder')

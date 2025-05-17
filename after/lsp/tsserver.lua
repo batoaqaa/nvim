@@ -1,3 +1,5 @@
+-- disable
+---@type vim.lsp.Config
 local opts = require('custom.plugins.lsp-config.opts')
 return {
   --  run 'npm i -g typescript'
