@@ -2,80 +2,97 @@ K = {}
 
 function K.lspKeymaps(client, bufnr)
   local bufkeymap = function(mode, keys, func, desc)
-    vim.keymap.set(mode, keys, func, { buffer = bufnr, noremap = true, silent = true, desc = 'LSP: ' .. desc })
+    vim.keymap.set(mode, keys, func, { buffer = bufnr, noremap = true, silent = true, desc = desc })
+    -- vim.keymap.set(mode, keys, func, { buffer = bufnr, noremap = true, silent = true, desc = 'LSP: ' .. desc })
   end
+  -- Disable defaults
+  pcall(vim.keymap.del, 'n', 'gra')
+  pcall(vim.keymap.del, 'n', 'gri')
+  pcall(vim.keymap.del, 'n', 'grn')
+  pcall(vim.keymap.del, 'n', 'grr')
+  pcall(vim.keymap.del, 'n', 'gO')
+  pcall(vim.keymap.del, 'n', 'K')
+  --
   -- Quickfix list
   bufkeymap('n', '[q', vim.cmd.cprev, 'Previous quickfix item')
   bufkeymap('n', ']q', vim.cmd.cnext, 'Next quickfix item')
   -- Diagnostic keymaps
-  bufkeymap('n', '[d', vim.diagnostic.goto_prev, 'Go to previous [D]iagnostic message')
-  bufkeymap('n', ']d', vim.diagnostic.goto_next, 'Go to next [D]iagnostic message')
-  bufkeymap('n', '<leader>e', vim.diagnostic.open_float, 'Show diagnostic [E]rror messages')
-  bufkeymap('n', '<leader>q', vim.diagnostic.setloclist, 'Open diagnostic [Q]uickfix list')
+  bufkeymap('n', '[d', function()
+    vim.diagnostic.jump({ count = -1, float = true })
+  end, 'Go to previous [D]iagnostic message')
+  bufkeymap('n', '[d', function()
+    vim.diagnostic.jump({ count = 1, float = true })
+  end, 'Go to previous [D]iagnostic message')
+  bufkeymap('n', 'gle', vim.diagnostic.open_float, 'Show diagnostic [e]rror messages')
+  bufkeymap('n', 'glq', vim.diagnostic.setloclist, 'Open diagnostic [q]uickfix list')
   --
   -- stylua: ignore start
-  local trouble = require("trouble").toggle
-  bufkeymap('n', "<leader>tt", function() trouble() end, "Toggle Trouble")
-  bufkeymap('n', "<leader>tq", function() trouble("quickfix") end, "Quickfix List")
-  bufkeymap('n', "<leader>dr", function() trouble("lsp_references") end, "References")
-  bufkeymap('n', "<leader>dd", function() trouble("document_diagnostics") end, "Document Diagnostics")
-  bufkeymap('n', "<leader>dw", function() trouble("workspace_diagnostics") end, "Workspace Diagnostics")
+  -- << local trouble = require("trouble").toggle
+  -- << bufkeymap('n', "<leader>tt", function() trouble() end, "Toggle Trouble")
+  -- << bufkeymap('n', "<leader>tq", function() trouble("quickfix") end, "Quickfix List")
+  -- << bufkeymap('n', "<leader>dr", function() trouble("lsp_references") end, "References")
+  -- << bufkeymap('n', "<leader>dd", function() trouble("document_diagnostics") end, "Document Diagnostics")
+  -- << bufkeymap('n', "<leader>dw", function() trouble("workspace_diagnostics") end, "Workspace Diagnostics")
   -- stylua: ignore end
   --
   if client.server_capabilities.hoverProvider then
-    bufkeymap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+    bufkeymap('n', 'glk', vim.lsp.buf.hover, 'Hover Documentation')
   end
   if client.server_capabilities.signatureHelpProvider then
-    bufkeymap({ 'i', 'n' }, '<C-k>', vim.lsp.buf.signature_help, 'Show signature')
+    bufkeymap({ 'i', 'n' }, '<C-s>', vim.lsp.buf.signature_help, 'Show signature')
   end
   if client.server_capabilities.declarationProvider then
-    bufkeymap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    bufkeymap('n', 'glD', vim.lsp.buf.declaration, 'Goto [D]eclaration')
   end
   if client.server_capabilities.definitionProvider then
-    bufkeymap('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
+    bufkeymap('n', 'gld', vim.lsp.buf.definition, 'Go to [d]efinition')
     -- bufkeymap('n', 'gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   end
   if client.server_capabilities.typeDefinitionProvider then
-    bufkeymap('n', 'gt', vim.lsp.buf.type_definition, '[G]oto [T]ype definition')
+    bufkeymap('n', 'glt', vim.lsp.buf.type_definition, 'Goto [t]ype definition')
   end
   if client.server_capabilities.implementationProvider then
-    bufkeymap('n', 'gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+    bufkeymap('n', 'gli', vim.lsp.buf.implementation, 'Goto [i]mplementation')
   end
+
+  -- bufkeymap('n', 'gr', '<Plug>(CodeAction, implementation, rename, references)', 'CodeAction, implementation, rename, references')
   if client.server_capabilities.referencesProvider then
-    bufkeymap('n', 'gr', vim.lsp.buf.references, 'List references')
+    -- bufkeymap('n', 'gr', vim.lsp.buf.references, 'List references')
+    bufkeymap('n', 'glr', '<cmd>Telescope lsp_references<CR>', 'Goto [r]eferences')
     -- bufkeymap('n', 'gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   end
   if client.server_capabilities.renameProvider then
     -- bufkeymap('n', '<F2>', vim.lsp.buf.rename, 'Rename symbol')
-    bufkeymap('n', '<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+    bufkeymap('n', 'glR', vim.lsp.buf.rename, '[R]ename')
   end
   if client.server_capabilities.codeActionProvider then
-    -- bufkeymap('n', '<F4>', vim.lsp.buf.code_action, 'Code action')
-    bufkeymap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    bufkeymap('n', 'gla', vim.lsp.buf.code_action, 'Code [a]ction')
+    -- bufkeymap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
   end
 
   if client.server_capabilities.documentSymbolProvider then
-    bufkeymap('n', '<leader>ds', vim.lsp.buf.document_symbol, '[D]ocument [S]ymbols')
+    bufkeymap('n', 'glwd', vim.lsp.buf.document_symbol, 'Document [s]ymbols')
     -- bufkeymap('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   end
-  if client.server_capabilities.workspaceSymbolProvider then
-    bufkeymap('n', '<leader>ws', vim.lsp.buf.workspace_symbol, 'List workspace symbols')
+  if client:supports_method("workspace/symbol") then
+    -- if client.server_capabilities.workspaceSymbolProvider then
+    bufkeymap('n', 'glww', vim.lsp.buf.workspace_symbol, 'List [w]orkspace symbols')
     -- bufkeymap('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
   end
   if client.server_capabilities.workspace then
-    bufkeymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd folder')
-    bufkeymap('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove folder')
-    bufkeymap('n', '<leader>wl', function()
+    bufkeymap('n', 'glwa', vim.lsp.buf.add_workspace_folder, 'Workspace [a]dd folder')
+    bufkeymap('n', 'glwr', vim.lsp.buf.remove_workspace_folder, 'Workspace [r]emove folder')
+    bufkeymap('n', 'glwl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, '[W]orkspace [L]ist folders')
   end
   --
-  if client.server_capabilities.documentFormattingProvider then
-    --   -- if client.supports_method 'textDocument/formatting' then
-    bufkeymap({ 'n', 'x' }, '<F3>', function()
-      -- vim.lsp.buf.format { bufnr = buf_number, async = true }
-      require('conform').format({ bufnr = bufnr, async = true })
-    end, 'format buffer')
+  if client.supports_method 'textDocument/formatting' then
+    -- if client.server_capabilities.documentFormattingProvider then
+    bufkeymap({ 'n', 'x' }, 'glf', function()
+      vim.lsp.buf.format({ bufnr = bufnr, async = true })
+      -- require('conform').format({ bufnr = bufnr, async = true })
+    end, '[f]ormat buffer')
     --   --
     -- vim.api.nvim_clear_autocmds({
     --   group = get_augroup(client),
@@ -103,9 +120,9 @@ function K.lspKeymaps(client, bufnr)
   end
   --
   if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-    bufkeymap('n', '<leader>lh', function()
+    bufkeymap('n', 'glh', function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
-    end, '[l]sp [h]ints toggle')
+    end, '[h]ints toggle')
     ------------------------------------------------------------------------------
     -- -- Initial inlay hint display.
     -- -- Idk why but without the delay inlay hints aren't displayed at the very start.

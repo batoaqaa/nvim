@@ -1,10 +1,8 @@
 ---@type vim.lsp.Config
-local opts = require('custom.plugins.lsp-config.opts')
 return {
   -- on_attach = opts.on_attach,
   cmd = { 'yaml-language-server', '--stdio' },
   filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab' },
-  capabilities = opts.capabilities,
   settings = {
     yaml = {
       hover = true,

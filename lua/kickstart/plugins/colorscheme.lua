@@ -144,7 +144,7 @@ return {
   --//   priority = 1000,
   --// }
   priority = 1000, -- Make sure to load this before all the other start plugins.
-  lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  lazy = false,    -- make sure we load this during startup if it is your main colorscheme
 
   --[[ github colorscheme /
   -- github_dark
@@ -204,16 +204,30 @@ return {
   --end,
   --]]
 
-  --[[ catppuccin colorscheme /
+  ---[[ catppuccin colorscheme /
   'catppuccin/nvim',
   opts = conf,
   name = 'catppuccin',
-  init = function()
-    vim.cmd.colorscheme('catppuccin')
+  config = function()
+    require('catppuccin').setup {
+      flavour = 'mocha',
+      color_overrides = {
+        mocha = {
+          base = "#000000",
+          mantle = "#000000",
+          crust = "#000000",
+        },
+      },
+      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" }),
+      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    }
+    -- Enable theme
+    require('catppuccin').load()
+    -- vim.cmd.colorscheme('catppuccin')
     --end,
     --]]
 
-  ---[[ tokyonight colorscheme /
+    --[[ tokyonight colorscheme /
   'folke/tokyonight.nvim',
   opts = conf,
   init = function()
@@ -221,15 +235,78 @@ return {
     --end,
     --]]
 
-    --[[ gruvbox colorscheme /
-  'ellisonleao/gruvbox.nvim',
-  opts = {},
-  init = function()
-    vim.cmd.colorscheme 'gruvbox'
-  --end,
-  --]]
+    --[[ onedark
+  "navarasu/onedark.nvim",
+  config = function()
+    require('onedark').setup {
+      style = 'deep'
+    }
+    -- Enable theme
+    require('onedark').load()
+    --]]
 
-    vim.cmd.hi('Comment gui=none')
+    --[[ gruvbox colorscheme /
+  -- 'sainnhe/gruvbox-material',
+  -- config = function()
+  --   vim.g.gruvbox_material_enable_italic = true
+  --   vim.cmd.colorscheme('gruvbox-material')
+
+  -- 'sainnhe/edge',
+  -- config = function()
+  --   vim.g.edge_enable_italic = true
+  --   vim.cmd.colorscheme('edge')
+
+  'sainnhe/everforest',
+  config = function()
+    -- require('everforest').setup {
+    --   contrast = "hard",
+    --   palette_overrides = {
+    --     dark0_hard = "#000000",
+    --   },
+    -- }
+    vim.g.everforest_background = 'hard'     -- 'medium'  'soft'
+    vim.g.everforest_foreground = 'material' -- 'original'  'mix'
+    -- vim.g.everforest_colors_override = { bg0 = { '#202020', '234' }, bg2 = { '#282828', '235' } }
+    -- vim.g.everforest_colors_override = { bg0 = { '#11111b', '234' }, bg2 = { '#11111b', '235' } }
+    -- vim.g.everforest_enable_bold = '1'
+    -- vim.g.everforest_transparent_background = '2'
+
+    vim.g.everforest_enable_italic = true
+    vim.cmd.colorscheme('everforest')
+
+    -- 'sainnhe/sonokai',
+    -- config = function()
+    --   vim.g.sonokai_enable_italic = true
+    --   vim.cmd.colorscheme('sonokai')
+
+    -- 'ellisonleao/gruvbox.nvim',
+    -- opts = {},
+    -- init = function()
+    --   -- vim.cmd.colorscheme 'gruvbox'
+    --   --end,
+    --   --]]
+    --
+    --[[ jellybeans colorscheme /
+  "wtfox/jellybeans.nvim",
+  config = function()
+    -- Default (vibrant dark)
+    vim.cmd [[colorscheme jellybeans]]
+    -- -- Vibrant light
+    -- vim.cmd [[colorscheme jellybeans-light]]
+    --
+    -- -- Muted dark
+    -- vim.cmd [[colorscheme jellybeans-muted]]
+    --
+    -- -- Muted light
+    -- vim.cmd [[colorscheme jellybeans-muted-light]]
+    --
+    -- -- Mono dark
+    -- vim.cmd [[colorscheme jellybeans-mono]]
+    --
+    -- -- Mono light
+    -- vim.cmd [[colorscheme jellybeans-mono-light]]
   end,
+
+  --   vim.cmd.hi('Comment gui=none')
   --]]
 }

@@ -7,8 +7,13 @@
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- Toggle virtual_text off when on the line with the error
 vim.diagnostic.config({
-  virtual_text = true,
+  -- virtual_text = true,
+  virtual_text = { spacing = 4, prefix = "●" },
+  -- virtual_lines = { current_line = true },
+  virtual_lines = false,
   update_in_insert = true,
   underline = true,
   severity_sort = true,
@@ -29,9 +34,9 @@ vim.diagnostic.config({
     },
   },
 })
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
-vim.g.have_project_conf = false
 
 -- [[ Setting options ]]
 require('options')

@@ -1,4 +1,3 @@
-local opts = require('custom.plugins.lsp-config.opts')
 ---@type vim.lsp.Config
 return {
   cmd = { 'rust-analyzer' },
@@ -7,7 +6,6 @@ return {
     'Cargo.toml',
     'Cargo.lock',
   },
-  capabilities = opts.capabilities,
   settings = {
     ['rust-analyzer'] = {
       procMacro = { enable = true },

@@ -96,12 +96,14 @@ opt.jumpoptions = 'view'
 opt.laststatus = 3         -- global statusline
 opt.linebreak = true       -- Wrap lines at convenient points
 opt.list = true            -- Show some invisible characters (tabs...
-opt.mouse = ''             -- Enable mouse mode
+opt.mouse = 'a'            -- Enable mouse mode
 opt.number = true          -- Print line number
-opt.pumblend = 10          -- Popup blend
-opt.pumheight = 10         -- Maximum number of entries in a popup
-opt.relativenumber = true  -- Relative line numbers
-opt.scrolloff = 4          -- Lines of context
+-- opt.omnifunc = "v:lua.vim.lsp.omnifunc"
+-- opt.completeopt = { "menuone", "fuzzy", "noinsert", "preview" }
+opt.pumblend = 10         -- Popup blend
+opt.pumheight = 10        -- Maximum number of entries in a popup
+opt.relativenumber = true -- Relative line numbers
+opt.scrolloff = 4         -- Lines of context
 opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
 opt.showmode = false   -- Dont show mode since we have a statusline
@@ -128,6 +130,7 @@ opt.undolevels = 10000
 opt.updatetime = 200               -- Save swap file and trigger CursorHold
 opt.virtualedit = 'block'          -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = 'longest:full,full' -- Command-line completion mode
+opt.winborder = 'rounded'          -- use rounded borders on all floating windows
 opt.winminwidth = 5                -- Minimum window width
 opt.wrap = false                   -- Disable line wrap
 

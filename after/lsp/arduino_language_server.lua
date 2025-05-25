@@ -1,8 +1,9 @@
--- diaable
+-- disable
 ---@type vim.lsp.Config
-local opts = require('custom.plugins.lsp-config.opts')
 return {
   arduino_language_server = {
-    capabilities = opts.capabilities,
+    cmd = { "arduino-language-server" },
+    filetypes = { "arduino" },
+    root_markers = { '*.ino' },
   },
 }

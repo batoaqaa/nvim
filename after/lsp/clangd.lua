@@ -45,11 +45,10 @@ A sample file provided in the nvim configuration folder,
 --     },
 --   },
 -- },
+-- local uv = vim.uv or vim.loop
+--
+-- local opts = require('custom.plugins.lsp-config.opts')
 ---@type vim.lsp.Config
---
-local opts = require('custom.plugins.lsp-config.opts')
-local local_cap = opts.capabilities
---
 return {
   cmd = {
     'clangd',
@@ -82,16 +81,7 @@ return {
     '.git',
     vim.uv.cwd(),
   },
-  -- capabilities = local_cap,
-  capabilities = {
-    textDocument = {
-      completion = {
-        completionItem = {
-          snippetSupport = true,
-        },
-      },
-    },
-  },
+  -- capabilities = opts.capabilities,
   single_file_support = true,
   init_options = {
     usePlaceholders = true,
@@ -103,22 +93,27 @@ return {
   keys = {
     { '<leader>cR', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
   },
+  -- on_new_config = function(new_config, new_root_dir)
+  --   vim.notify(opts.printTable(new_config))
+  --   vim.notify("launching on new config" .. new_root_dir)
+  --   local uv = vim.uv or vim.loop
+  --   local path = vim.fn.getcwd()
+  --   local fname = string.format('%s\\%s.json', new_root_dir, new_config.name)
+  --   vim.notify("you are here")
+  --   vim.notify(fname)
+  --   if uv.fs_stat(fname) then
+  --     local ok, result = pcall(vim.fn.readfile, fname)
+  --     if ok then
+  --       result = table.concat(result)
+  --       result = vim.json.decode(result)
+  --       -- config.cmd = result.cmd
+  --       local new = vim.tbl_deep_extend("force", new_config, result)
+  --       for k, v in pairs(new) do
+  --         new_config[k] = v
+  --       end
+  --       -- config.cmd = vim.tbl_deep_extend('force', config.cmd or {}, result.cmd) --working fine
+  --     end
+  --     opts.printTable(new_config)
+  --   end
+  -- end
 }
-
--- ClangdOPTS.on_new_config = function(config, _)
---   vim.notify(opts.dump(config))
---   local uv = vim.uv or vim.loop
---   local path = vim.fn.getcwd()
---   local fname = string.format('%s\\%s.json', path, config.name)
---   print(fname)
---   if uv.fs_stat(fname) then
---     local ok, result = pcall(vim.fn.readfile, fname)
---     if ok then
---       result = table.concat(result)
---       result = vim.json.decode(result)
---       config.cmd = result.cmd
---       -- config.cmd = vim.tbl_deep_extend('force', config.cmd or {}, result.cmd)    --working fine
---     end
---     opts.printTable(config)
---   end
--- end

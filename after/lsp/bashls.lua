@@ -1,7 +1,5 @@
 ---@type vim.lsp.Config
-local opts = require('custom.plugins.lsp-config.opts')
 return {
-  capabilities = opts.capabilities,
   cmd = { 'bash-language-server', 'start' },
   filetypes = { 'bash', 'sh', 'zsh' },
   root_markers = { '.git', vim.uv.cwd() },

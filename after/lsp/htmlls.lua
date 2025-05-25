@@ -1,5 +1,4 @@
 ---@type vim.lsp.Config
-local opts = require('custom.plugins.lsp-config.opts')
 return {
   cmd = { 'vscode-html-language-server', '--stdio' },
   filetypes = { 'html' },
@@ -12,5 +11,4 @@ return {
     },
     provideFormatter = true,
   },
-  capabilities = opts.capabilities,
 }
