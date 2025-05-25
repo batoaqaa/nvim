@@ -56,15 +56,15 @@ return {
       --   bind_to_cwd = false,
       --   -- hijack_netrw_behavior = 'open_current',
       follow_current_file = { enabled = true },
-      --   window = {
-      --     mappings = {
-      --       ['\\'] = 'close_window',
-      --     },
-      --     fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
-      --       ["<C-j>"] = "move_cursor_down",
-      --       ["<C-k>"] = "move_cursor_up",
-      --     }
-      --   },
+      window = {
+        mappings = {
+          ['<space>'] = 'none',
+        },
+        -- fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
+        --   ["<C-j>"] = "move_cursor_down",
+        --   ["<C-k>"] = "move_cursor_up",
+        -- }
+      },
       --   filtered_items = {
       --     visible = true,
       --     hide_dotfiles = false,
