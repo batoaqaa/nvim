@@ -8,10 +8,10 @@ return {
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [']quote
       --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
+      require('mini.ai').setup({ n_lines = 500 })
       --
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      require('mini.pairs').setup {
+      require('mini.pairs').setup({
         {
           modes = { insert = true, command = true, terminal = false },
           -- skip autopair when next character is one of these
@@ -41,13 +41,13 @@ return {
         -- config = function(_, opts)
         --   LazyVim.mini.pairs(opts)
         -- end,
-      }
+      })
       -- require('mini.bufremove').setup()
       --
       -- ysaiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- ysd'   - [S]urround [D]elete [']quotes
       -- ysr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup {
+      require('mini.surround').setup({
         -- Module mappings. Use `''` (empty string) to disable one.
         mappings = {
           add = 'ysa', -- Add surrounding in Normal and Visual modes
@@ -61,14 +61,14 @@ return {
           suffix_last = 'l', -- Suffix to search with "prev" method
           suffix_next = 'n', -- Suffix to search with "next" method
         },
-      }
+      })
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
+      local statusline = require('mini.statusline')
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      statusline.setup({ use_icons = vim.g.have_nerd_font })
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for

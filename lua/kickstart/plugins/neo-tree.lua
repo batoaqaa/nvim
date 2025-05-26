@@ -51,49 +51,50 @@ return {
       position = 'left',
       width = '20%',
     },
+    default_source = 'filesystem',
+    sources = {
+      'filesystem',
+      'buffers',
+      'git_status',
+      -- "document_symbols",
+    },
+    source_selector = {
+      winbar = false,
+      statusline = false,
+      sources = {
+        { source = 'filesystem' },
+        { source = 'buffers' },
+      },
+    },
     filesystem = {
       use_libuv_file_watcher = true,
-      --   bind_to_cwd = false,
-      --   -- hijack_netrw_behavior = 'open_current',
-      follow_current_file = { enabled = true },
+      bind_to_cwd = false,
+      follow_current_file = {
+        enabled = false,
+        leave_dirs_open = false,
+      },
       window = {
         mappings = {
           ['<space>'] = 'none',
         },
-        -- fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
-        --   ["<C-j>"] = "move_cursor_down",
-        --   ["<C-k>"] = "move_cursor_up",
-        -- }
-      },
-      --   filtered_items = {
-      --     visible = true,
-      --     hide_dotfiles = false,
-      --     hide_gitignored = true,
-      --     hide_by_name = {
-      --       '.github',
-      --       '.gitignore',
-      --       'package-lock.json',
-      --     },
-      --     never_show = { '.git' },
-      --   },
-    },
-
-    default_component_configs = {
-      git_status = {
-        symbols = {
-          -- Change type
-          added = '✚',
-          deleted = '✖',
-          modified = '',
-          renamed = '󰁕',
-          -- Status type
-          untracked = '',
-          ignored = '',
-          unstaged = ' ',
-          staged = '',
-          conflict = '',
-        },
       },
     },
+    -- default_component_configs = {
+    --   git_status = {
+    --     symbols = {
+    --       -- Change type
+    --       -- added = '✚',
+    --       -- deleted = '✖',
+    --       -- modified = '',
+    --       -- renamed = '󰁕',
+    --       -- Status type
+    --       untracked = '',
+    --       ignored = '',
+    --       unstaged = ' ',
+    --       staged = '',
+    --       conflict = '',
+    --     },
+    --   },
+    -- },
   },
 }
