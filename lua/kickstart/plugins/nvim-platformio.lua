@@ -27,10 +27,9 @@ return {
 
       local ok, wk = pcall(require, 'which-key') --will also load the package if it isn't loaded already
       if ok then
-        local prefix = '<leader>p' -- or use 'gp'
-        local Piocmd = 'Piocmdh' -- 'Piocmdh' (horizontal terminal)  'Piocmdf' (float terminal)
+        local prefix = '<leader>p'               -- or use 'gp'
+        local Piocmd = 'Piocmdh'                 -- 'Piocmdh' (horizontal terminal)  'Piocmdf' (float terminal)
         wk.add({
-          { prefix .. '', group = ' PlatformIO:' },
           { prefix .. 'g', group = '  [g]eneral' },
           { prefix .. 'd', group = '  [d]ependencies' },
           { prefix .. 'a', group = '  [a]dvance' },
@@ -64,7 +63,7 @@ return {
             { prefix .. 'avs', '<cmd>' .. Piocmd .. ' run -v -t uploadfs<CR>', desc = ' upload file [s]ystem' },
             { prefix .. 'avt', '<cmd>' .. Piocmd .. ' test -v<CR>', desc = ' [t]est' },
             { prefix .. 'avc', '<cmd>' .. Piocmd .. ' check -v<CR>', desc = ' [c]heck' },
-            { prefix .. 'ava', '<cmd>' .. Piocmd .. ' run -v -t compiledb<CR>', desc = ' compilation databa[s]e' },
+            { prefix .. 'ava', '<cmd>' .. Piocmd .. ' run -v -t compiledb<CR>', desc = ' compilation databa[a]e' },
 
             { prefix .. 'ru', '<cmd>' .. Piocmd .. ' remote run -t upload<CR>', desc = ' [u]pload' },
             { prefix .. 'rt', '<cmd>' .. Piocmd .. ' remote test<CR>', desc = ' [t]est' },

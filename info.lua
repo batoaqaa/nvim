@@ -151,4 +151,10 @@
 -- end
 
 -- local bloaded = (package.loaded['which-key'] ~= nil)
+
+-- vim.api.nvim_command 'tabnew | term'
+-- vim.api.nvim_input 'i'
+
+-- vim.api.nvim_command 'tabnew | term'
+-- vim.api.nvim_input('i' .. command .. utils.enter)
 -----------------------   MY  -----------------------------
