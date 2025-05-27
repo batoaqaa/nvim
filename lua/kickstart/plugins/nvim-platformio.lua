@@ -10,6 +10,8 @@ return {
     { 'nvim-telescope/telescope.nvim' },
     { 'nvim-lua/plenary.nvim' },
     {
+      -- WhichKey helps you remember your Neovim keymaps,
+      -- by showing available keybindings in a popup as you type.
       'folke/which-key.nvim',
       opts = {
         preset = 'helix', --'modern', --"classic", --
