@@ -1,12 +1,19 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-local opts = { noremap = true, silent = true }
+-- local opts = { noremap = true, silent = true }
 
 -- Shorten function name
 -- local keymap = vim.api.nvim_set_keymap
-local keymap = vim.keymap.set
+-- local keymap = vim.keymap.set
 
+local keymap = function(mode, lhs, rhs, opts)
+  local options = { noremap = true, silent = true }
+  if opts then
+    options = vim.tbl_extend('force', options, opts)
+  end
+  vim.keymap.set(mode, lhs, rhs, options)
+end
 -- Modes
 -- <Space>	Normal, Visual, Select and Operator-pending
 --  n  Normal
@@ -29,8 +36,8 @@ local keymap = vim.keymap.set
 --  A = Alt   <A-j>	= Alt+j
 --  S = Shift <S-j> = Shift+j
 
-keymap('v', '/', "\"fy/\\V<C-R>f<CR>" )
-keymap('v', '*', "\"fy/\\V<C-R>f<CR>" )
+keymap('v', '/', '"fy/\\V<C-R>f<CR>')
+keymap('v', '*', '"fy/\\V<C-R>f<CR>')
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -41,10 +48,10 @@ keymap('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 keymap('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Resize with arrows
-keymap('n', '<C-Up>', ':resize -2<CR>', opts)
-keymap('n', '<C-Down>', ':resize +2<CR>', opts)
-keymap('n', '<C-Left>', ':vertical resize -2<CR>', opts)
-keymap('n', '<C-Right>', ':vertical resize +2<CR>', opts)
+keymap('n', '<C-Up>', ':resize -2<CR>')
+keymap('n', '<C-Down>', ':resize +2<CR>')
+keymap('n', '<C-Left>', ':vertical resize -2<CR>')
+keymap('n', '<C-Right>', ':vertical resize +2<CR>')
 
 -- Naviagate buffers
 -- keymap('n', '<S-l>', ':bnext<CR>', opts)
@@ -73,29 +80,29 @@ keymap('n', '[B', '<cmd>BufferLineMovePrev<cr>', { desc = 'Move buffer prev' })
 keymap('n', ']B', '<cmd>BufferLineMoveNext<cr>', { desc = 'Move buffer next' })
 
 -- Move text up and down
-keymap('n', '<A-j>', '<Esc>:m .+1<CR>==gi', opts)
-keymap('n', '<A-k>', '<Esc>:m .-2<CR>==gi', opts)
+keymap('n', '<A-j>', '<Esc>:m .+1<CR>==gi')
+keymap('n', '<A-k>', '<Esc>:m .-2<CR>==gi')
 
 -- Insert --
 -- Press jk fast to enter
-keymap('i', 'jk', '<ESC>', opts)
-keymap('c', 'jk', '<ESC>', opts)
+keymap('i', 'jk', '<ESC>')
+keymap('c', 'jk', '<ESC>')
 
 -- Visual --
 -- Stay in indent mode
-keymap('v', '<', '<gv', opts)
-keymap('v', '>', '>gv', opts)
+keymap('v', '<', '<gv')
+keymap('v', '>', '>gv')
 
 -- Move text up and down
-keymap('v', '<A-j>', ':m .+1<CR>==', opts)
-keymap('v', '<A-k>', ':m .-2<CR>==', opts)
+keymap('v', '<A-j>', ':m .+1<CR>==')
+keymap('v', '<A-k>', ':m .-2<CR>==')
 
 -- Visual Block --
 -- Move text up and down
-keymap('x', 'J', ":move '>+1<CR>gv-gv", opts)
-keymap('x', 'K', ":move '<-2<CR>gv-gv", opts)
-keymap('x', '<A-j>', ":move '>+1<CR>gv-gv", opts)
-keymap('x', '<A-k>', ":move '<-2<CR>gv-gv", opts)
+keymap('x', 'J', ":move '>+1<CR>gv-gv")
+keymap('x', 'K', ":move '<-2<CR>gv-gv")
+keymap('x', '<A-j>', ":move '>+1<CR>gv-gv")
+keymap('x', '<A-k>', ":move '<-2<CR>gv-gv")
 
 -- Command --
 -- Menu navigation
@@ -119,10 +126,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank {
+    vim.highlight.on_yank({
       higroup = 'IncSearch', -- see `:highlight` for more options
       timeout = 200,
-    }
+    })
   end,
 })
 --

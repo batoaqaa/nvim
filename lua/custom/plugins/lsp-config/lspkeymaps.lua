@@ -1,9 +1,8 @@
 K = {}
 
 function K.lspKeymaps(client, bufnr)
-  local bufkeymap = function(mode, keys, func, desc)
-    vim.keymap.set(mode, keys, func, { buffer = bufnr, noremap = true, silent = true, desc = desc })
-    -- vim.keymap.set(mode, keys, func, { buffer = bufnr, noremap = true, silent = true, desc = 'LSP: ' .. desc })
+  local bufkeymap = function(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, noremap = true, silent = true, desc = desc })
   end
   -- Disable defaults
   pcall(vim.keymap.del, 'n', 'gra')
@@ -74,7 +73,7 @@ function K.lspKeymaps(client, bufnr)
     bufkeymap('n', 'glwd', vim.lsp.buf.document_symbol, 'Document [s]ymbols')
     -- bufkeymap('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   end
-  if client:supports_method("workspace/symbol") then
+  if client:supports_method('workspace/symbol') then
     -- if client.server_capabilities.workspaceSymbolProvider then
     bufkeymap('n', 'glww', vim.lsp.buf.workspace_symbol, 'List [w]orkspace symbols')
     -- bufkeymap('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -87,7 +86,7 @@ function K.lspKeymaps(client, bufnr)
     end, '[W]orkspace [L]ist folders')
   end
   --
-  if client.supports_method 'textDocument/formatting' then
+  if client.supports_method('textDocument/formatting') then
     -- if client.server_capabilities.documentFormattingProvider then
     bufkeymap({ 'n', 'x' }, 'glf', function()
       vim.lsp.buf.format({ bufnr = bufnr, async = true })

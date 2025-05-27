@@ -158,3 +158,10 @@
 -- vim.api.nvim_command 'tabnew | term'
 -- vim.api.nvim_input('i' .. command .. utils.enter)
 -----------------------   MY  -----------------------------
+-- {
+--   '<leader>b',
+--   group = 'buffers',
+--   expand = function()
+--     return require('which-key.extras').expand.buf()
+--   end,
+-- },

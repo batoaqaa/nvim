@@ -1,13 +1,22 @@
 -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 return {
   'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  -- event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
+
+  keys = {
+    {
+      '<leader>?',
+      function()
+        require('which-key').show({ global = false })
+      end,
+      desc = 'Buffer Local Keymaps (which-key)',
+    },
+  },
   opts = {
     -- delay between pressing a key and opening which-key (milliseconds)
     -- this setting is independent of vim.o.timeoutlen
     preset = 'modern', --"classic", --"helix", --
-    defaults = {},
-    delay = 0,
     icons = {
       -- set icon mappings to true if you have a Nerd Font
       mappings = vim.g.have_nerd_font,
@@ -46,6 +55,7 @@ return {
     },
     -- sort = { "order", "group", "manual", "mod" },
     sort = { 'local', 'order', 'group', 'alphanum', 'mod' },
+
     -- Document existing key chains
     spec = {
       { '<leader>b', group = '[B]uffer' },
