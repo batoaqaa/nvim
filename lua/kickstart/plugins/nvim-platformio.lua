@@ -12,7 +12,7 @@ return {
     {
       'folke/which-key.nvim',
       opts = {
-        preset = 'modern', --"classic", --'helix', --
+        preset = 'helix', --'modern', --"classic", --
         sort = { 'order', 'group', 'manual', 'mod' },
       },
     },
