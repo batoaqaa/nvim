@@ -1,8 +1,7 @@
 return {
-  -- 'batoaqaa/nvim-platformio.lua',
-  'anurag3301/nvim-platformio.lua',
+  'batoaqaa/nvim-platformio.lua',
+  -- 'anurag3301/nvim-platformio.lua',
   -- cmd = { 'Pioinit', 'Piorun', 'Piocmdh', 'Piocmdf', 'Piolib', 'Piomon', 'Piodebug', 'Piodb' },
-  lazy = false,
 
   -- dependencies are always lazy-loaded unless specified otherwise
   dependencies = {
@@ -27,9 +26,13 @@ return {
     })
 
     local ok, wk = pcall(require, 'which-key') --will also load the package if it isn't loaded already
-    if ok then
-      local prefix = '<leader>p'               -- or use 'gp'
-      local Piocmd = 'Piocmdh'                 -- 'Piocmdh' (horizontal terminal)  'Piocmdf' (float terminal)
+    if not ok then
+      vim.api.nvim_echo({
+        { 'which-key plugin not found!', 'ErrorMsg' },
+      }, true, {})
+    else
+      local prefix = '<leader>p' -- or use 'gp'
+      local Piocmd = 'Piocmdf'   -- 'Piocmdh' (horizontal terminal)  'Piocmdf' (float terminal)
       wk.add({
         { prefix .. '', group = ' PlatformIO:' },
         { prefix .. 'g', group = '  [g]eneral' },
@@ -44,7 +47,7 @@ return {
           { prefix .. 'gc', '<cmd>' .. Piocmd .. ' run -t clean<CR>', desc = ' [c]lean' },
           { prefix .. 'gf', '<cmd>' .. Piocmd .. ' run -t fullclean<CR>', desc = ' [f]ull clean' },
           { prefix .. 'gd', '<cmd>' .. Piocmd .. ' device list<CR>', desc = ' [d]evice list' },
-          { prefix .. 'gm', '<cmd>' .. Piocmd .. ' run -t monitor<CR>', desc = ' [m]onitor' },
+          { prefix .. 'gm', '<cmd>' .. 'Piocmdh' .. ' run -t monitor<CR>', desc = ' [m]onitor' },
           { prefix .. 'gu', '<cmd>' .. Piocmd .. ' run -t upload<CR>', desc = ' [u]pload' },
           { prefix .. 'gs', '<cmd>' .. Piocmd .. ' run -t uploadfs<CR>', desc = ' upload file [s]ystem' },
           { prefix .. 'gt', '<cmd>' .. Piocmd .. '<CR>', desc = ' Core CLI [T]erminal' },
@@ -69,7 +72,7 @@ return {
 
           { prefix .. 'ru', '<cmd>' .. Piocmd .. ' remote run -t upload<CR>', desc = ' [u]pload' },
           { prefix .. 'rt', '<cmd>' .. Piocmd .. ' remote test<CR>', desc = ' [t]est' },
-          { prefix .. 'rm', '<cmd>' .. Piocmd .. ' remote run -t monitor<CR>', desc = ' [m]onitor' },
+          { prefix .. 'rm', '<cmd>' .. 'Piocmdh' .. ' remote run -t monitor<CR>', desc = ' [m]onitor' },
           { prefix .. 'rd', '<cmd>' .. Piocmd .. ' remote device list<CR>', desc = ' [d]evice list' },
 
           { prefix .. 'mu', '<cmd>' .. Piocmd .. ' upgrade<CR>', desc = ' [u]pgrade' },

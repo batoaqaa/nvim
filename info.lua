@@ -165,3 +165,95 @@
 --     return require('which-key.extras').expand.buf()
 --   end,
 -- },
+-- modes:
+--
+-- 		   n	    Normal
+-- 		   no	    Operator-pending
+-- 		   nov	    Operator-pending (forced charwise |o_v|)
+-- 		   noV	    Operator-pending (forced linewise |o_V|)
+-- 		   noCTRL-V Operator-pending (forced blockwise |o_CTRL-V|)
+-- 				CTRL-V is one character
+-- 		   niI	    Normal using |i_CTRL-O| in |Insert-mode|
+-- 		   niR	    Normal using |i_CTRL-O| in |Replace-mode|
+-- 		   niV	    Normal using |i_CTRL-O| in |Virtual-Replace-mode|
+-- 		   nt	    Normal in |terminal-emulator| (insert goes to
+-- 				Terminal mode)
+-- 		   ntT	    Normal using |t_CTRL-\_CTRL-O| in |Terminal-mode|
+-- 		   v	    Visual by character
+-- 		   vs	    Visual by character using |v_CTRL-O| in Select mode
+-- 		   V	    Visual by line
+-- 		   Vs	    Visual by line using |v_CTRL-O| in Select mode
+-- 		   CTRL-V   Visual blockwise
+-- 		   CTRL-Vs  Visual blockwise using |v_CTRL-O| in Select mode
+-- 		   s	    Select by character
+-- 		   S	    Select by line
+-- 		   CTRL-S   Select blockwise
+-- 		   i	    Insert
+-- 		   ic	    Insert mode completion |compl-generic|
+-- 		   ix	    Insert mode |i_CTRL-X| completion
+-- 		   R	    Replace |R|
+-- 		   Rc	    Replace mode completion |compl-generic|
+-- 		   Rx	    Replace mode |i_CTRL-X| completion
+-- 		   Rv	    Virtual Replace |gR|
+-- 		   Rvc	    Virtual Replace mode completion |compl-generic|
+-- 		   Rvx	    Virtual Replace mode |i_CTRL-X| completion
+-- 		   c	    Command-line editing
+-- 		   cr	    Command-line editing overstrike mode |c_<Insert>|
+-- 		   cv	    Vim Ex mode |gQ|
+-- 		   cvr	    Vim Ex mode while in overstrike mode |c_<Insert>|
+-- 		   r	    Hit-enter prompt
+-- 		   rm	    The -- more -- prompt
+-- 		   r?	    A |:confirm| query of some sort
+-- 		   !	    Shell or external command is executing
+-- 		   t	    Terminal mode: keys go to the job
+
+-- vim.api.nvim_echo({ { "Error: Unknown target mode '" .. 'target_mode' .. "'", 'ErrorMsg' } }, true, {})
+-- vim.api.nvim_echo({ { 'Failed to switch. Current mode is: ' .. 'new_mode', 'WarningMsg' } }, true, {})
+-- vim.api.nvim_echo({ { 'Successfully switched to target mode: ' .. 'target_mode', 'MoreMsg' } }, true, {})
+
+---------------------------------------
+-- local function SetMode(target_mode)
+--   -- local current_mode = vim.api.nvim_get_mode().mode
+--   -- print('Current mode: ' .. current_mode)
+--   if target_mode == 'n' or target_mode == 'nt' or target_mode == 'normal' or target_mode == 'normal terminal' then
+--     local esc_key = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
+--     vim.api.nvim_feedkeys(esc_key, 'n', false)
+--     vim.api.nvim_feedkeys(esc_key, 'n', false) -- Sending Esc twice is a common robust way
+--     -- print 'Attempting to switch to Normal mode'
+--   elseif target_mode == 'i' or target_mode == 't' or target_mode == 'insert' or target_mode == 'terminal' then
+--     vim.api.nvim_feedkeys('i', 'n', false)
+--     -- print 'Attempting to switch to Insert mode'
+--   elseif target_mode == 'v' or target_mode == 'visual' then
+--     vim.api.nvim_feedkeys('v', 'n', false)
+--     -- print 'Attempting to switch to Visual mode'
+--   elseif target_mode == 'V' or target_mode == 'visual_line' then
+--     vim.api.nvim_feedkeys('V', 'n', false)
+--     -- print 'Attempting to switch to Line Visual mode'
+--   else
+--     vim.api.nvim_echo({ { "Error: Unknown target mode '" .. target_mode .. "'", 'ErrorMsg' } }, true, {})
+--     return
+--   end
+--   -- Short delay to allow mode change to process, then get new mode
+--   vim.defer_fn(function()
+--     -- local new_mode = vim.api.nvim_get_mode().mode
+--     -- print('New mode: ' .. new_mode)
+--     -- if new_mode:sub(1, 1) == target_mode:sub(1, 1) or (target_mode == 'n' and new_mode == 'n') or (target_mode == 'nt' and new_mode == 'nt') then
+--     --   vim.api.nvim_echo({ { 'Successfully switched to target mode: ' .. target_mode, 'MoreMsg' } }, true, {})
+--     -- elseif target_mode == 'i' and new_mode == 'i' then
+--     --   vim.api.nvim_echo({ { 'Successfully switched to target mode: ' .. target_mode, 'MoreMsg' } }, true, {})
+--     -- elseif target_mode == 't' and new_mode == 't' then
+--     --   vim.api.nvim_echo({ { 'Successfully switched to target mode: ' .. target_mode, 'MoreMsg' } }, true, {})
+--     -- else
+--     --   vim.api.nvim_echo({ { 'Failed to switch. Current mode is: ' .. new_mode, 'WarningMsg' } }, true, {})
+--     -- end
+--   end, 100) -- 100ms delay
+-- end
+---------------------------------------
+-- vim.cmd('2ToggleTerm direction=' .. direction)
+
+-- vim.api.nvim_command 'tabnew | term'
+-- vim.api.nvim_input 'i'
+-- vim.api.nvim_input('i make clean && make || make\n')
+
+-- vim.api.nvim_command 'tabnew | term'
+-- vim.api.nvim_input('i' .. command .. utils.enter)

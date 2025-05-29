@@ -1,8 +1,8 @@
 -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 return {
   'folke/which-key.nvim',
-  -- event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-  event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
+  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  -- event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
 
   keys = {
     {

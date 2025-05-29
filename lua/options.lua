@@ -41,15 +41,6 @@ vim.g.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
 vim.g.shellquote = ''
 vim.g.shellxquote = ''
 
--- vim.g.shell = vim.fn.executable 'pwsh' and 'pwsh' or 'powershell'
--- vim.g.shellcmdflag =
--- '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
--- vim.g.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
--- --'-RedirectStandardOutput %s -NoNewWindow -Wait'
--- vim.g.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
--- vim.g.shellquote = ''
--- vim.g.shellxquote = ''
-
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false
 
