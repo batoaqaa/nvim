@@ -48,6 +48,11 @@ A sample file provided in the nvim configuration folder,
 -- local uv = vim.uv or vim.loop
 --
 -- local opts = require('custom.plugins.lsp-config.opts')
+-- local capabilities = opts.capabilities
+-- capabilities.textDocument.foldingRange = {
+--   dynamicRegistration = false,
+--   lineFoldingOnly = true,
+-- }
 ---@type vim.lsp.Config
 return {
   cmd = {

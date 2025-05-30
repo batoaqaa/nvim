@@ -7,6 +7,7 @@ return {
   opts = {
     keymap = {
       preset = 'enter',
+      ['<C-y>'] = { 'select_and_accept' },
     },
     appearance = {
       use_nvim_cmp_as_default = false,
@@ -15,13 +16,32 @@ return {
     signature = { enabled = true },
 
     completion = {
-      -- documentation = {
-      --   auto_show = true,
-      -- },
-      list = {
+      accept = {
+        -- experimental auto-brackets support
+        auto_brackets = {
+          enabled = true,
+        },
+      },
+      list = { -- used for 'enter' preset
         selection = {
           preselect = true,
         },
+      },
+      menu = {
+        border = 'single',
+        draw = {
+          treesitter = { 'lsp' },
+        },
+      },
+      documentation = {
+        auto_show = true,
+        window = {
+          border = 'single',
+        },
+        auto_show_delay_ms = 200,
+      },
+      ghost_text = {
+        enabled = vim.g.ai_cmp,
       },
     },
   },

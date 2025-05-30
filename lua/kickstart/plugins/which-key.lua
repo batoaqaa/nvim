@@ -58,16 +58,39 @@ return {
 
     -- Document existing key chains
     spec = {
-      { '<leader>b', group = '[B]uffer' },
-      { '<leader>d', group = 'LSP [D]iagnostic' },
+      -- { '<leader>b', group = '[B]uffer' },
+      { '<leader>d', group = 'Delete' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>l', group = '[l]azy git' },
       { '<leader>r', group = 'LSP rename' },
       { '<leader>s', group = '[S]earch' },
       { '<leader>t', group = '[T]oggle' },
-      { '<leader>w', group = 'LSP [W]orkspace' },
+      { '<leader>x', group = 'diagnostics/quickfix', icon = { icon = '󱖫 ', color = 'green' } },
       { 'gl', group = ' LSP:' },
+      { '[', group = 'prev' },
+      { ']', group = 'next' },
+      { 'g', group = 'goto' },
+      { 'gs', group = 'surround' },
       { 'glw', group = ' LSP: workspace' },
+      { 'z', group = 'fold' },
+      {
+        '<leader>b',
+        group = 'buffer',
+        expand = function()
+          return require('which-key.extras').expand.buf()
+        end,
+      },
+      {
+        '<leader>w',
+        group = 'windows',
+        proxy = '<c-w>',
+        expand = function()
+          return require('which-key.extras').expand.win()
+        end,
+      },
+      -- better descriptions
+      { 'gx', desc = 'Open with system app' },
+      { '<leader>u', desc = '[U]ndo history' },
     },
   },
 }
