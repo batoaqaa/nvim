@@ -6,14 +6,24 @@ return {
   ---@type blink.cmp.Config
   opts = {
     keymap = {
-      preset = 'default',
-      -- ['<C-y>'] = { 'select_and_accept' },
+      preset = 'enter',
     },
     appearance = {
       use_nvim_cmp_as_default = false,
       nerd_font_variant = 'normal',
     },
     signature = { enabled = true },
+
+    completion = {
+      -- documentation = {
+      --   auto_show = true,
+      -- },
+      list = {
+        selection = {
+          preselect = true,
+        },
+      },
+    },
   },
   opts_extend = { 'sources.default' },
 }

@@ -50,6 +50,7 @@ require('lazy').setup({
   -- require('kickstart/plugins/colorizer'),
   require('kickstart/plugins/todo-comments'),
   -- require('kickstart/plugins/menu'),
+  require('kickstart/plugins/lazydev'),
   require('kickstart/plugins/blink-cmp'),
   require('kickstart/plugins/mini'),
   require('kickstart/plugins/bigfile'),

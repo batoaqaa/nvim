@@ -27,19 +27,12 @@ require('vim.lsp.protocol').CompletionItemKind = {
   '', -- TypeParameter
 }
 ----------------------------------------------------------------------------------
-
--- local capabilities = {
---   textDocument = {
---     semanticTokens = {
---       multilineTokenSupport = true,
---     },
---   },
--- }
--- -- INFO: 1
--- vim.lsp.config('*', {
---   capabilities = require('blink.cmp').get_lsp_capabilities(capabilities),
---   root_markers = { '.git' },
--- })
+local opts = require('custom.plugins.lsp-config.opts')
+-- INFO: 1
+vim.lsp.config('*', {
+  capabilities = opts.capabilities,
+  root_markers = { '.git' },
+})
 --
 -- INFO: 2 Defined in <rtp>/lsp/clangd.lua        override 1
 -- INFO: 4 Defined in <rtp>/after/lsp/clangd.lua  override 1 & 2 & 3
@@ -70,7 +63,6 @@ for srv_name, _ in pairs(lang_servers) do
   vim.lsp.config(srv_name, lsp_server_settings)
 end
 vim.lsp.enable(vim.tbl_keys(lang_servers))
-
 
 ----------------------------------------------------------------------------------
 --< Start LspAttach autocommand
@@ -180,8 +172,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- --> End LspAttach autocommand
 
 -- Special config for lazy buffer
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "lazy",
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'lazy',
   callback = function()
     vim.diagnostic.config({
       signs = false,
@@ -193,9 +185,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Toggle virtual text and show diagnostics on cursor hold
-vim.api.nvim_create_autocmd("CursorHold", {
+vim.api.nvim_create_autocmd('CursorHold', {
   callback = function()
-    if vim.bo.filetype == "lazy" then
+    if vim.bo.filetype == 'lazy' then
       return
     end
 
@@ -203,7 +195,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
     local diagnostics = vim.diagnostic.get(0, { lnum = current_line })
 
     vim.diagnostic.config({
-      virtual_text = vim.tbl_isempty(diagnostics) and { spacing = 4, prefix = "●" } or false,
+      virtual_text = vim.tbl_isempty(diagnostics) and { spacing = 4, prefix = '●' } or false,
     })
 
     -- Only show float when there are diagnostics
