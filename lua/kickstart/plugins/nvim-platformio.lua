@@ -34,7 +34,7 @@ return {
       local prefix = '<leader>p' -- or use 'gp'
       local Piocmd = 'Piocmdf'   -- 'Piocmdh' (horizontal terminal)  'Piocmdf' (float terminal)
       wk.add({
-        { prefix .. '', group = ' PlatformIO:' },
+        { prefix, group = ' PlatformIO:' },
         { prefix .. 'g', group = '  [g]eneral' },
         { prefix .. 'd', group = '  [d]ependencies' },
         { prefix .. 'a', group = '  [a]dvance' },
@@ -42,7 +42,8 @@ return {
         { prefix .. 'r', group = '  [r]emote' },
         { prefix .. 'm', group = '  [m]iscellaneous' },
         {
-          mode = { 'n', 'v' }, -- NORMAL and VISUAL mode
+          mode = { 'n' }, -- NORMAL and VISUAL mode
+          { prefix .. 'l', '<cmd>' .. 'PioTermList' .. ' <CR>', desc = ' Terminals [l]ist' },
           { prefix .. 'gb', '<cmd>' .. Piocmd .. ' run<CR>', desc = ' [b]uild' },
           { prefix .. 'gc', '<cmd>' .. Piocmd .. ' run -t clean<CR>', desc = ' [c]lean' },
           { prefix .. 'gf', '<cmd>' .. Piocmd .. ' run -t fullclean<CR>', desc = ' [f]ull clean' },

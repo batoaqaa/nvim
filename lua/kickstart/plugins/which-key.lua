@@ -88,8 +88,10 @@ return {
           return require('which-key.extras').expand.win()
         end,
       },
+
+      { '\\',        ':NvimTreeToggle<CR>',        { silent = true, desc = 'Toggle NvimTree' } },
       -- better descriptions
-      { 'gx', desc = 'Open with system app' },
+      { 'gx',        desc = 'Open with system app' },
       { '<leader>u', desc = '[U]ndo history' },
     },
   },

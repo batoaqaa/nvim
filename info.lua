@@ -210,6 +210,7 @@
 -- vim.api.nvim_echo({ { "Error: Unknown target mode '" .. 'target_mode' .. "'", 'ErrorMsg' } }, true, {})
 -- vim.api.nvim_echo({ { 'Failed to switch. Current mode is: ' .. 'new_mode', 'WarningMsg' } }, true, {})
 -- vim.api.nvim_echo({ { 'Successfully switched to target mode: ' .. 'target_mode', 'MoreMsg' } }, true, {})
+-- vim.api.nvim_echo({ { 'Successfully switched to target mode: ' .. 'target_mode', 'Normal' } }, true, {})
 
 ---------------------------------------
 -- local function SetMode(target_mode)

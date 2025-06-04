@@ -209,18 +209,18 @@ return {
   opts = conf,
   name = 'catppuccin',
   config = function()
-    require('catppuccin').setup {
+    require('catppuccin').setup({
       flavour = 'mocha',
       color_overrides = {
         mocha = {
-          base = "#000000",
-          mantle = "#000000",
-          crust = "#000000",
+          base = '#000000',
+          mantle = '#000000',
+          crust = '#000000',
         },
       },
       -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" }),
       -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    }
+    })
     -- Enable theme
     require('catppuccin').load()
     -- vim.cmd.colorscheme('catppuccin')
