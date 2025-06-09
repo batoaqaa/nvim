@@ -30,15 +30,20 @@ if vim.fn.isdirectory(platformio_core_dir) == 0 then
   vim.fn.mkdir(platformio_core_dir, 'p')
   os.execute('wget https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py')
   os.execute('python3 get-platformio.py')
+  os.execute('python3 get-platformio.py')
+  if jit.os == 'Windows' then
+    os.execute('del get-platformio.py*')
+  else
+    os.execute('rm -f get-platformio.py*')
+  end
 end
 
 -- local expand_dir = vim.fn.expand(pynvim_env)
 if not vim.uv.fs_stat(pynvim_env) then
   vim.fn.system({ 'python', '-m', 'venv', pynvim_env })
-end
-
-if jit.os ~= 'Windows' then
-  os.execute('chmod 755 -R ' .. pynvim_bin)
+  if jit.os ~= 'Windows' then
+    os.execute('chmod 755 -R ' .. pynvim_bin)
+  end
 end
 
 if not vim.uv.fs_stat(pynvim_lib) then
