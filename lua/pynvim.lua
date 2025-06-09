@@ -37,9 +37,6 @@ if not vim.uv.fs_stat(pynvim_env) then
   vim.fn.system({ 'python', '-m', 'venv', pynvim_env })
 end
 
-print(vim.uv.os_getenv('PLATFORMIO_CORE_DIR'))
-print(vim.uv.os_getenv('PATH'))
-
 if jit.os ~= 'Windows' then
   os.execute('chmod 755 -R ' .. pynvim_bin)
 end
