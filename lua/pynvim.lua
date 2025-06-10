@@ -13,7 +13,8 @@ if jit.os == 'Windows' then
   pynvim_activate = pynvim_bin .. '\\activate'
 
   pynvim_lib = pynvim_env .. '\\Lib\\' .. '\\site-packages\\pynvim'
-  os.execute('setx PLATFORMIO_CORE_DIR ' .. platformio_core_dir)
+  -- os.execute('setx PLATFORMIO_CORE_DIR ' .. platformio_core_dir)
+  vim.uv.os_setenv('PLATFORMIO_CORE_DIR', platformio_core_dir)
 else
   platformio_core_dir = vim.env.HOME .. '/.platformio'
 
@@ -29,8 +30,7 @@ end
 if vim.fn.isdirectory(platformio_core_dir) == 0 then
   vim.fn.mkdir(platformio_core_dir, 'p')
   os.execute('wget https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py')
-  os.execute('python3 get-platformio.py')
-  os.execute('python3 get-platformio.py')
+  os.execute('python get-platformio.py')
   if jit.os == 'Windows' then
     os.execute('del get-platformio.py*')
   else
