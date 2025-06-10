@@ -70,7 +70,7 @@ function K.lspKeymaps(client, bufnr)
   end
 
   if client.server_capabilities.documentSymbolProvider then
-    bufkeymap('n', 'glwd', vim.lsp.buf.document_symbol, 'Document [s]ymbols')
+    bufkeymap('n', 'glwd', vim.lsp.buf.document_symbol, '[D]ocument symbols')
     -- bufkeymap('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   end
   if client:supports_method('workspace/symbol') then
@@ -86,6 +86,10 @@ function K.lspKeymaps(client, bufnr)
     end, '[W]orkspace [L]ist folders')
   end
   --
+  if client.supports_method('textDocument/switchSourceHeader') then
+    bufkeymap('n', 'glws', '<cmd>LspClangdSwitchSourceHeader<cr>', '[S]witch Source/Header (C/C++)')
+  end
+
   if client.supports_method('textDocument/formatting') then
     -- if client.server_capabilities.documentFormattingProvider then
     bufkeymap({ 'n', 'x' }, 'glf', function()

@@ -95,9 +95,6 @@ return {
     clangdFileStatus = true,
     compilationDatabasePath = vim.fn.getcwd(),
   },
-  keys = {
-    { '<leader>cR', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
-  },
   -- on_new_config = function(new_config, new_root_dir)
   --   vim.notify(opts.printTable(new_config))
   --   vim.notify("launching on new config" .. new_root_dir)

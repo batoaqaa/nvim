@@ -78,8 +78,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- vim.lsp.set_log_level 'trace'
       print('Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number)
       ------------------------------------------------------------------
-      -- if client.name == 'clangd' then
-      -- end
+      if client.name == 'clangd' then
+        vim.api.nvim_buf_create_user_command(0, 'LspClangdSwitchSourceHeader', function()
+          local method_name = 'textDocument/switchSourceHeader'
+          local params = vim.lsp.util.make_text_document_params(buf_number)
+          client.request(method_name, params, function(err, result)
+            if err then
+              error(tostring(err))
+            end
+            if not result then
+              vim.notify('corresponding file cannot be determined')
+              return
+            end
+            vim.cmd.edit(vim.uri_to_fname(result))
+          end, buf_number)
+        end, { desc = 'Switch between source/header' })
+      end
       -- if client.name == 'tsserver' then
       --   client.server_capabilities.documentFormattingProvider = false
       -- end
