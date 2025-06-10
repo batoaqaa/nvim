@@ -20,7 +20,6 @@ vim.g.python_host_prog = pynvim_python
 vim.g.python3_host_prog = pynvim_python
 vim.env.PATH = pynvim_bin .. (isWindows and ';' or ':') .. vim.env.PATH
 vim.env.VIRTUAL_ENV = pynvim_env
--- print(vim.env.PATH)
 
 if vim.fn.isdirectory(platformio_core_dir) == 0 then
   vim.fn.mkdir(platformio_core_dir, 'p')
