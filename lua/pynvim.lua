@@ -30,7 +30,7 @@ end
 if vim.fn.isdirectory(platformio_core_dir) == 0 then
   vim.fn.mkdir(platformio_core_dir, 'p')
   os.execute('wget https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py')
-  os.execute('python get-platformio.py')
+  vim.fn.system({ 'python', 'get-platformio.py' })
   if jit.os == 'Windows' then
     os.execute('del get-platformio.py*')
   else
