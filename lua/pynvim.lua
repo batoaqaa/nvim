@@ -46,6 +46,11 @@ if not vim.uv.fs_stat(pynvim_env) then
   end
 end
 
+vim.g.python_host_prog = pynvim_python
+vim.g.python3_host_prog = pynvim_python
+vim.env.PATH = pynvim_bin .. ':' .. vim.env.PATH
+vim.env.VIRTUAL_ENV = pynvim_env
+
 if not vim.uv.fs_stat(pynvim_lib) then
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'pynvim' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'neovim' })
@@ -54,10 +59,6 @@ if not vim.uv.fs_stat(pynvim_lib) then
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'scons' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'yamllint' })
 end
-
-vim.g.python_host_prog = pynvim_python
-vim.g.python3_host_prog = pynvim_python
-vim.env.VIRTUAL_ENV = pynvim_env
 
 -- vim.fn.system({ pynvim_activate })
 
