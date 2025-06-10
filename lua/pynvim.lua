@@ -1,4 +1,4 @@
-local python_version = 'python3.12'
+local python_version = 'python3.13'
 --
 --:lua os.execute("setx PLATFORMIO_CORE_DIR %HOMEPATH%/.platformio")
 --:lua os.execute("setx PLATFORMIO_CORE_DIR %userprofile%/.platformio")
@@ -12,9 +12,8 @@ if jit.os == 'Windows' then
   pynvim_python = pynvim_bin .. '\\python.exe'
   pynvim_activate = pynvim_bin .. '\\activate'
 
-  pynvim_lib = pynvim_env .. '\\Lib\\' .. '\\site-packages\\pynvim'
+  -- pynvim_lib = pynvim_env .. '\\Lib\\' .. '\\site-packages\\pynvim'
   -- os.execute('setx PLATFORMIO_CORE_DIR ' .. platformio_core_dir)
-  vim.uv.os_setenv('PLATFORMIO_CORE_DIR', platformio_core_dir)
 else
   platformio_core_dir = vim.env.HOME .. '/.platformio'
 
@@ -23,10 +22,10 @@ else
   pynvim_python = pynvim_bin .. '/python'
   pynvim_activate = pynvim_bin .. '/activate'
 
-  pynvim_lib = pynvim_env .. '/lib/' .. python_version .. '/site-packages/pynvim'
-  vim.uv.os_setenv('PLATFORMIO_CORE_DIR', platformio_core_dir)
+  -- pynvim_lib = pynvim_env .. '/lib/' .. python_version .. '/site-packages/pynvim'
 end
 
+vim.uv.os_setenv('PLATFORMIO_CORE_DIR', platformio_core_dir)
 if vim.fn.isdirectory(platformio_core_dir) == 0 then
   vim.fn.mkdir(platformio_core_dir, 'p')
   vim.fn.system({ 'wget', 'https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py' })
@@ -44,20 +43,20 @@ if not vim.uv.fs_stat(pynvim_env) then
   if jit.os ~= 'Windows' then
     os.execute('chmod 755 -R ' .. pynvim_bin)
   end
-end
 
-vim.g.python_host_prog = pynvim_python
-vim.g.python3_host_prog = pynvim_python
-vim.env.PATH = pynvim_bin .. ':' .. vim.env.PATH
-vim.env.VIRTUAL_ENV = pynvim_env
+  vim.g.python_host_prog = pynvim_python
+  vim.g.python3_host_prog = pynvim_python
+  vim.env.PATH = pynvim_bin .. ':' .. vim.env.PATH
+  vim.env.VIRTUAL_ENV = pynvim_env
 
-if not vim.uv.fs_stat(pynvim_lib) then
+  -- if not vim.uv.fs_stat(pynvim_lib) then
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'pynvim' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'neovim' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'debugpy' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'isort' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'scons' })
   vim.fn.system({ pynvim_python, '-m', 'pip', 'install', 'yamllint' })
+  -- end
 end
 
 -- vim.fn.system({ pynvim_activate })
