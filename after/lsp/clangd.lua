@@ -86,7 +86,6 @@ return {
     '.git',
     vim.uv.cwd(),
   },
-  -- capabilities = opts.capabilities,
   single_file_support = true,
   init_options = {
     usePlaceholders = true,

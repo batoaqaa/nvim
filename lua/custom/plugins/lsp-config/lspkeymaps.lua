@@ -16,12 +16,17 @@ function K.lspKeymaps(client, bufnr)
   bufkeymap('n', '[q', vim.cmd.cprev, 'Previous quickfix item')
   bufkeymap('n', ']q', vim.cmd.cnext, 'Next quickfix item')
   -- Diagnostic keymaps
-  bufkeymap('n', '[d', function()
-    vim.diagnostic.jump({ count = -1, float = true })
-  end, 'Go to previous [D]iagnostic message')
-  bufkeymap('n', '[d', function()
-    vim.diagnostic.jump({ count = 1, float = true })
-  end, 'Go to previous [D]iagnostic message')
+
+  -- bufkeymap('n', '[d', function()
+  --   vim.diagnostic.jump({ count = -1, float = true })
+  -- end, 'Go to previous [D]iagnostic message')
+  -- bufkeymap('n', '[d', function()
+  --   vim.diagnostic.jump({ count = 1, float = true })
+  -- end, 'Go to previous [D]iagnostic message')
+  bufkeymap('n', '[d', '<cmd>vim.diagnostic.goto_prev()<CR>', 'Go to previous [d]iagnostic message')
+  bufkeymap('n', ']d', '<cmd>vim.diagnostic.goto_next()<CR>', 'Go to next [d]iagnostic message')
+  -- buf_set_keymap('n', 'gl', '<cmd>vim.diagnostic.open_float()<CR>', { desc = "Show Line Diagnostics" })
+
   bufkeymap('n', 'gle', vim.diagnostic.open_float, 'Show diagnostic [e]rror messages')
   bufkeymap('n', 'glq', vim.diagnostic.setloclist, 'Open diagnostic [q]uickfix list')
   --
