@@ -7,6 +7,7 @@ return {
   dependencies = {
     { 'akinsho/toggleterm.nvim' },
     { 'nvim-telescope/telescope.nvim' },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-lua/plenary.nvim' },
     {
       -- WhichKey helps you remember your Neovim keymaps,
@@ -48,7 +49,8 @@ return {
           { prefix .. 'gc', '<cmd>' .. Piocmd .. ' run -t clean<CR>', desc = ' [c]lean' },
           { prefix .. 'gf', '<cmd>' .. Piocmd .. ' run -t fullclean<CR>', desc = ' [f]ull clean' },
           { prefix .. 'gd', '<cmd>' .. Piocmd .. ' device list<CR>', desc = ' [d]evice list' },
-          { prefix .. 'gm', '<cmd>' .. 'Piocmdh' .. ' run -t monitor<CR>', desc = ' [m]onitor' },
+          { prefix .. 'gm', '<cmd>' .. Piocmd .. ' run -t monitor<CR>', desc = ' [m]onitor' },
+          -- { prefix .. 'gm', '<cmd>' .. 'Piocmdh' .. ' run -t monitor<CR>', desc = ' [m]onitor' },
           { prefix .. 'gu', '<cmd>' .. Piocmd .. ' run -t upload<CR>', desc = ' [u]pload' },
           { prefix .. 'gs', '<cmd>' .. Piocmd .. ' run -t uploadfs<CR>', desc = ' upload file [s]ystem' },
           { prefix .. 'gt', '<cmd>' .. Piocmd .. '<CR>', desc = ' Core CLI [T]erminal' },

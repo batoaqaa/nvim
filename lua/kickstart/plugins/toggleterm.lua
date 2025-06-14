@@ -7,7 +7,7 @@ return {
   config = function()
     -- opts = {
     --[[ things you want to change go here]]
-    require('toggleterm').setup {
+    require('toggleterm').setup({
       -- size can be a number or function which is passed the current terminal
       -- size = 20
       -- size = function(term)
@@ -99,7 +99,7 @@ return {
           -- return term._display_name
         end,
       },
-    }
+    })
     -- --
     -- vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
     --   pattern = [[term://*]],

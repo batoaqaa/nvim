@@ -84,6 +84,7 @@ return {
           'prettierd',
           'pyright',
           'shfmt',
+          'lua-language-server',
           'stylua',
           'yamlfmt',
           'yamllint',
