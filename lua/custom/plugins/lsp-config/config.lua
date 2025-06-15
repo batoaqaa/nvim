@@ -65,9 +65,9 @@ for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
   if f then
     f:close()
   end
-  -- Only include the file if it doesn't start with "-- disable"
-  if not first_line:match('^%-%-%s*disable.*') then
-    local name = vim.fn.fnamemodify(file, ':t:r') -- `:t` gets filename, `:r` removes extension
+  -- Only include the file if it doesn't start with "-- disable" (space characters or no)
+  if not first_line:match('^%-%-%s*disable.*') then --https://www.lua.org/pil/20.2.html
+    local name = vim.fn.fnamemodify(file, ':t:r')   -- `:t` gets filename, `:r` removes extension
     table.insert(lsp_files, name)
   end
 end
@@ -77,18 +77,10 @@ vim.list_extend(ensure_installed, lsp_files)
 -- INFO: 3 Defined in custom/plugins/lsp-config/lang-servers.lua     override 1 & 2
 local lang_servers = require('custom.plugins.lsp-config.lang-servers')
 for srv_name, settings in pairs(lang_servers) do
-  -- local lsp_server_settings = lang_servers[srv_name]
-  -- vim.notify(opts.dump(lsp_server_settings))
-  -- vim.notify(srv_name)
   vim.lsp.config(srv_name, settings)
 end
 vim.lsp.enable(vim.tbl_keys(lang_servers))
 vim.list_extend(ensure_installed, vim.tbl_keys(lang_servers))
--- require('mason-lspconfig').setup({
---   automatic_enable = false,
---   ensure_installed = ensure_installed,
--- })
--- print(vim.inspect(ensure_installed))
 require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 ----------------------------------------------------------------------------------
 --< Start LspAttach autocommand
