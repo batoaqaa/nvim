@@ -50,18 +50,51 @@ require('lazy-bootstrap')
 -- [[ Configure and install plugins ]]
 require('lazy-plugins')
 
-local group = vim.api.nvim_create_augroup('rlnum', { clear = true })
-vim.api.nvim_create_autocmd('ModeChanged', {
-  pattern = { '*:i*', 'i*:*' },
-  group = group,
-  callback = function()
-    vim.o.relativenumber = vim.api.nvim_get_mode().mode:match('^i') == nil
-  end,
-})
-------------------------
-------------------------
 -- [[ Configure python env ]]
 require('pynvim')
+
+-- vim.api.nvim_create_autocmd('ModeChanged', {
+--   pattern = { '*:i*', 'i*:*' },
+--   group = vim.api.nvim_create_augroup('EnableDisableRelativenumber', {clear = true}),
+--   callback = function()
+--     vim.o.relativenumber = vim.api.nvim_get_mode().mode:match('^i') == nil
+--   end,
+-- })
+------------------------
+vim.api.nvim_create_autocmd({
+  'BufEnter',
+  'FocusGained',
+  'InsertLeave',
+  'CmdlineLeave',
+  'WinEnter',
+}, {
+  pattern = '*',
+  group = vim.api.nvim_create_augroup('EnableRelativenumber', { clear = true }),
+  callback = function()
+    if vim.o.nu and vim.api.nvim_get_mode().mode ~= 'i' then
+      vim.opt.relativenumber = true
+    end
+  end,
+  desc = 'Enable relative number in normal mode',
+})
+
+vim.api.nvim_create_autocmd({
+  'BufLeave',
+  'FocusLost',
+  'InsertEnter',
+  'CmdlineEnter',
+  'WinLeave',
+}, {
+  pattern = '*',
+  group = vim.api.nvim_create_augroup('DisableRelativenumber', { clear = true }),
+  callback = function()
+    if vim.o.nu then
+      vim.opt.relativenumber = false
+      vim.cmd('redraw')
+    end
+  end,
+  desc = 'Disable relative number in insert mode',
+})
 ------------------------
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

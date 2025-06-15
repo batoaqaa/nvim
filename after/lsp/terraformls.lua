@@ -1,4 +1,4 @@
--- disable
+--- disabled
 ---@type vim.lsp.Config
 return {
   cmd = { 'terraform-ls', 'serve' },

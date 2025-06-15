@@ -26,25 +26,6 @@ require('vim.lsp.protocol').CompletionItemKind = {
   ' ', -- Operator
   '', -- TypeParameter
 }
-local ensure_installed = {
-  'black',
-  'biome',
-  'clang-format',
-  'isort',
-  'prettier',
-  'prettierd',
-  'pyright',
-  'shfmt',
-  'stylua',
-  'yamlfmt',
-  'yamllint',
-  'debugpy',
-  'debugpy',
-  'isort',
-  'mypy',
-  'pylint',
-}
-
 ----------------------------------------------------------------------------------
 local opts = require('custom.plugins.lsp-config.opts')
 -- INFO: 1
@@ -66,30 +47,23 @@ for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
     f:close()
   end
   -- Only include the file if it doesn't start with "-- disable"
-  if not first_line:match('^%-%-%s*disable.*') then
+  if not first_line:match('^%-%- disable') then
     local name = vim.fn.fnamemodify(file, ':t:r') -- `:t` gets filename, `:r` removes extension
     table.insert(lsp_files, name)
   end
 end
 vim.lsp.enable(lsp_files)
-vim.list_extend(ensure_installed, lsp_files)
 
 -- INFO: 3 Defined in custom/plugins/lsp-config/lang-servers.lua     override 1 & 2
 local lang_servers = require('custom.plugins.lsp-config.lang-servers')
-for srv_name, settings in pairs(lang_servers) do
-  -- local lsp_server_settings = lang_servers[srv_name]
+for srv_name, _ in pairs(lang_servers) do
+  local lsp_server_settings = lang_servers[srv_name]
   -- vim.notify(opts.dump(lsp_server_settings))
   -- vim.notify(srv_name)
-  vim.lsp.config(srv_name, settings)
+  vim.lsp.config(srv_name, lsp_server_settings)
 end
 vim.lsp.enable(vim.tbl_keys(lang_servers))
-vim.list_extend(ensure_installed, vim.tbl_keys(lang_servers))
--- require('mason-lspconfig').setup({
---   automatic_enable = false,
---   ensure_installed = ensure_installed,
--- })
--- print(vim.inspect(ensure_installed))
-require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
+
 ----------------------------------------------------------------------------------
 --< Start LspAttach autocommand
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -98,16 +72,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client_id = args.data.client_id
     local client = vim.lsp.get_client_by_id(client_id)
-    local bufnr = args.buf
+    local buf_number = args.buf
 
     if client then
       -- vim.lsp.set_log_level 'trace'
-      print('Attaching to: ' .. client.name .. ' attached to buffer ' .. bufnr)
+      print('Attaching to: ' .. client.name .. ' attached to buffer ' .. buf_number)
       ------------------------------------------------------------------
       if client.name == 'clangd' then
         vim.api.nvim_buf_create_user_command(0, 'LspClangdSwitchSourceHeader', function()
           local method_name = 'textDocument/switchSourceHeader'
-          local params = vim.lsp.util.make_text_document_params(bufnr)
+          local params = vim.lsp.util.make_text_document_params(buf_number)
           client.request(method_name, params, function(err, result)
             if err then
               error(tostring(err))
@@ -117,7 +91,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
               return
             end
             vim.cmd.edit(vim.uri_to_fname(result))
-          end, bufnr)
+          end, buf_number)
         end, { desc = 'Switch between source/header' })
       end
       -- if client.name == 'tsserver' then
@@ -128,7 +102,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- end
       ------------------------------------------------------------------
       --- Skip this if you are using blink
-      -- if client:supports_method('textDocument/completion', { bufnr = bufnr }) then
+      -- if client:supports_method('textDocument/completion') then
       --   vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
       -- end
       -- vim.diagnostic.config({
@@ -143,15 +117,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- Auto-format ("lint") on save.
       -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
       ---[[ Format and autoimport on Save
-      if not client:supports_method('textDocument/willSaveWaitUntil', { bufnr = bufnr }) then
+      if not client:supports_method('textDocument/willSaveWaitUntil') then
         vim.api.nvim_create_autocmd('BufWritePre', {
           group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
           buffer = args.buf,
           callback = function()
-            if client:supports_method('textDocument/formatting', { bufnr = bufnr }) then
+            if client:supports_method('textDocument/formatting') then
               vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
             end
-            if client:supports_method('textDocument/codeAction', { bufnr = bufnr }) then
+            if client:supports_method('textDocument/codeAction') then
               local function apply_code_action(action_type)
                 local ctx = { only = action_type, diagnostics = {} }
                 local actions = vim.lsp.buf.code_action({ context = ctx, apply = true, return_actions = true })
@@ -171,13 +145,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
       if client.server_capabilities.documentHighlightProvider then
         local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-          buffer = bufnr,
+          buffer = buf_number,
           group = highlight_augroup,
           callback = vim.lsp.buf.document_highlight,
         })
         --
         vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-          buffer = bufnr,
+          buffer = buf_number,
           group = highlight_augroup,
           callback = vim.lsp.buf.clear_references,
         })
@@ -192,7 +166,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         --
       end
       local lspkeymaps = require('custom.plugins.lsp-config.lspkeymaps')
-      lspkeymaps.lspKeymaps(client, bufnr)
+      lspkeymaps.lspKeymaps(client, buf_number)
     end
     --
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {

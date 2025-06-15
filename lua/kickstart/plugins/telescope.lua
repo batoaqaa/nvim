@@ -103,12 +103,12 @@ return {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
         })
-      end, { desc = 'Search [/] in Open Files' })
+      end, { desc = '[S]earch [/] in Open Files' })
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files({ cwd = vim.fn.stdpath('config') })
-      end, { desc = 'Search [N]eovim files' })
+      end, { desc = '[S]earch [N]eovim files' })
     end,
   },
 }

@@ -257,4 +257,9 @@
 -- vim.api.nvim_input('i make clean && make || make\n')
 
 -- vim.api.nvim_command 'tabnew | term'
+-- zR open all folds
+-- zM close all folds
+-- zk move previous fold
+-- zj move next fold
+
 -- vim.api.nvim_input('i' .. command .. utils.enter)
