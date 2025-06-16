@@ -1,4 +1,67 @@
-----------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+-- INFO: Mason packages install for lint and formater
+local mason = require('mason')
+
+mason.setup()
+
+mason.setup({
+  PATH = 'append',
+  ui = {
+    border = 'single',
+    icons = {
+      package_installed = '✓',
+      package_pending = '➜',
+      package_uninstalled = '✗',
+    },
+  },
+})
+-- List of packages you want Mason to ensure are installed
+local ensure_installed = {
+  'black',
+  'biome',
+  'clang-format',
+  'isort',
+  'prettier',
+  'prettierd',
+  'pyright',
+  'shfmt',
+  'stylua',
+  'yamlfmt',
+  'yamllint',
+  'debugpy',
+  'mypy',
+  'pylint',
+}
+
+-- Function to install or ensure formatters/linters are installed
+local mr = require('mason-registry')
+
+mr:on('package:install:success', function()
+  vim.defer_fn(function()
+    -- trigger FileType event to possibly load this newly installed LSP server
+    require('lazy.core.handler.event').trigger({
+      event = 'FileType',
+      buf = vim.api.nvim_get_current_buf(),
+    })
+  end, 100)
+end)
+
+mr.refresh(function()
+  for _, tool in ipairs(ensure_installed) do
+    local ok, p = pcall(mr.get_package, tool)
+    if ok and p then
+      if not p:is_installed() then
+        pcall(p.install, p)
+      end
+    else
+      vim.notify('Failed to get package: ' .. tool, vim.log.levels.WARN)
+    end
+  end
+end)
+
+---------------------------------------------------------------------------------
+-- INFO: LSP servers install and configure
+
 require('vim.lsp.protocol').CompletionItemKind = {
   ' ', -- Text
   'ƒ ', -- Method
@@ -26,25 +89,8 @@ require('vim.lsp.protocol').CompletionItemKind = {
   ' ', -- Operator
   '', -- TypeParameter
 }
-local ensure_installed = {
-  'black',
-  'biome',
-  'clang-format',
-  'isort',
-  'prettier',
-  'prettierd',
-  'pyright',
-  'shfmt',
-  'stylua',
-  'yamlfmt',
-  'yamllint',
-  'debugpy',
-  'debugpy',
-  'isort',
-  'mypy',
-  'pylint',
-}
 
+-- INFO: Configure and install lsp sewrvers
 ----------------------------------------------------------------------------------
 local opts = require('custom.plugins.lsp-config.opts')
 -- INFO: 1
@@ -56,7 +102,7 @@ vim.lsp.config('*', {
 -- INFO: 2 Defined in <rtp>/lsp/clangd.lua        override 1
 -- INFO: 4 Defined in <rtp>/after/lsp/clangd.lua  override 1 & 2 & 3
 -- suggest setting it in the after/ if you want to be sure it is setting your config and not overwritten by a default from a plugin.
-local lsp_files = {}
+local lsp_serverss = {}
 local lsp_dir = vim.fn.stdpath('config') .. '/after/lsp/'
 for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
   -- Read the first line of the file
@@ -68,22 +114,25 @@ for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
   -- Only include the file if it doesn't start with "-- disable" (space characters or no)
   if not first_line:match('^%-%-%s*disable.*') then --https://www.lua.org/pil/20.2.html
     local name = vim.fn.fnamemodify(file, ':t:r')   -- `:t` gets filename, `:r` removes extension
-    table.insert(lsp_files, name)
+    table.insert(lsp_serverss, name)
   end
 end
-vim.lsp.enable(lsp_files)
-vim.list_extend(ensure_installed, lsp_files)
 
 -- INFO: 3 Defined in custom/plugins/lsp-config/lang-servers.lua     override 1 & 2
 local lang_servers = require('custom.plugins.lsp-config.lang-servers')
 for srv_name, settings in pairs(lang_servers) do
   vim.lsp.config(srv_name, settings)
 end
-vim.lsp.enable(vim.tbl_keys(lang_servers))
-vim.list_extend(ensure_installed, vim.tbl_keys(lang_servers))
-require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
+
+vim.list_extend(lsp_serverss, vim.tbl_keys(lang_servers) or {})
+require('mason-lspconfig').setup({
+  ensure_installed = lsp_serverss,
+  automatic_enable = true, -- this will automatically enable LSP servers after install
+})
+-- vim.lsp.enable(lsp_serverss) -- uncoment this if no automatic_enable above.
+
 ----------------------------------------------------------------------------------
---< Start LspAttach autocommand
+-- INFO: LspAttach autocommand start
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
   --desc = 'LSP actions',
