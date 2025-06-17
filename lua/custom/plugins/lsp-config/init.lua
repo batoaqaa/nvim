@@ -19,7 +19,7 @@ return {
           auto_refresh = false,
         },
       },
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} }, -- status bottom right
     },
   },
 }
