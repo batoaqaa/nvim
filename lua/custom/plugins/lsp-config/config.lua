@@ -36,25 +36,38 @@ local ensure_installed = {
 -- Function to install or ensure formatters/linters are installed
 local mr = require('mason-registry')
 
-mr:on('package:install:success', function()
-  vim.defer_fn(function()
-    -- trigger FileType event to possibly load this newly installed LSP server
-    require('lazy.core.handler.event').trigger({
-      event = 'FileType',
-      buf = vim.api.nvim_get_current_buf(),
-    })
-  end, 100)
-end)
+-- mr:on('package:install:success', function()
+--   vim.defer_fn(function()
+--     -- trigger FileType event to possibly load this newly installed LSP server
+--     require('lazy.core.handler.event').trigger({
+--       event = 'FileType',
+--       buf = vim.api.nvim_get_current_buf(),
+--     })
+--   end, 100)
+-- end)
 
 mr.refresh(function()
   for _, tool in ipairs(ensure_installed) do
     local ok, p = pcall(mr.get_package, tool)
     if ok and p then
-      if not p:is_installed() then
-        pcall(p.install, p)
+      if not p:is_installing() then
+        p:install({}, function(success, result)
+          if not success then
+            vim.defer_fn(function()
+              vim.notify(tool .. ' failed to install', vim.log.levels.ERROR)
+            end, 0)
+          end
+        end)
+        -- pcall(p.install, p)
+      else
+        vim.defer_fn(function()
+          vim.notify(tool .. ' already installed', vim.log.levels.WARN)
+        end, 0)
       end
     else
-      vim.notify('Failed to get package: ' .. tool, vim.log.levels.WARN)
+      vim.defer_fn(function()
+        vim.notify('Failed to get package: ' .. tool, vim.log.levels.WARN)
+      end, 0)
     end
   end
 end)
