@@ -1,16 +1,10 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
--- local opts = { noremap = true, silent = true }
-
--- Shorten function name
--- local keymap = vim.api.nvim_set_keymap
--- local keymap = vim.keymap.set
 
 local keymap = function(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
-    options = vim.tbl_extend('force', options, opts)
+    options = vim.tbl_extend('force', options, opts or {})
   end
   vim.keymap.set(mode, lhs, rhs, options)
 end
@@ -38,9 +32,9 @@ end
 
 keymap('v', '/', '"fy/\\V<C-R>f<CR>')
 keymap('v', '*', '"fy/\\V<C-R>f<CR>')
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
---
 --  See `:help wincmd` for a list of all window commands
 keymap('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 keymap('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -54,13 +48,13 @@ keymap('n', '<C-Left>', ':vertical resize -2<CR>')
 keymap('n', '<C-Right>', ':vertical resize +2<CR>')
 
 -- Naviagate buffers
--- keymap('n', '<S-l>', ':bnext<CR>', opts)
--- keymap('n', '<S-h>', ':bprevious<CR>', opts)
+-- keymap('n', '<S-l>', ':bnext<CR>', { desc = 'Next Buffer' })
+-- keymap('n', '<S-h>', ':bprevious<CR>', { desc = 'Prev Buffer' })
 -- keymap('n', '<leader>bp', ':bprevious<CR>', { desc = '[P]revious Buffer' })
--- keymap('n', '<leader>bn', ':bnext<CR>', { desc = '[N]ext Buffer' })
+-- keymap('n', '<leader>bn', ':bn{{ desc = 'Next Buffer' } desc = 'Next Buffer' }{ desc = 'Next Buffer' }ext<CR>', { desc = '[N]ext Buffer' })
 -- keymap('n', '<leader>bd', ':bdelete<CR>', { desc = '[D]elete Buffer' })
--- keymap('n', '<leader>ba', ':ball<CR>', { desc = '[A]show AllOpened Buffers' })
--- keymap('n', '[b', '<cmd>bnext<cr>', { desc = 'Prev Buffer' })
+-- keymap('n', '<leader>bs', ':ball<CR>', { desc = '[S]how AllOpened Buffers' })
+-- keymap('n', '[b', '<cmd>bnext<cr>', { desc = 'Prev Buf, { remap = false, silent = true }fer' })
 -- keymap('n', ']b', '<cmd>bprevious<cr>', { desc = 'Next Buffer' })
 
 keymap('n', '<leader>bb', ':bprevious<CR>', { desc = '[B]efore Buffer' })
@@ -113,14 +107,6 @@ keymap('c', '<C-k>', 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, nore
 -- vim.opt.hlsearch = true -- already assigned in options.lua
 keymap('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -133,6 +119,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 --
+keymap({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yank' }) -- delete without yank
+keymap({ 'n', 'v' }, '<leader>c', '"_c', { desc = 'Change text without yank' }) -- Change text without yank
+-- keymap('x', 'p', 'pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })
+-- keymap('x', 'P', 'Pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })
+
+vim.keymap.set('x', 'p', '"_c<C-r>+<Esc>') -- replace-paste in insert mode
+vim.keymap.set('x', 'P', '"_c<C-r>+<Esc>') -- replace-paste in insert mode
 -- toggleterm keymaps
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which

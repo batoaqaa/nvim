@@ -60,7 +60,7 @@ return {
     -- Document existing key chains
     spec = {
       -- { '<leader>b', group = '[B]uffer' },
-      { '<leader>d', group = 'Delete' },
+      -- { '<leader>d', group = 'Delete' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>l', group = '[l]azy git' },
       { '<leader>r', group = 'LSP rename' },
@@ -90,9 +90,9 @@ return {
         end,
       },
 
-      { '\\',        ':NvimTreeToggle<CR>',        { silent = true, desc = 'Toggle NvimTree' } },
+      { '\\', ':NvimTreeToggle<CR>', { silent = true, desc = 'Toggle NvimTree' } },
       -- better descriptions
-      { 'gx',        desc = 'Open with system app' },
+      { 'gx', desc = 'Open with system app' },
       { '<leader>u', desc = '[U]ndo history' },
     },
   },
