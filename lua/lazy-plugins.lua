@@ -49,7 +49,7 @@ require('lazy').setup({
   require('kickstart/plugins/colorscheme'),
   -- require('kickstart/plugins/colorizer'),
   require('kickstart/plugins/todo-comments'),
-  -- require('kickstart/plugins/menu'),
+  require('kickstart/plugins/trouble'),
   require('kickstart/plugins/clangd-extensions'),
   require('kickstart/plugins/lazydev'),
   require('kickstart/plugins/blink-cmp'),
@@ -76,7 +76,7 @@ require('lazy').setup({
   require('kickstart/plugins/bufferline'),
   require('kickstart/plugins/undotree'),
   require('kickstart/plugins/nvim-platformio'),
-  -- require('kickstart/plugins/kamailio-lsp'),
+  require('kickstart/plugins/kamailio-lsp'),
   require('kickstart/plugins/toggleterm'),
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.

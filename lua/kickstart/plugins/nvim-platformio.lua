@@ -64,7 +64,6 @@ return {
           { prefix .. 'ad', '<cmd>' .. Piocmd .. ' debug<CR>', desc = ' [d]ebug' },
           { prefix .. 'ab', '<cmd>' .. Piocmd .. ' run -t compiledb<CR>', desc = ' compilation data[b]ase' },
 
-          { prefix .. 'av', '<cmd>' .. Piocmd .. ' debug<CR>', desc = ' [v]erbose' },
           { prefix .. 'avb', '<cmd>' .. Piocmd .. ' run -v<CR>', desc = ' [b]uild' },
           { prefix .. 'avd', '<cmd>' .. Piocmd .. ' debug -v<CR>', desc = ' [d]ebug' },
           { prefix .. 'avu', '<cmd>' .. Piocmd .. ' run -v -t upload<CR>', desc = ' [u]pload' },
