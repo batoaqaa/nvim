@@ -50,19 +50,21 @@ mr.refresh(function()
   for _, tool in ipairs(ensure_installed) do
     local ok, p = pcall(mr.get_package, tool)
     if ok and p then
-      if not p:is_installing() then
-        p:install({}, function(success, result)
-          if not success then
-            vim.defer_fn(function()
-              vim.notify(tool .. ' failed to install', vim.log.levels.ERROR)
-            end, 0)
-          end
-        end)
-        -- pcall(p.install, p)
-      else
-        vim.defer_fn(function()
-          vim.notify(tool .. ' already installed', vim.log.levels.WARN)
-        end, 0)
+      if not p:is_installed() then
+        if not p:is_installing() then
+          p:install({}, function(success, result)
+            if not success then
+              vim.defer_fn(function()
+                vim.notify(tool .. ' failed to install', vim.log.levels.ERROR)
+              end, 0)
+            end
+          end)
+          -- pcall(p.install, p)
+        else
+          vim.defer_fn(function()
+            vim.notify(tool .. ' already installed', vim.log.levels.WARN)
+          end, 0)
+        end
       end
     else
       vim.defer_fn(function()
@@ -126,7 +128,7 @@ for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
   end
   -- Only include the file if it doesn't start with "-- disable" (space characters or no)
   if not first_line:match('^%-%-%s*disable.*') then --https://www.lua.org/pil/20.2.html
-    local name = vim.fn.fnamemodify(file, ':t:r')   -- `:t` gets filename, `:r` removes extension
+    local name = vim.fn.fnamemodify(file, ':t:r') -- `:t` gets filename, `:r` removes extension
     table.insert(lsp_serverss, name)
   end
 end
@@ -266,35 +268,35 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- --> End LspAttach autocommand
 
 -- Special config for lazy buffer
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'lazy',
-  callback = function()
-    vim.diagnostic.config({
-      signs = false,
-      virtual_text = true,
-      virtual_lines = false,
-      underline = false,
-    })
-  end,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'lazy',
+--   callback = function()
+--     vim.diagnostic.config({
+--       signs = true,
+--       virtual_text = false,
+--       virtual_lines = true,
+--       underline = false,
+--     })
+--   end,
+-- })
 
 -- Toggle virtual text and show diagnostics on cursor hold
-vim.api.nvim_create_autocmd('CursorHold', {
-  callback = function()
-    if vim.bo.filetype == 'lazy' then
-      return
-    end
-
-    local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1
-    local diagnostics = vim.diagnostic.get(0, { lnum = current_line })
-
-    vim.diagnostic.config({
-      virtual_text = vim.tbl_isempty(diagnostics) and { spacing = 4, prefix = '●' } or false,
-    })
-
-    -- Only show float when there are diagnostics
-    if not vim.tbl_isempty(diagnostics) then
-      vim.diagnostic.open_float(nil, { focusable = false })
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('CursorHold', {
+--   callback = function()
+--     if vim.bo.filetype == 'lazy' then
+--       return
+--     end
+--
+--     local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1
+--     local diagnostics = vim.diagnostic.get(0, { lnum = current_line })
+--
+--     vim.diagnostic.config({
+--       virtual_text = vim.tbl_isempty(diagnostics) and { spacing = 4, prefix = '●' } or false,
+--     })
+--
+--     -- Only show float when there are diagnostics
+--     if not vim.tbl_isempty(diagnostics) then
+--       vim.diagnostic.open_float(nil, { focusable = false })
+--     end
+--   end,
+-- })

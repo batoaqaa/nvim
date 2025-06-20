@@ -11,9 +11,13 @@ vim.g.maplocalleader = ' '
 -- Toggle virtual_text off when on the line with the error
 vim.diagnostic.config({
   -- virtual_text = true,
-  virtual_text = { spacing = 4, prefix = '●' },
-  -- virtual_lines = { current_line = true },
+  -- virtual_text = {
+  --   spacing = 4,
+  --   prefix = '●',
+  --   current_line = true,
+  -- },
   virtual_lines = true,
+  -- virtual_lines = { current_line = true },
   update_in_insert = true,
   underline = true,
   severity_sort = true,

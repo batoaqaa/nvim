@@ -20,7 +20,7 @@ return {
 
       -- if you only want these mappings for toggle term use term://*toggleterm#* instead
       open_mapping = [[<F7>]], -- [[<c-\>]], -- or { [[<c-\>]], [[<c-¥>]] } if you also use a Japanese keyboard.
-      on_close = function(t) -- function to run when the terminal closes
+      on_close = function(t)   -- function to run when the terminal closes
         -- vim.cmd 'startinsert!'
       end,
       on_create = function(t) -- function to run when the terminal is first created
@@ -59,17 +59,17 @@ return {
       hide_numbers = true, -- hide the number column in toggleterm buffers
       shade_filetypes = {},
       display_name = 'batoaqaa',
-      autochdir = false, -- when neovim changes it current directory the terminal will change it's own when next it's opened
-      shade_terminals = true, -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
-      shading_factor = -30, -- the percentage by which to lighten dark terminal background, default: -30
-      shading_ratio = -3, -- the ratio of shading factor for light/dark terminal background, default: -3
+      autochdir = false,        -- when neovim changes it current directory the terminal will change it's own when next it's opened
+      shade_terminals = true,   -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
+      shading_factor = -30,     -- the percentage by which to lighten dark terminal background, default: -30
+      shading_ratio = -3,       -- the ratio of shading factor for light/dark terminal background, default: -3
       start_in_insert = false,
-      insert_mappings = true, -- whether or not the open mapping applies in insert mode
+      insert_mappings = true,   -- whether or not the open mapping applies in insert mode
       terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
       persist_size = true,
-      persist_mode = true, -- if set to true (default) the previous terminal mode will be remembered
+      persist_mode = true,      -- if set to true (default) the previous terminal mode will be remembered
       direction = 'horizontal', -- 'horizontal', -- 'vertical' | | 'tab' | 'float',
-      close_on_exit = false, -- close the terminal window when the process exits
+      close_on_exit = false,    -- close the terminal window when the process exits
       -- Change the default shell. Can be a string or a function returning a string
       shell = vim.g.shell,
       auto_scroll = true, -- automatically scroll to the bottom on terminal output
@@ -81,8 +81,10 @@ return {
         width = math.ceil(vim.api.nvim_get_option_value('columns', {}) * 0.8 - 4),
         height = math.ceil(vim.api.nvim_get_option_value('lines', {}) * 0.8),
         -- and its starting position
-        col = math.ceil((vim.api.nvim_get_option_value('columns', {}) - math.ceil(vim.api.nvim_get_option_value('columns', {}) * 0.8 - 4)) / 2 - 1),
-        row = math.ceil((vim.api.nvim_get_option_value('lines', {}) - math.ceil(vim.api.nvim_get_option_value('lines', {}) * 0.8)) / 2),
+        col = math.ceil((vim.api.nvim_get_option_value('columns', {}) - math.ceil(vim.api.nvim_get_option_value('columns', {}) * 0.8 - 4)) /
+        2 - 1),
+        row = math.ceil((vim.api.nvim_get_option_value('lines', {}) - math.ceil(vim.api.nvim_get_option_value('lines', {}) * 0.8)) /
+        2),
 
         highlights = {
           border = 'Normal',
@@ -120,7 +122,7 @@ return {
     -- })
     --
     _G.set_terminal_keymaps = function()
-      local opts = { silent = true, noremap = true, buffer = 0 }
+      local opts = { silent = true, buffer = 0 }
       -- local opts = { buffer = 0 }
       vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts)
       -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)

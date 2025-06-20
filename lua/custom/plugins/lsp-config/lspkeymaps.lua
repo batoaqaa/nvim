@@ -1,8 +1,8 @@
 K = {}
-
+--Lua functions in combination with the option expr = true handles keycodes automatically
 function K.lspKeymaps(client, bufnr)
   local bufkeymap = function(mode, lhs, rhs, desc)
-    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, noremap = true, silent = true, desc = desc })
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc }) -- noremap by default
   end
   -- Disable defaults
   pcall(vim.keymap.del, 'n', 'gra')

@@ -2,7 +2,7 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 
 local keymap = function(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
+  local options = { silent = true } --noremap = true by default in vim.keymap.set
   if opts then
     options = vim.tbl_extend('force', options, opts or {})
   end
@@ -100,8 +100,8 @@ keymap('x', '<A-k>', ":move '<-2<CR>gv-gv")
 
 -- Command --
 -- Menu navigation
-keymap('c', '<C-j>', 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true })
-keymap('c', '<C-k>', 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true })
+keymap('c', '<C-j>', 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true })
+keymap('c', '<C-k>', 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true })
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 -- vim.opt.hlsearch = true -- already assigned in options.lua
@@ -119,7 +119,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 --
-keymap({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yank' }) -- delete without yank
+keymap({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yank' })      -- delete without yank
 keymap({ 'n', 'v' }, '<leader>c', '"_c', { desc = 'Change text without yank' }) -- Change text without yank
 -- keymap('x', 'p', 'pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })
 -- keymap('x', 'P', 'Pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })
