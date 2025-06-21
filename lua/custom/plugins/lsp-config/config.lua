@@ -33,19 +33,8 @@ local ensure_installed = {
   'pylint',
 }
 
--- Function to install or ensure formatters/linters are installed
+-- Mason function to install or ensure formatters/linters are installed
 local mr = require('mason-registry')
-
--- mr:on('package:install:success', function()
---   vim.defer_fn(function()
---     -- trigger FileType event to possibly load this newly installed LSP server
---     require('lazy.core.handler.event').trigger({
---       event = 'FileType',
---       buf = vim.api.nvim_get_current_buf(),
---     })
---   end, 100)
--- end)
-
 mr.refresh(function()
   for _, tool in ipairs(ensure_installed) do
     local ok, p = pcall(mr.get_package, tool)
@@ -57,9 +46,16 @@ mr.refresh(function()
               vim.defer_fn(function()
                 vim.notify(tool .. ' failed to install', vim.log.levels.ERROR)
               end, 0)
+              -- else
+              --   -- trigger FileType event to possibly load this newly installed package
+              --   vim.defer_fn(function()
+              --     require('lazy.core.handler.event').trigger({
+              --       event = 'FileType',
+              --       buf = vim.api.nvim_get_current_buf(),
+              --     })
+              --   end, 0)
             end
           end)
-          -- pcall(p.install, p)
         else
           vim.defer_fn(function()
             vim.notify(tool .. ' already installed', vim.log.levels.WARN)
@@ -267,7 +263,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 -- --> End LspAttach autocommand
 
--- Special config for lazy buffer
+-- Special config for lazy buffer diagnostics
 -- vim.api.nvim_create_autocmd('FileType', {
 --   pattern = 'lazy',
 --   callback = function()
@@ -280,7 +276,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --   end,
 -- })
 
--- Toggle virtual text and show diagnostics on cursor hold
+-- Toggle float virtual text and show diagnostics on cursor hold for non lazy filetype
 -- vim.api.nvim_create_autocmd('CursorHold', {
 --   callback = function()
 --     if vim.bo.filetype == 'lazy' then
