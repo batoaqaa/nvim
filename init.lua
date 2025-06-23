@@ -5,8 +5,8 @@
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- Toggle virtual_text off when on the line with the error
 vim.diagnostic.config({
@@ -23,18 +23,18 @@ vim.diagnostic.config({
   severity_sort = true,
   float = {
     focusable = true,
-    style = "minimal",
-    border = "rounded",
+    style = 'minimal',
+    border = 'rounded',
     source = true,
-    header = "",
-    prefix = "",
+    header = '',
+    prefix = '',
   },
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = " ",
-      [vim.diagnostic.severity.WARN] = " ",
-      [vim.diagnostic.severity.HINT] = " ",
-      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.ERROR] = ' ',
+      [vim.diagnostic.severity.WARN] = ' ',
+      [vim.diagnostic.severity.HINT] = ' ',
+      [vim.diagnostic.severity.INFO] = ' ',
     },
   },
 })
@@ -43,17 +43,17 @@ vim.diagnostic.config({
 vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
-require("options")
+require('config.options')
 
 -- [[ Basic Keymaps ]]
-require("keymaps")
+require('config.keymaps')
 
 -- [[ Configure python env ]]
-require("pynvim")
+require('config.pynvim')
 
 -- [[ Install `lazy.nvim` plugin manager ]]
-require("config.lazyboot")
-require("config.lazysetup")
+require('config.lazyboot')
+require('config.lazysetup')
 
 -- vim.api.nvim_create_autocmd('ModeChanged', {
 --   pattern = { '*:i*', 'i*:*' },
@@ -64,38 +64,38 @@ require("config.lazysetup")
 -- })
 ------------------------
 vim.api.nvim_create_autocmd({
-  "BufEnter",
-  "FocusGained",
-  "InsertLeave",
-  "CmdlineLeave",
-  "WinEnter",
+  'BufEnter',
+  'FocusGained',
+  'InsertLeave',
+  'CmdlineLeave',
+  'WinEnter',
 }, {
-  pattern = "*",
-  group = vim.api.nvim_create_augroup("EnableRelativenumber", { clear = true }),
+  pattern = '*',
+  group = vim.api.nvim_create_augroup('EnableRelativenumber', { clear = true }),
   callback = function()
-    if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
+    if vim.o.nu and vim.api.nvim_get_mode().mode ~= 'i' then
       vim.opt.relativenumber = true
     end
   end,
-  desc = "Enable relative number in normal mode",
+  desc = 'Enable relative number in normal mode',
 })
 
 vim.api.nvim_create_autocmd({
-  "BufLeave",
-  "FocusLost",
-  "InsertEnter",
-  "CmdlineEnter",
-  "WinLeave",
+  'BufLeave',
+  'FocusLost',
+  'InsertEnter',
+  'CmdlineEnter',
+  'WinLeave',
 }, {
-  pattern = "*",
-  group = vim.api.nvim_create_augroup("DisableRelativenumber", { clear = true }),
+  pattern = '*',
+  group = vim.api.nvim_create_augroup('DisableRelativenumber', { clear = true }),
   callback = function()
     if vim.o.nu then
       vim.opt.relativenumber = false
-      vim.cmd("redraw")
+      vim.cmd('redraw')
     end
   end,
-  desc = "Disable relative number in insert mode",
+  desc = 'Disable relative number in insert mode',
 })
 ------------------------
 -- The line beneath this is called `modeline`. See `:help modeline`
