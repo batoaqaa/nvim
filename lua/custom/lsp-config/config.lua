@@ -1,50 +1,50 @@
 ---------------------------------------------------------------------------------
 -- INFO: Mason packages install for lint and formater
-local mason = require("mason")
+local mason = require('mason')
 
 mason.setup()
 
 mason.setup({
-  PATH = "append",
+  PATH = 'append',
   ui = {
-    border = "single",
+    border = 'single',
     icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗",
+      package_installed = '✓',
+      package_pending = '➜',
+      package_uninstalled = '✗',
     },
   },
 })
 -- List of packages you want Mason to ensure are installed
 local ensure_installed = {
-  "black",
-  "biome",
-  "clang-format",
-  "isort",
-  "prettier",
-  "prettierd",
-  "pyright",
-  "shfmt",
-  "stylua",
-  "yamlfmt",
-  "yamllint",
-  "debugpy",
-  "mypy",
-  "pylint",
+  'black',
+  'biome',
+  'clang-format',
+  'isort',
+  'prettier',
+  'prettierd',
+  'pyright',
+  'shfmt',
+  'stylua',
+  'yamlfmt',
+  'yamllint',
+  'debugpy',
+  'mypy',
+  'pylint',
 }
 
 -- Mason function to install or ensure formatters/linters are installed
-local mr = require("mason-registry")
+local mr = require('mason-registry')
 mr.refresh(function()
   for _, tool in ipairs(ensure_installed) do
     local ok, p = pcall(mr.get_package, tool)
     if ok and p then
       if not p:is_installed() then
         if not p:is_installing() then
-          p:install({}, function(success, result)
+          p:install({}, function(success, _)
             if not success then
               vim.defer_fn(function()
-                vim.notify(tool .. " failed to install", vim.log.levels.ERROR)
+                vim.notify(tool .. ' failed to install', vim.log.levels.ERROR)
               end, 0)
               -- else
               --   -- trigger FileType event to possibly load this newly installed package
@@ -58,13 +58,13 @@ mr.refresh(function()
           end)
         else
           vim.defer_fn(function()
-            vim.notify(tool .. " already installed", vim.log.levels.WARN)
+            vim.notify(tool .. ' already installed', vim.log.levels.WARN)
           end, 0)
         end
       end
     else
       vim.defer_fn(function()
-        vim.notify("Failed to get package: " .. tool, vim.log.levels.WARN)
+        vim.notify('Failed to get package: ' .. tool, vim.log.levels.WARN)
       end, 0)
     end
   end
@@ -73,70 +73,75 @@ end)
 ---------------------------------------------------------------------------------
 -- INFO: LSP servers install and configure
 
-require("vim.lsp.protocol").CompletionItemKind = {
-  " ", -- Text
-  "ƒ ", -- Method
-  "󰊕 ", -- Function
-  " ", -- Constructor
-  " ", -- Field
-  " ", -- Variable
-  "", -- Class
-  " ", -- Interface
-  " ", -- Module
-  "", -- Property
-  "", -- Unit
-  " ", -- Value
-  "了", -- Enum
-  " ", -- Keyword
-  " ", -- Snippet
-  "", -- Color
-  "", -- File
-  " ", -- Reference
-  "", -- Folder
-  "", -- EnumMember
-  "", -- Constant
-  "", -- Struct
-  "", -- Event
-  " ", -- Operator
-  "", -- TypeParameter
+-- The kind of a completion entry.
+local icons = {
+  Text = ' ', -- Text = 1,
+  Method = 'ƒ ', -- Method = 2,
+  Function = ' ', -- Function = 3,
+  Constructor = ' ', -- Constructor = 4,
+  Field = ' ', -- Field = 5,
+  Variable = '', -- Variable = 6,
+  Class = '', -- Class = 7,
+  Interface = ' ', -- Interface = 8,
+  Module = ' ', -- Module = 9,
+  Property = '', -- Property = 10,
+  Unit = '', -- Unit = 11,
+  Value = ' ', -- Value = 12,
+  Enum = '了', -- Enum = 13,
+  Keyword = ' ', -- Keyword = 14,
+  Snippet = ' ', -- Snippet = 15,
+  Color = '', -- Color = 16,
+  File = '', -- File = 17,
+  Reference = ' ', -- Reference = 18,
+  Folder = '', -- Folder = 19,
+  EnumMember = '', -- EnumMember = 20,
+  Constant = '', -- Constant = 21,
+  Struct = '', -- Struct = 22,
+  Event = '', -- Event = 23,
+  Operator = ' ', -- Operator = 24,
+  TypeParameter = '', -- TypeParameter = 25,
 }
+local kinds = vim.lsp.protocol.CompletionItemKind
+for i, kind in ipairs(kinds) do
+  kinds[i] = icons[kind] or kind
+end
 
 -- INFO: Configure and install lsp sewrvers
 ----------------------------------------------------------------------------------
-local opts = require("custom.lsp-config.opts")
+local opts = require('custom.lsp-config.opts')
 -- INFO: 1
-vim.lsp.config("*", {
+vim.lsp.config('*', {
   capabilities = opts.capabilities,
-  root_markers = { ".git" },
+  root_markers = { '.git' },
 })
 --
 -- INFO: 2 Defined in <rtp>/lsp/clangd.lua        override 1
 -- INFO: 4 Defined in <rtp>/after/lsp/clangd.lua  override 1 & 2 & 3
 -- suggest setting it in the after/ if you want to be sure it is setting your config and not overwritten by a default from a plugin.
 local lsp_serverss = {}
-local lsp_dir = vim.fn.stdpath("config") .. "/after/lsp/"
-for _, file in ipairs(vim.fn.globpath(lsp_dir, "*.lua", false, true)) do
+local lsp_dir = vim.fn.stdpath('config') .. '/after/lsp/'
+for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
   -- Read the first line of the file
-  local f = io.open(file, "r")
-  local first_line = f and f:read("*l") or ""
+  local f = io.open(file, 'r')
+  local first_line = f and f:read('*l') or ''
   if f then
     f:close()
   end
   -- Only include the file if it doesn't start with "-- disable" (space characters or no)
-  if not first_line:match("^%-%-%s*disable.*") then --https://www.lua.org/pil/20.2.html
-    local name = vim.fn.fnamemodify(file, ":t:r")  -- `:t` gets filename, `:r` removes extension
+  if not first_line:match('^%-%-%s*disable.*') then --https://www.lua.org/pil/20.2.html
+    local name = vim.fn.fnamemodify(file, ':t:r')   -- `:t` gets filename, `:r` removes extension
     table.insert(lsp_serverss, name)
   end
 end
 
 -- INFO: 3 Defined in custom/plugins/lsp-config/lang-servers.lua     override 1 & 2
-local lang_servers = require("custom.lsp-config.lang-servers")
+local lang_servers = require('custom.lsp-config.lang-servers')
 for srv_name, settings in pairs(lang_servers) do
   vim.lsp.config(srv_name, settings)
 end
 
 vim.list_extend(lsp_serverss, vim.tbl_keys(lang_servers) or {})
-require("mason-lspconfig").setup({
+require('mason-lspconfig').setup({
   ensure_installed = lsp_serverss,
   automatic_enable = true, -- this will automatically enable LSP servers after install
 })
@@ -144,8 +149,8 @@ require("mason-lspconfig").setup({
 
 ----------------------------------------------------------------------------------
 -- INFO: LspAttach autocommand start
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
   --desc = 'LSP actions',
   callback = function(args)
     local client_id = args.data.client_id
@@ -154,23 +159,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     if client then
       -- vim.lsp.set_log_level 'trace'
-      print("Attaching to: " .. client.name .. " attached to buffer " .. bufnr)
+      print('Attaching to: ' .. client.name .. ' attached to buffer ' .. bufnr)
       ------------------------------------------------------------------
-      if client.name == "clangd" then
-        vim.api.nvim_buf_create_user_command(0, "LspClangdSwitchSourceHeader", function()
-          local method_name = "textDocument/switchSourceHeader"
+      if client.name == 'clangd' then
+        vim.api.nvim_buf_create_user_command(0, 'LspClangdSwitchSourceHeader', function()
+          local method_name = 'textDocument/switchSourceHeader'
           local params = vim.lsp.util.make_text_document_params(bufnr)
           client.request(method_name, params, function(err, result)
             if err then
               error(tostring(err))
             end
             if not result then
-              vim.notify("corresponding file cannot be determined")
+              vim.notify('corresponding file cannot be determined')
               return
             end
             vim.cmd.edit(vim.uri_to_fname(result))
           end, bufnr)
-        end, { desc = "Switch between source/header" })
+        end, { desc = 'Switch between source/header' })
       end
       -- if client.name == 'tsserver' then
       --   client.server_capabilities.documentFormattingProvider = false
@@ -195,60 +200,59 @@ vim.api.nvim_create_autocmd("LspAttach", {
       -- Auto-format ("lint") on save.
       -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
       ---[[ Format and autoimport on Save
-      if not client:supports_method("textDocument/willSaveWaitUntil", { bufnr = bufnr }) then
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),
+      if not client:supports_method('textDocument/willSaveWaitUntil', { bufnr = bufnr }) then
+        vim.api.nvim_create_autocmd('BufWritePre', {
+          group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
           buffer = args.buf,
           callback = function()
-            if client:supports_method("textDocument/formatting", { bufnr = bufnr }) then
+            if client:supports_method('textDocument/formatting', { bufnr = bufnr }) then
               vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
             end
-            if client:supports_method("textDocument/codeAction", { bufnr = bufnr }) then
+            if client:supports_method('textDocument/codeAction', { bufnr = bufnr }) then
               local function apply_code_action(action_type)
                 local ctx = { only = action_type, diagnostics = {} }
-                local actions =
-                    vim.lsp.buf.code_action({ context = ctx, apply = true, return_actions = true })
+                local actions = vim.lsp.buf.code_action({ context = ctx, apply = true, return_actions = true })
 
                 -- only apply if code action is available
                 if actions and #actions > 0 then
                   vim.lsp.buf.code_action({ context = ctx, apply = true })
                 end
               end
-              apply_code_action({ "source.fixAll" })
-              apply_code_action({ "source.organizeImports" })
+              apply_code_action({ 'source.fixAll' })
+              apply_code_action({ 'source.organizeImports' })
             end
           end,
         })
       end
       ------------------------------------------------------------------
       if client.server_capabilities.documentHighlightProvider then
-        local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
           buffer = bufnr,
           group = highlight_augroup,
           callback = vim.lsp.buf.document_highlight,
         })
         --
-        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
           buffer = bufnr,
           group = highlight_augroup,
           callback = vim.lsp.buf.clear_references,
         })
         --
-        vim.api.nvim_create_autocmd("LspDetach", {
-          group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+        vim.api.nvim_create_autocmd('LspDetach', {
+          group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
           callback = function(event)
             vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event.buf })
+            vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = event.buf })
           end,
         })
         --
       end
-      local lspkeymaps = require("custom.lsp-config.lspkeymaps")
+      local lspkeymaps = require('custom.lsp-config.lspkeymaps')
       lspkeymaps.lspKeymaps(client, bufnr)
     end
     --
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       signs = true,
       underline = true,
       virtual_text = {
