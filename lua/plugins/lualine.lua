@@ -2,8 +2,25 @@ return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
 
+  -- opts = function(_, opts)
+  --   local trouble = require('trouble')
+  --   local symbols = trouble.statusline({
+  --     mode = 'lsp_document_symbols',
+  --     groups = {},
+  --     title = false,
+  --     filter = { range = true },
+  --     format = '{kind_icon}{symbol.name:Normal}',
+  --     -- The following line is needed to fix the background color
+  --     -- Set it to the lualine section you want to use
+  --     hl_group = 'lualine_c_normal',
+  --   })
+  --   table.insert(opts.sections.lualine_c, {
+  --     symbols.get,
+  --     cond = symbols.has,
+  --   })
+  -- end,
   config = function()
-    require('lualine').setup {
+    require('lualine').setup({
       options = {
         icons_enabled = true,
         theme = 'auto',
@@ -33,16 +50,20 @@ return {
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { 'filename' },
-        lualine_x = { 'location' },
+        lualine_c = {},
+        lualine_x = {},
         lualine_y = {},
         lualine_z = {},
       },
       tabline = {},
       winbar = {},
       inactive_winbar = {},
-      extensions = {},
-    }
-    require('lualine').setup()
+      extensions = {
+        -- 'quickfix',
+        -- 'nvim-tree',
+        -- 'trouble',
+        -- 'toggleterm',
+      },
+    })
   end,
 }

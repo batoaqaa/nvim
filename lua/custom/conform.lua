@@ -7,7 +7,7 @@ return {
       -- Customize or remove this keymap to your liking
       '<leader>f',
       function()
-        require('conform').format({ async = true })
+        require('conform').format({ async = true, lsp_fallback = true })
       end,
       mode = '',
       desc = 'Format buffer',
@@ -18,6 +18,7 @@ return {
   ---@type conform.setupOpts
   opts = {
     -- Define your formatters
+    lsp_fallback = true,
     formatters_by_ft = {
       lua = { 'stylua' },
       cpp = { 'clang-format' },
@@ -28,6 +29,8 @@ return {
       go = { 'goimports', 'gofmt' },
       html = { 'htmlbeautifier' },
       -- html = { 'prettier' },
+      ini = { 'prettier' },
+      dosini = { 'prettier' },
       json = { 'prettier' },
       -- Conform can also run multiple formatters sequentially
       python = { 'isort', 'black' },

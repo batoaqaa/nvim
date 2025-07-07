@@ -38,10 +38,11 @@ require('lazy').setup({
   --    require('Comment').setup({})
 
   -- transparent background
-  { 'xiyaowong/transparent.nvim', opst = { lazy = false } },
+  { 'xiyaowong/transparent.nvim', opts = { lazy = false } },
 
   require('custom/lsp-config'),
   require('custom/nvim-platformio'),
+  require('custom/conform'),
   require('custom/lint'),
   --
 }, {
