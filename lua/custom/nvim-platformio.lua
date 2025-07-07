@@ -3,8 +3,26 @@ return {
   'batoaqaa/nvim-platformio.lua',
   -- 'anurag3301/nvim-platformio.lua',
   -- cmd = { 'Pioinit', 'Piorun', 'Piocmdh', 'Piocmdf', 'Piolib', 'Piomon', 'Piodebug', 'Piodb' },
+  event = 'VeryLazy',
   cond = function() -- start/load nvim-platformio when platformio.ini file exist in cwd
-    return vim.fn.filereadable('platformio.ini') == 1
+    if vim.fn.filereadable('platformio.ini') == 1 then
+      return true
+    end
+
+    -- vim.api.nvim_create_autocmd('CmdUndefined', {
+    --   pattern = 'Piocmdf',
+    --   group = vim.api.nvim_create_augroup('LazyOrCond', { clear = true }),
+    --   callback = function()
+    --     -- When the command is run, load the plugin
+    --     require('lazy').load({ plugins = { 'nvim-platformio.lua' }, wait = true })
+    --     -- require('lazy.core.config').plugins['nvim-platformio.lua']._.enabled = true
+    --     require('lazy.core.config').plugins['nvim-platformio.lua']._.disabled = false
+    --     print('test')
+    --     -- It's good practice to then run the command again
+    --     -- vim.cmd('Piocmdf')
+    --   end,
+    -- })
+    return false
   end,
 
   -- dependencies are always lazy-loaded unless specified otherwise
@@ -61,6 +79,7 @@ return {
         { prefix .. 'ps',  '<cmd>' .. Piocmd .. ' run -t size<CR>',              desc = 'Program [S]ize',            icon = icon },
         { prefix .. 'pu',  '<cmd>' .. Piocmd .. ' run -t uploadfs<CR>',          desc = '[U]pload file system',      icon = icon },
         { prefix .. 'pe',  '<cmd>' .. Piocmd .. ' run -t erase<CR>',             desc = '[E]rase Flash',             icon = icon },
+        { prefix .. 'pi',  '<cmd>Pioinit<CR>',                                   desc = '[I]nit project',            icon = icon },
 
         { prefix .. 'd',   group = '[D]ependencies',                             icon = icon },
         { prefix .. 'dl',  '<cmd>' .. Piocmd .. ' pkg list<CR>',                 desc = '[L]ist packages',           icon = icon },
