@@ -3,12 +3,10 @@ return {
   'batoaqaa/nvim-platformio.lua',
   -- 'anurag3301/nvim-platformio.lua',
   -- cmd = { 'Pioinit', 'Piorun', 'Piocmdh', 'Piocmdf', 'Piolib', 'Piomon', 'Piodebug', 'Piodb' },
-  event = 'VeryLazy',
-  cond = function() -- start/load nvim-platformio when platformio.ini file exist in cwd
-    if vim.fn.filereadable('platformio.ini') == 1 then
-      return true
-    end
 
+  -- to use cond; first time you create project folder, you should create empty platformio.ini file
+  cond = function() -- start/load nvim-platformio when platformio.ini file exist in cwd
+    return vim.fn.filereadable('platformio.ini') == 1
     -- vim.api.nvim_create_autocmd('CmdUndefined', {
     --   pattern = 'Piocmdf',
     --   group = vim.api.nvim_create_augroup('LazyOrCond', { clear = true }),
@@ -22,7 +20,6 @@ return {
     --     -- vim.cmd('Piocmdf')
     --   end,
     -- })
-    return false
   end,
 
   -- dependencies are always lazy-loaded unless specified otherwise
