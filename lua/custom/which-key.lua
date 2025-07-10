@@ -1,7 +1,7 @@
 -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 return {
   'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  -- event = 'VimEnter', -- Sets the loading event to 'VimEnter'
   -- event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
 
   keys = {
@@ -90,9 +90,9 @@ return {
         end,
       },
 
-      { '\\', ':NvimTreeToggle<CR>', { silent = true, desc = 'Toggle NvimTree' } },
+      { '\\',        ':NvimTreeToggle<CR>',        { silent = true, desc = 'Toggle NvimTree' } },
       -- better descriptions
-      { 'gx', desc = 'Open with system app' },
+      { 'gx',        desc = 'Open with system app' },
       { '<leader>u', desc = '[U]ndo history' },
     },
   },

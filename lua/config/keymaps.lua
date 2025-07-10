@@ -119,7 +119,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 --
-keymap({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yank' }) -- delete without yank
+keymap({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yank' })      -- delete without yank
 keymap({ 'n', 'v' }, '<leader>c', '"_c', { desc = 'Change text without yank' }) -- Change text without yank
 -- keymap('x', 'p', 'pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })
 -- keymap('x', 'P', 'Pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })
@@ -138,4 +138,29 @@ vim.keymap.set('x', 'P', '"_c<C-r>+<Esc>') -- replace-paste in insert mode
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 -- vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
 
+-- function _G.toggle_which_key_preset()
+--   local wk = require('which-key')
+--
+--   -- Check the current preset and toggle to the other
+--   if vim.g.which_key_preset == 'modern' then
+--     vim.g.which_key_preset = 'helix'
+--   else
+--     vim.g.which_key_preset = 'modern'
+--   end
+--
+--   -- Re-run the setup function with the new preset
+--   wk.setup({
+--     preset = vim.g.which_key_preset,
+--   })
+--   local Config = require('which-key.config')
+--   Config.setup({
+--     preset = vim.g.which_key_preset
+--   })
+--
+--   vim.notify('Which-Key preset switched to: ' .. vim.g.which_key_preset, vim.log.levels.INFO)
+-- end
+--
+-- -- Create a user command to execute the toggle function
+-- vim.api.nvim_create_user_command('ToggleWhichKey', _G.toggle_which_key_preset, {})
+-- --
 -- vim: ts=2 sts=2 sw=2 et

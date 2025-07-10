@@ -41,10 +41,10 @@ require('lazy').setup({
   { 'xiyaowong/transparent.nvim', opts = { lazy = false } },
 
   require('custom/lsp-config'),
-  require('custom/nvim-platformio'),
   require('custom/conform'),
   require('custom/lint'),
-  --
+  require('custom/nvim-platformio'),
+  require('custom/which-key'),
 }, {
   rocks = { enabled = false },
   git = { log = { '--since=3 days ago' } },
