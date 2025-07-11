@@ -26,75 +26,98 @@ return {
 
         -- Comment out following line to disable the default platformio key mappings.
         menu_key = '<leader>\\', -- replace this key mapping to your convenience
+
+        --[[
+        --Below is the default configuration.
+        --you can add the following after platformio configuration to modify default.
+        --or make you own new mappings if you comment menu_key in configuration.
+        menu_bindings = {
+          node = 'menu',
+          desc = 'PlatformIO',
+          shortcut = '<leader>\\',
+          items = {
+            { node = 'item', desc = '[L]ist terminals',    shortcut = 'l', command = 'PioTermList' },
+            { node = 'item', desc = '[T]erminal Core CLI', shortcut = 't', command = 'Piocmdf' },
+            {
+              node = 'menu',
+              desc = '[G]eneral',
+              shortcut = 'g',
+              items = {
+                { node = 'item', desc = '[B]uild',       shortcut = 'b', command = 'Piocmdf run' },
+                { node = 'item', desc = '[U]pload',      shortcut = 'u', command = 'Piocmdf run -t upload' },
+                { node = 'item', desc = '[M]onitor',     shortcut = 'm', command = 'Piocmdh run -t monitor' },
+                { node = 'item', desc = '[C]lean',       shortcut = 'c', command = 'Piocmdf run -t clean' },
+                { node = 'item', desc = '[F]ull clean',  shortcut = 'f', command = 'Piocmdf run -t fullclean' },
+                { node = 'item', desc = '[D]evice list', shortcut = 'd', command = 'Piocmdf device list' },
+              },
+            },
+            {
+              node = 'menu',
+              desc = '[P]latform',
+              shortcut = 'p',
+              items = {
+                { node = 'item', desc = '[B]uild file system',  shortcut = 'b', command = 'Piocmdf run -t buildfs' },
+                { node = 'item', desc = 'Program [S]ize',       shortcut = 's', command = 'Piocmdf run -t size' },
+                { node = 'item', desc = '[U]pload file system', shortcut = 'u', command = 'Piocmdf run -t uploadfs' },
+                { node = 'item', desc = '[E]rase Flash',        shortcut = 'e', command = 'Piocmdf run -t erase' },
+              },
+            },
+            {
+              node = 'menu',
+              desc = '[D]ependencies',
+              shortcut = 'd',
+              items = {
+                { node = 'item', desc = '[L]ist packages',     shortcut = 'l', command = 'Piocmdf pkg list' },
+                { node = 'item', desc = '[O]utdated packages', shortcut = 'o', command = 'Piocmdf pkg outdated' },
+                { node = 'item', desc = '[U]pdate packages',   shortcut = 'u', command = 'Piocmdf pkg update' },
+              },
+            },
+            {
+              node = 'menu',
+              desc = '[A]dvanced',
+              shortcut = 'a',
+              items = {
+                { node = 'item', desc = '[T]est',                 shortcut = 't', command = 'Piocmdf test' },
+                { node = 'item', desc = '[C]heck',                shortcut = 'c', command = 'Piocmdf check' },
+                { node = 'item', desc = '[D]ebug',                shortcut = 'd', command = 'Piocmdf debug' },
+                { node = 'item', desc = 'Compilation Data[b]ase', shortcut = 'b', command = 'Piocmdf run -t compiledb' },
+                -- {
+                --   node = 'menu',
+                --   desc = '[V]erbose',
+                --   shortcut = 'v',
+                --   items = {
+                --     { node = 'item', desc = 'Verbose [B]uild',  shortcut = 'b', command = 'Piocmdf run -v' },
+                --     { node = 'item', desc = 'Verbose [U]pload', shortcut = 'u', command = 'Piocmdf run -v -t upload' },
+                --     { node = 'item', desc = 'Verbose [T]est',   shortcut = 't', command = 'Piocmdf test -v' },
+                --     { node = 'item', desc = 'Verbose [C]heck',  shortcut = 'c', command = 'Piocmdf check -v' },
+                --     { node = 'item', desc = 'Verbose [D]ebug',  shortcut = 'd', command = 'Piocmdf debug -v' },
+                --   },
+                -- },
+              },
+            },
+            {
+              node = 'menu',
+              desc = '[R]emote',
+              shortcut = 'r',
+              items = {
+                { node = 'item', desc = 'Remote [U]pload',  shortcut = 'u', command = 'Piocmdf remote run -t upload' },
+                { node = 'item', desc = 'Remote [T]est',    shortcut = 't', command = 'Piocmdf remote test' },
+                { node = 'item', desc = 'Remote [M]onitor', shortcut = 'm', command = 'Piocmdh remote run -t monitor' },
+                { node = 'item', desc = 'Remote [D]evices', shortcut = 'd', command = 'Piocmdf remote device list' },
+              },
+            },
+            {
+              node = 'menu',
+              desc = '[M]iscellaneous',
+              shortcut = 'm',
+              items = {
+                { node = 'item', desc = '[U]pgrade PlatformIO Core', shortcut = 'u', command = 'Piocmdf upgrade' },
+              },
+            },
+          },
+        },
+        --]]
       })
-
-      --[[
-      --Below is the default configuration.
-      --you can add the following after platformio configuration to modify default.
-      --or make you own new mappings if you comment menu_key in configuration.
-      local prefix = require('platformio').config.menu_key or '<leader>\\'
-      local wok, wk = pcall(require, 'which-key') --will also load the package if it isn't loaded already
-      if not wok then
-        vim.api.nvim_echo({
-          { 'which-key plugin not found!', 'ErrorMsg' },
-        }, true, {})
-      else
-        local icon = { icon = '  ', color = 'orange' }
-        local Piocmd = 'Piocmdf' -- 'Piocmdh' (horizontal terminal)  'Piocmdf' (float terminal)
-        wk.add({
-          mode = { 'n', 'v' },   -- NORMAL and VISUAL mode
-          { prefix,          group = '[P]latformIO:',                              icon = icon },
-
-          -- { prefix .. 'g', hidden = true}, -- delete group
-          { prefix .. 'g',   group = '[G]eneral',                                  icon = icon },
-          { prefix .. 'gb',  '<cmd>' .. Piocmd .. ' run<CR>',                      desc = '[B]uild',                   icon = icon },
-          { prefix .. 'gu',  '<cmd>' .. Piocmd .. ' run -t upload<CR>',            desc = '[U]pload',                  icon = icon },
-          -- { prefix .. 'gm', '<Nop>', hidden = true }, -- delete keymapping
-          { prefix .. 'gm',  '<cmd>' .. 'Piocmdh' .. ' run -t monitor<CR>',        desc = '[M]onitor',                 icon = icon },
-          { prefix .. 'gc',  '<cmd>' .. Piocmd .. ' run -t clean<CR>',             desc = '[C]lean',                   icon = icon },
-          { prefix .. 'gf',  '<cmd>' .. Piocmd .. ' run -t fullclean<CR>',         desc = '[F]ull clean',              icon = icon },
-          { prefix .. 'gd',  '<cmd>' .. Piocmd .. ' device list<CR>',              desc = '[D]evice list',             icon = icon },
-
-          { prefix .. 'p',   group = '[P]latform',                                 icon = icon },
-          { prefix .. 'pb',  '<cmd>' .. Piocmd .. ' run -t buildfs<CR>',           desc = '[B]uild file system',       icon = icon },
-          { prefix .. 'ps',  '<cmd>' .. Piocmd .. ' run -t size<CR>',              desc = 'Program [S]ize',            icon = icon },
-          { prefix .. 'pu',  '<cmd>' .. Piocmd .. ' run -t uploadfs<CR>',          desc = '[U]pload file system',      icon = icon },
-          { prefix .. 'pe',  '<cmd>' .. Piocmd .. ' run -t erase<CR>',             desc = '[E]rase Flash',             icon = icon },
-          { prefix .. 'pi',  '<cmd>Pioinit<CR>',                                   desc = '[I]nit project',            icon = icon },
-
-          { prefix .. 'd',   group = '[D]ependencies',                             icon = icon },
-          { prefix .. 'dl',  '<cmd>' .. Piocmd .. ' pkg list<CR>',                 desc = '[L]ist packages',           icon = icon },
-          { prefix .. 'do',  '<cmd>' .. Piocmd .. ' pkg outdated<CR>',             desc = '[O]utdated packages',       icon = icon },
-          { prefix .. 'du',  '<cmd>' .. Piocmd .. ' pkg update<CR>',               desc = '[U]pdate packages',         icon = icon },
-
-          { prefix .. 'a',   group = '[A]dvanced',                                 icon = icon },
-          { prefix .. 'at',  '<cmd>' .. Piocmd .. ' test<CR>',                     desc = '[T]est',                    icon = icon },
-          { prefix .. 'ac',  '<cmd>' .. Piocmd .. ' check<CR>',                    desc = '[C]heck',                   icon = icon },
-          { prefix .. 'ad',  '<cmd>' .. Piocmd .. ' debug<CR>',                    desc = '[D]ebug',                   icon = icon },
-          { prefix .. 'ab',  '<cmd>' .. Piocmd .. ' run -t compiledb<CR>',         desc = 'Compilation Data[b]ase',    icon = icon },
-
-          { prefix .. 'av',  group = '[V]erbose',                                  icon = icon },
-          { prefix .. 'avb', '<cmd>' .. Piocmd .. ' run -v<CR>',                   desc = 'Verbose [B]uild',           icon = icon },
-          { prefix .. 'avu', '<cmd>' .. Piocmd .. ' run -v -t upload<CR>',         desc = 'Verbose [U]pload',          icon = icon },
-          { prefix .. 'avt', '<cmd>' .. Piocmd .. ' test -v<CR>',                  desc = 'Verbose [T]est',            icon = icon },
-          { prefix .. 'avc', '<cmd>' .. Piocmd .. ' check -v<CR>',                 desc = 'Verbose [C]heck',           icon = icon },
-          { prefix .. 'avd', '<cmd>' .. Piocmd .. ' debug -v<CR>',                 desc = 'Verbose [D]ebug',           icon = icon },
-
-          { prefix .. 'r',   group = '[R]emote',                                   icon = icon },
-          { prefix .. 'ru',  '<cmd>' .. Piocmd .. ' remote run -t upload<CR>',     desc = 'Remote [U]pload',           icon = icon },
-          { prefix .. 'rt',  '<cmd>' .. Piocmd .. ' remote test<CR>',              desc = 'Remote [T]est',             icon = icon },
-          { prefix .. 'rm',  '<cmd>' .. 'Piocmdh' .. ' remote run -t monitor<CR>', desc = 'Remote [M]onitor',          icon = icon },
-          { prefix .. 'rd',  '<cmd>' .. Piocmd .. ' remote device list<CR>',       desc = 'Remote [D]evices',          icon = icon },
-
-          { prefix .. 'm',   group = '[M]iscellaneous',                            icon = icon },
-          { prefix .. 'mu',  '<cmd>' .. Piocmd .. ' upgrade<CR>',                  desc = '[U]pgrade PlatformIO Core', icon = icon },
-
-          -- { prefix .. 'l', '<Nop>', hidden = true }, -- to delete which-key mapping
-          { prefix .. 'l',   '<cmd>' .. 'PioTermList' .. ' <CR>',                  desc = '[L]ist terminals',          icon = icon },
-          { prefix .. 't',   '<cmd>' .. Piocmd .. '<CR>',                          desc = '[T]erminal Core CLI',       icon = icon },
-        })
-      end
-      --]]
     end
   end,
 }
