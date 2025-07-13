@@ -97,6 +97,23 @@ vim.api.nvim_create_autocmd({
   end,
   desc = 'Disable relative number in insert mode',
 })
+-- In your init.lua or a loaded config file
+
+-- vim.g.enable_toggle_me_plugin = true -- Default to enabled, or false if you want it off by default
+
+vim.api.nvim_create_user_command('ReloadPlugin', function()
+  -- vim.g.enable_toggle_me_plugin = not vim.g.enable_toggle_me_plugin
+  print("Toggling 'toggle-me-plugin' to: " .. (vim.g.enable_toggle_me_plugin and 'enabled' or 'disabled'))
+
+  -- Crucially, reload lazy.nvim to apply the change
+  require('lazy').reload()
+
+  -- You might want to also re-source your init.lua if the global variable
+  -- is set there, to ensure it's picked up before the Lazy reload.
+  -- :source $MYVIMCONFIG/init.lua
+end, {
+  desc = 'Toggle the "toggle-me-plugin" on/off and reload lazy.nvim',
+})
 ------------------------
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

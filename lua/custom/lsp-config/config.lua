@@ -23,7 +23,7 @@ local ensure_installed = {
   'isort',
   'prettier',
   'prettierd',
-  'pyright',
+  -- 'basedpyright',
   'shfmt',
   'stylua',
   'yamlfmt',
