@@ -42,9 +42,9 @@ require('lazy').setup({
 
   require('custom/lsp-config'),
   require('custom/conform'),
-  require('custom/lint'),
-  require('custom/nvim-platformio'),
-  require('custom/which-key'),
+  -- require('custom/lint'),
+  -- require('custom/nvim-platformio'),
+  -- require('custom/which-key'),
 }, {
   rocks = { enabled = false },
   git = { log = { '--since=3 days ago' } },
