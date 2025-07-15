@@ -1,10 +1,3 @@
--- This file is automatically loaded by plugins.core
--- LazyVim picker to use.
--- Can be one of: telescope, fzf
--- Leave it to "auto" to automatically use the picker
--- enabled with `:LazyExtras`
-vim.g.lazyvim_picker = 'auto'
-
 -- LazyVim root dir detection
 -- Each entry can be:
 -- * the name of a detector function like `lsp` or `cwd`
@@ -62,7 +55,7 @@ opt.conceallevel = 2                                    -- Hide * markup for bol
 opt.confirm = true                                      -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true                                   -- Enable highlighting of the current line
 
--- LazyVim auto format
+-- auto format
 vim.g.autoformat = true
 opt.formatexpr = "v:lua.require'conform'.formatexpr()" --"v:lua.require'lazyvim.util'.format.formatexpr()"
 opt.formatoptions = 'jcroqlnt'                         -- tcqj

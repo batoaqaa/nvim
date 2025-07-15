@@ -80,4 +80,23 @@ return {
     end,
   },
 }
+-- return {
+--   'echasnovski/mini.surround',
+--   branch = 'stable',
+--   main = 'mini.surround',
+--   opts = {
+--     search_method = 'cover_or_next',
+--   },
+--   config = function(PluginSpec)
+--     local options = nil
+--
+--     if type(PluginSpec.opts) == 'function' then
+--       options = PluginSpec.opts(PluginSpec)
+--     elseif type(PluginSpec.opts) ~= 'nil' then
+--       options = PluginSpec.opts
+--     end
+--
+--     require(PluginSpec.main).setup(options)
+--   end
+-- }
 -- vim: ts=2 sts=2 sw=2 et

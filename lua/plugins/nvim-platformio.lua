@@ -3,11 +3,36 @@ return {
   -- 'anurag3301/nvim-platformio.lua',
   -- cmd = { 'Pioinit', 'Piorun', 'Piocmdh', 'Piocmdf', 'Piolib', 'Piomon', 'Piodebug', 'Piodb' },
 
-  -- to use cond; first time you create project folder, you should create empty platformio.ini file
-  cond = function() -- start/load nvim-platformio when platformio.ini file exist in cwd
-    return vim.fn.filereadable('platformio.ini') == 1
+  -- optional: cond used to enable/disable platformio
+  -- based on existance of platformio.ini file in cwd.
+  -- You can enable platformio plugin, using :PioEnable command
+  cond = function()
+    if vim.fn.filereadable('platformio.ini') ~= 1 then
+      vim.api.nvim_create_user_command('PioEnable', function() --available only if no platformio.ini in cwd
+        if vim.fn.filereadable('platformio.ini') ~= 1 then
+          vim.g.platformioEnabled = true
+          vim.notify('PlatformIO enable start ...', vim.log.levels.INFO, { title = 'PlatformIO' })
+          require('lazy').restore({ show = false })
+          vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+            pattern = 'LazyRestore',
+            once = true,
+            callback = function()
+              require('lazy').load({ plugins = { 'nvim-platformio.lua' } })
+              vim.notify('PlatformIO enable complete!', vim.log.levels.INFO, { title = 'PlatformIO' })
+              vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+                pattern = 'LazyLoad',
+                once = true,
+                callback = function()
+                  vim.api.nvim_command('Pioinit')
+                end,
+              })
+            end,
+          })
+        end
+      end, {})
+    end
+    return (vim.fn.filereadable('platformio.ini') == 1) or vim.g.platformioEnabled
   end,
-
   -- dependencies are always lazy-loaded unless specified otherwise
   dependencies = {
     { 'akinsho/toggleterm.nvim' },
@@ -16,20 +41,20 @@ return {
     { 'nvim-lua/plenary.nvim' },
     { 'folke/which-key.nvim' },
   },
+  opts = {
+    -- config = function()
+    --   local pok, platformio = pcall(require, 'platformio')
+    --   if pok then
+    --     platformio.setup({
+    lsp = 'clangd', --default: ccls, other option: clangd
+    -- If you pick clangd, it also creates compile_commands.json
 
-  config = function()
-    local pok, platformio = pcall(require, 'platformio')
-    if pok then
-      platformio.setup({
-        lsp = 'clangd', --default: ccls, other option: clangd
-        -- If you pick clangd, it also creates compile_commands.json
+    -- Uncomment out following line to enable platformio menu.
+    menu_key = '<leader>\\',  -- replace this menu key  to your convenience
+    menu_name = 'PlatformIO', -- replace this menu name to your convenience
 
-        -- Uncomment out following line to enable platformio menu.
-        menu_key = '<leader>\\',  -- replace this menu key  to your convenience
-        menu_name = 'PlatformIO', -- replace this menu name to your convenience
-
-        -- Following are the default keybindings, you can overwrite them in the config
-        --[[
+    -- Following are the default keybindings, you can overwrite them in the config
+    --[[
         menu_bindings = {
           { node = 'item', desc = '[L]ist terminals',    shortcut = 'l', command = 'PioTermList' },
           { node = 'item', desc = '[T]erminal Core CLI', shortcut = 't', command = 'Piocmdf' },
@@ -111,7 +136,8 @@ return {
           },
         },
         ]]
-      })
-    end
-  end,
+    --     })
+    --   end
+    -- end,
+  },
 }
