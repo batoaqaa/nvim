@@ -4,35 +4,38 @@ return {
   -- cmd = { 'Pioinit', 'Piorun', 'Piocmdh', 'Piocmdf', 'Piolib', 'Piomon', 'Piodebug', 'Piodb' },
 
   -- optional: cond used to enable/disable platformio
-  -- based on existance of platformio.ini file in cwd.
+  -- based on existance of platformio.ini file and .pio folder in cwd.
   -- You can enable platformio plugin, using :PioEnable command
   cond = function()
-    if vim.fn.filereadable('platformio.ini') ~= 1 then
+    local platformioRootDir = vim.fs.root(vim.fn.getcwd(), { 'platformio.ini' })
+    if platformioRootDir and vim.fs.find('.pio', { path = platformioRootDir, type = 'directory' })[1] then
+      vim.g.platformioRootDir = platformioRootDir
+    else
       vim.api.nvim_create_user_command('PioEnable', function() --available only if no platformio.ini in cwd
-        if vim.fn.filereadable('platformio.ini') ~= 1 then
-          vim.g.platformioEnabled = true
-          vim.notify('PlatformIO enable start ...', vim.log.levels.INFO, { title = 'PlatformIO' })
-          require('lazy').restore({ show = false })
-          vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
-            pattern = 'LazyRestore',
-            once = true,
-            callback = function()
-              require('lazy').load({ plugins = { 'nvim-platformio.lua' } })
-              vim.notify('PlatformIO enable complete!', vim.log.levels.INFO, { title = 'PlatformIO' })
-              vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
-                pattern = 'LazyLoad',
-                once = true,
-                callback = function()
-                  vim.api.nvim_command('Pioinit')
-                end,
-              })
-            end,
-          })
-        end
+        vim.g.platformioRootDir = vim.fn.getcwd()
+        vim.notify('PlatformIO enable start ...', vim.log.levels.INFO, { title = 'PlatformIO' })
+        require('lazy').restore({ show = false })
+        vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+          pattern = 'LazyRestore',
+          once = true,
+          callback = function()
+            require('lazy').load({ plugins = { 'nvim-platformio.lua' } })
+            vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+              pattern = 'LazyLoad',
+              once = true,
+              callback = function()
+                vim.notify('PlatformIO enable complete!', vim.log.levels.INFO, { title = 'PlatformIO' })
+                vim.api.nvim_command('Pioinit')
+              end,
+            })
+          end,
+        })
       end, {})
     end
-    return (vim.fn.filereadable('platformio.ini') == 1) or vim.g.platformioEnabled
+
+    return vim.g.platformioRootDir -- or vim.g.platformioEnabled -- or (vim.fn.filereadable('platformio.ini') == 1)
   end,
+
   -- dependencies are always lazy-loaded unless specified otherwise
   dependencies = {
     { 'akinsho/toggleterm.nvim' },
@@ -50,7 +53,7 @@ return {
     -- If you pick clangd, it also creates compile_commands.json
 
     -- Uncomment out following line to enable platformio menu.
-    menu_key = '<leader>\\',  -- replace this menu key  to your convenience
+    menu_key = '<leader>\\', -- replace this menu key  to your convenience
     menu_name = 'PlatformIO', -- replace this menu name to your convenience
 
     -- Following are the default keybindings, you can overwrite them in the config

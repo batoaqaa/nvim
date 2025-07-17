@@ -84,9 +84,18 @@ end, {
 -- })
 ------------------------
 
--- vim.api.nvim_create_user_command('PioEnable', function() --available only if no platformio.ini in cwd
---   if vim.fn.filereadable('platformio.ini') ~= 1 then
---     vim.g.platformioEnabled = true
+-- Get the startup directory and store it in a global variable
+-- local platformioRootDir = vim.fs.root(vim.fn.getcwd(), { 'platformio.ini' })
+-- if platformioRootDir and vim.fs.find('.pio', { path = platformioRootDir, type = 'directory' })[1] then
+--   vim.g.platformioRootDir = platformioRootDir
+-- end
+-- -- vim.g.nvimStartDir = vim.fn.getcwd()
+-- -- if vim.fn.filereadable(vim.g.nvimStartDir .. 'platformio.ini') ~= 1 then
+-- if not vim.g.platformioRootDir then
+--   vim.api.nvim_create_user_command('PioEnable', function() --available only if no platformio.ini in cwd
+--     -- if vim.fn.filereadable(vim.g.nvimStartDir .. 'platformio.ini') ~= 1 then
+--     -- vim.g.platformioEnabled = true
+--     vim.g.platformioRootDir = vim.fn.getcwd()
 --     vim.notify('PlatformIO enable start ...', vim.log.levels.INFO, { title = 'PlatformIO' })
 --     require('lazy').restore({ show = false })
 --     vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
@@ -104,8 +113,9 @@ end, {
 --         })
 --       end,
 --     })
---   end
--- end, {})
+--     -- end
+--   end, {})
+-- end
 
 -- vim.api.nvim_create_user_command('PioToggle', function()
 --   vim.notify('PlatformIO Starting ...', vim.log.levels.INFO, { title = 'PlatformIO' })
