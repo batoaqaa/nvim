@@ -84,39 +84,6 @@ end, {
 -- })
 ------------------------
 
--- Get the startup directory and store it in a global variable
--- local platformioRootDir = vim.fs.root(vim.fn.getcwd(), { 'platformio.ini' })
--- if platformioRootDir and vim.fs.find('.pio', { path = platformioRootDir, type = 'directory' })[1] then
---   vim.g.platformioRootDir = platformioRootDir
--- end
--- -- vim.g.nvimStartDir = vim.fn.getcwd()
--- -- if vim.fn.filereadable(vim.g.nvimStartDir .. 'platformio.ini') ~= 1 then
--- if not vim.g.platformioRootDir then
---   vim.api.nvim_create_user_command('PioEnable', function() --available only if no platformio.ini in cwd
---     -- if vim.fn.filereadable(vim.g.nvimStartDir .. 'platformio.ini') ~= 1 then
---     -- vim.g.platformioEnabled = true
---     vim.g.platformioRootDir = vim.fn.getcwd()
---     vim.notify('PlatformIO enable start ...', vim.log.levels.INFO, { title = 'PlatformIO' })
---     require('lazy').restore({ show = false })
---     vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
---       pattern = 'LazyRestore',
---       once = true,
---       callback = function()
---         require('lazy').load({ plugins = { 'nvim-platformio.lua' } })
---         vim.notify('PlatformIO enable complete!', vim.log.levels.INFO, { title = 'PlatformIO' })
---         vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
---           pattern = 'LazyLoad',
---           once = true,
---           callback = function()
---             vim.api.nvim_command('Pioinit')
---           end,
---         })
---       end,
---     })
---     -- end
---   end, {})
--- end
-
 -- vim.api.nvim_create_user_command('PioToggle', function()
 --   vim.notify('PlatformIO Starting ...', vim.log.levels.INFO, { title = 'PlatformIO' })
 --   require('lazy').sync({ show = false })
@@ -134,3 +101,118 @@ end, {
 -- end, {
 --   desc = 'Sync lazy.nvim plugins without showing the UI',
 -- })
+
+-- vim.g.platformioEnabled = true
+vim.api.nvim_create_user_command('PioEnable', function() --available only if no platformio.ini in cwd
+  vim.g.platformioRootDir = vim.fn.getcwd()
+  vim.notify('PlatformIO enable start ...', vim.log.levels.INFO, { title = 'PlatformIO' })
+  local LazyUserEvents_group = vim.api.nvim_create_augroup('LazyUserEvents', { clear = true })
+
+  -- Access lazy's internal data to see if the plugin is already set up
+  local platformio_plugin = require('lazy.core.config').plugins['nvim-platformio.lua']
+  print(vim.inspect(require('lazy.core.config').plugins))
+  -- Check if the plugin exists and is not installed
+  if platformio_plugin and not platformio_plugin.specs then -- is_installed then
+    vim.notify('PlatformIO project detected. Installing nvim-platformio...', vim.log.levels.INFO)
+  end
+  -- Trigger after LazySync
+  -- require('lazy').install({ plugins = { 'batoaqaa/nvim-platformio.lua' }, show = false })
+  -- require('lazy').install({ plugins = { 'nvim-platformio.lua' }, show = false })
+  -- vim.cmd("Lazy install show=false")
+  -- require('lazy').restore({ show = false })
+  -- Check if the plugin is already defined in lazy's internal config
+  -- require('lazy').restore({ show = false })
+  -- if (vim.uv or vim.loop).fs_stat(vim.fn.stdpath('data') .. '/lazy/nvim-platformio.lua') == nil then
+  --   -- require('lazy').sync({ show = false })
+  --   -- else
+  --   --   require('lazy').restore({ show = false })
+  --   vim.defer_fn(function()
+  --     require('lazy').sync({ show = false })
+  --     -- require('lazy').restore({ show = false })
+  --   end, 0)
+  -- end
+
+  vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+    pattern = 'LazyInstall',
+    once = true,
+    group = LazyUserEvents_group,
+    callback = function(args)
+      print(args.match)
+      -- print(args.file)
+      -- print(vim.inspect(args.data))
+      vim.notify('PlatformIO installed', vim.log.levels.INFO, { title = 'PlatformIO' })
+      -- require('lazy').install({ show = false })
+      -- vim.defer_fn(function()
+      require('lazy').sync({ show = false })
+      --   -- require('lazy').restore({ show = false })
+      -- end, 0)
+    end,
+  })
+  vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+    pattern = 'LazySync',
+    once = true,
+    group = LazyUserEvents_group,
+    callback = function(args)
+      print(args.match)
+      -- print(args.file)
+      -- print(vim.inspect(args.data))
+      vim.notify('PlatformIO synced', vim.log.levels.INFO, { title = 'PlatformIO' })
+      -- require('lazy').install({ show = false })
+      require('lazy').load({ plugins = { 'nvim-platformio.lua' } })
+      -- require('lazy').restore({ show = false })
+      -- require('lazy').restore({ show = false })
+    end,
+  })
+  vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+    pattern = 'LazyRestore',
+    once = true,
+    group = LazyUserEvents_group,
+    callback = function(args)
+      print(args.match)
+      -- print(args.file)
+      -- print(vim.inspect(args.data))
+      vim.notify('PlatformIO restored', vim.log.levels.INFO, { title = 'PlatformIO' })
+      require('lazy').load({ plugins = { 'nvim-platformio.lua' } })
+    end,
+  })
+  vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+    pattern = 'LazyLoad',
+    once = true,
+    group = LazyUserEvents_group,
+    callback = function(args)
+      print(args.match)
+      -- print(args.file)
+      -- print(vim.inspect(args.data))
+      vim.notify('PlatformIO enable complete!', vim.log.levels.INFO, { title = 'PlatformIO' })
+      -- vim.api.nvim_command('Pioinit')
+    end,
+  })
+
+  -- Check if the plugin is already defined in lazy's internal config
+  -- require('lazy').restore({ show = false })
+  if (vim.uv or vim.loop).fs_stat(vim.fn.stdpath('data') .. '/lazy/nvim-platformio.lua') == nil then
+    -- require('lazy').sync({ show = false })
+    -- else
+    --   require('lazy').restore({ show = false })
+    vim.defer_fn(function()
+      require('lazy').sync({ show = false })
+      -- require('lazy').restore({ show = false })
+    end, 0)
+  end
+
+  -- vim.api.nvim_create_autocmd('User', { -- if enabled then load platformio plugin
+  --   pattern = { 'LazyLoad', 'LazyRestore' },
+  --   once = true,
+  --   callback = function(args)
+  --     if args.match == 'LazyRestore' then
+  --       vim.notify('PlatformIO restored', vim.log.levels.INFO, { title = 'PlatformIO' })
+  --       require('lazy').load({ plugins = { 'nvim-platformio.lua' } })
+  --     elseif args.match == 'LazyLoad' then
+  --       vim.notify('PlatformIO enable complete!', vim.log.levels.INFO, { title = 'PlatformIO' })
+  --       print('Data:', args.data)
+  --       -- vim.api.nvim_command('Pioinit')
+  --     end
+  --   end,
+  -- })
+  --
+end, {})
