@@ -1,3 +1,49 @@
+-- uses: core.utils.text_manipulation
+local function fallback_format(bufnr)
+  bufnr = bufnr or 0
+
+  -- Check buffer valid state
+  if not vim.api.nvim_buf_is_loaded(bufnr) then
+    return
+  end
+  if not vim.api.nvim_buf_get_option(bufnr, 'modifiable') then
+    return
+  end
+  if vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= '' then
+    return
+  end
+  if vim.api.nvim_buf_get_option(bufnr, 'readonly') then
+    return
+  end
+  if vim.api.nvim_buf_get_option(bufnr, 'filetype') == '' then
+    return
+  end
+  if vim.api.nvim_buf_get_option(bufnr, 'binary') then
+    return
+  end
+
+  -- Now do trimming and squeezing blank lines, etc
+  local with_preserved_view = require('core.utils.nvim_utils').with_preserved_view
+  local utils = require('core.utils.text_manipulation')
+
+  -- utils.trim_whitespace(bufnr)
+  -- utils.squeeze_blank_lines(bufnr)
+  utils.clean_buffer(bufnr)
+
+  -- Try LSP formatting if any client attached
+  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+  if #clients > 0 then
+    vim.lsp.buf.format({ bufnr = bufnr, async = false })
+  else
+    -- fallback manual indent reformat
+    vim.api.nvim_buf_call(bufnr, function()
+      with_preserved_view(function()
+        vim.cmd('normal! gg=G')
+      end)
+    end)
+  end
+end
+
 return {
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
@@ -19,26 +65,30 @@ return {
   opts = {
     -- Define your formatters
     lsp_fallback = true,
+
     formatters_by_ft = {
-      lua = { 'stylua' },
       cpp = { 'clang-format' },
       c = { 'clang-format' },
-      css = { 'prettierd', 'prettier' },
-      scss = { 'prettierd', 'prettier' },
-      sh = { 'shfmt' },
-      go = { 'goimports', 'gofmt' },
-      html = { 'htmlbeautifier' },
-      -- html = { 'prettier' },
-      ini = { 'prettier' },
-      dosini = { 'prettier' },
-      json = { 'prettier' },
+      css = { 'prettierd' }, -- 'prettier' },
       -- Conform can also run multiple formatters sequentially
+      scss = { 'prettierd', 'prettier' },
+      dosini = { 'prettier' },
+      go = { 'goimports', 'gofmt' },
+      graphql = { 'prettierd' },
+      html = { 'prettierd' },
+      ini = { 'prettier' },
+      javascript = { 'prettierd' }, -- 'prettier' },
+      javascriptreact = { 'prettierd' },
+      json = { 'prettierd' },
+      lua = { 'stylua' },
+      markdown = { 'prettierd' },
       python = { 'isort', 'black' },
-      --
-      -- You can use a sub-list to tell conform to run *until* a formatter
-      -- is found.
-      javascript = { 'prettierd', 'prettier' },
-      yaml = { 'yamlfmt' },
+      svelte = { 'prettierd' },
+      sh = { 'shfmt' },
+      typescript = { 'prettierd' },
+      typescriptreact = { 'prettierd' },
+      yaml = { 'prettierd' },
+      -- yaml = { 'yamlfmt' },
     },
     -- Set default options
     default_format_opts = {
@@ -47,9 +97,11 @@ return {
     notify_on_error = false,
 
     format_on_save = {
+
+      lsp_fallback = fallback_format,
+      timeout_ms = 2500,
       lsp_format = 'fallback',
       async = false,
-      timeout_ms = 1000,
     },
     -- Set up format-on-save
     -- Customize formatters
