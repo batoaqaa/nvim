@@ -2,7 +2,7 @@
 -- INFO: Mason packages install for lint and formater
 local mason = require('mason')
 
-mason.setup()
+-- mason.setup()
 
 mason.setup({
   PATH = 'append',
@@ -147,6 +147,7 @@ require('mason-lspconfig').setup({
 })
 -- vim.lsp.enable(lsp_serverss) -- uncoment this if no automatic_enable above.
 
+-- local opts = { buffer = bufnr, noremap = true, silent = true }
 ----------------------------------------------------------------------------------
 -- INFO: LspAttach autocommand start
 vim.api.nvim_create_autocmd('LspAttach', {
