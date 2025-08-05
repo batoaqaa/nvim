@@ -28,5 +28,5 @@ return {
     root_markers = { 'docker-compose.yaml', 'docker-compose.yml', 'compose.yaml', 'compose.yml' },
   },
   ts_ls = require('custom.lsp-config.langs.ts_ls'),
-  clangd = require('custom.lsp-config.langs.clangd'),
+  -- clangd = require('custom.lsp-config.langs.clangd'),
 }

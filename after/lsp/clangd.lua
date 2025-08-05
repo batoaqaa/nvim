@@ -61,7 +61,12 @@ local cmd = {
   '--background-index',
   '--clang-tidy',
   '--compile_args_from=filesystem',
-  '--compile-commands-dir=.',
+
+  --clangd automatically searches for compile_commands.json
+  --in the parent directories of the source file you are editing,
+  --and also in subdirectories named build/
+  '--compile-commands-dir=.', -- so this is in default directory (parent of /src) no need for it.
+
   '--enable-config',
   '--completion-parse=always',
   '--completion-style=detailed',
@@ -80,13 +85,16 @@ local cmd = {
   '--ranking-model=decision_forest',
 }
 local path = vim.fn.getcwd()
-local fname = string.format('%s\\clangd.json', path)
+local fname = string.format('%s\\.clangd_cmd', path)
 if vim.fn.filereadable(fname) == 1 then
   local ok, result = pcall(vim.fn.readfile, fname)
   if ok then
-    result = table.concat(result)
-    result = vim.json.decode(result)
-    cmd = vim.tbl_deep_extend('force', cmd or {}, result.cmd) --working fine
+    -- result = table.concat(result)
+    -- result = vim.json.decode(result)
+    -- cmd = vim.tbl_deep_extend('force', cmd or {}, result.cmd) --working fine
+    -- cmd = cmd.result
+    --
+    cmd = result
     -- print(vim.inspect(cmd))
   end
 end
