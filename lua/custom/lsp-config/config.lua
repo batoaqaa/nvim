@@ -118,6 +118,7 @@ vim.lsp.config('*', {
 -- INFO: 2 Defined in <rtp>/lsp/clangd.lua        override 1
 -- INFO: 4 Defined in <rtp>/after/lsp/clangd.lua  override 1 & 2 & 3
 -- suggest setting it in the after/ if you want to be sure it is setting your config and not overwritten by a default from a plugin.
+-- any lsp in this setup will be configured automatically, we are collecting lsp's names to enable later on
 local lsp_serverss = {}
 local lsp_dir = vim.fn.stdpath('config') .. '/after/lsp/'
 for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
@@ -127,6 +128,7 @@ for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
   if f then
     f:close()
   end
+  -- lsps will be configured regarless it starts with "--" or not
   -- Only include the file if it doesn't start with "-- disable" (space characters or no)
   if not first_line:match('^%-%-%s*disable.*') then --https://www.lua.org/pil/20.2.html
     local name = vim.fn.fnamemodify(file, ':t:r')   -- `:t` gets filename, `:r` removes extension
