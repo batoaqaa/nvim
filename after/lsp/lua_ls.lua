@@ -7,7 +7,6 @@ return {
     '.luarc.jsonc',
     '.luacheckrc',
     '.stylua.toml',
-    'stylua.toml',
     'selene.toml',
     'selene.yml',
     '.git',

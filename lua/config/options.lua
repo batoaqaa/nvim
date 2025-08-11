@@ -14,7 +14,7 @@ vim.g.lazygit_config = true
 
 -- Options for the LazyVim statuscolumn
 vim.g.lazyvim_statuscolumn = {
-  folds_open = false,  -- show fold sign when fold is open
+  folds_open = false, -- show fold sign when fold is open
   folds_githl = false, -- highlight fold sign with git sign color
 }
 
@@ -25,7 +25,7 @@ vim.g.lazyvim_statuscolumn = {
 -- LazyVim.terminal.setup("pwsh")
 vim.g.shell = vim.fn.executable('pwsh') and 'pwsh' or 'powershell'
 vim.g.shellcmdflag =
-'-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[Out-File:Encoding]=utf8;Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+  '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[Out-File:Encoding]=utf8;Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
 vim.g.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
 vim.g.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
 vim.g.shellquote = ''
@@ -51,61 +51,61 @@ opt.autowrite = true -- Enable auto write
 -- integration works automatically. Requires Neovim >= 0.10.0
 opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus' -- Sync with system clipboard
 opt.completeopt = 'menu,menuone,noselect'
-opt.conceallevel = 2                                    -- Hide * markup for bold and italic, but not markers with substitutions
-opt.confirm = true                                      -- Confirm to save changes before exiting modified buffer
-opt.cursorline = true                                   -- Enable highlighting of the current line
+opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
+opt.cursorline = true -- Enable highlighting of the current line
 
 -- auto format
 vim.g.autoformat = true
 opt.formatexpr = "v:lua.require'conform'.formatexpr()" --"v:lua.require'lazyvim.util'.format.formatexpr()"
-opt.formatoptions = 'jcroqlnt'                         -- tcqj
+opt.formatoptions = 'jcroqlnt' -- tcqj
 opt.grepformat = '%f:%l:%c:%m'
 --
 opt.grepprg = 'rg --vimgrep'
-opt.ignorecase = true    -- Ignore case
+opt.ignorecase = true -- Ignore case
 opt.inccommand = 'split' -- preview incremental substitute
 opt.jumpoptions = 'view'
-opt.laststatus = 3       -- global statusline
-opt.linebreak = true     -- Wrap lines at convenient points
-opt.list = true          -- Show some invisible characters (tabs...
+opt.laststatus = 3 -- global statusline
+opt.linebreak = true -- Wrap lines at convenient points
+opt.list = true -- Show some invisible characters (tabs...
 opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-opt.mouse = 'a'          -- Enable mouse mode
-opt.number = true        -- Print line number
+opt.mouse = 'a' -- Enable mouse mode
+opt.number = true -- Print line number
 opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
 -- opt.completeopt = { "menuone", "fuzzy", "noinsert", "preview" }
-opt.pumblend = 10         -- Popup blend
-opt.pumheight = 10        -- Maximum number of entries in a popup
+opt.pumblend = 10 -- Popup blend
+opt.pumheight = 10 -- Maximum number of entries in a popup
 opt.relativenumber = true -- Relative line numbers
-opt.scrolloff = 10        -- Lines of context
+opt.scrolloff = 10 -- Lines of context
 opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
-opt.showmode = false   -- Dont show mode since we have a statusline
-opt.sidescrolloff = 8  -- Columns of context
+opt.showmode = false -- Dont show mode since we have a statusline
+opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = 'yes' -- Always show the signcolumn, otherwise it would shift the text each time
-opt.smartcase = true   -- Don't ignore case with capitals
+opt.smartcase = true -- Don't ignore case with capitals
 opt.spelllang = { 'en' }
 opt.spelloptions:append('noplainbuffer')
-opt.splitbelow = true                         -- Put new windows below current
+opt.splitbelow = true -- Put new windows below current
 opt.splitkeep = 'screen'
-opt.splitright = true                         -- Put new windows right of current
+opt.splitright = true -- Put new windows right of current
 --opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
-opt.tabstop = 2                               -- Number of spaces tabs count for
+opt.tabstop = 2 -- Number of spaces tabs count for
 opt.softtabstop = 2
-opt.shiftround = true                         -- Round indent
-opt.shiftwidth = 2                            -- Size of an indent
-opt.smartindent = true                        -- Insert indents automatically
-opt.expandtab = true                          -- Use spaces instead of tabs
+opt.shiftround = true -- Round indent
+opt.shiftwidth = 2 -- Size of an indent
+opt.smartindent = true -- Insert indents automatically
+opt.expandtab = true -- Use spaces instead of tabs
 
-opt.termguicolors = true                      -- True color support
+opt.termguicolors = true -- True color support
 opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
 opt.undofile = true
 opt.undolevels = 10000
-opt.updatetime = 250               -- Save swap file and trigger CursorHold
-opt.virtualedit = 'block'          -- Allow cursor to move where there is no text in visual block mode
+opt.updatetime = 250 -- Save swap file and trigger CursorHold
+opt.virtualedit = 'block' -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = 'longest:full,full' -- Command-line completion mode
-opt.winborder = 'rounded'          -- use rounded borders on all floating windows
-opt.winminwidth = 5                -- Minimum window width
-opt.wrap = false                   -- Disable line wrap
+opt.winborder = 'rounded' -- use rounded borders on all floating windows
+opt.winminwidth = 5 -- Minimum window width
+opt.wrap = false -- Disable line wrap
 
 if vim.fn.has('nvim-0.10') == 1 then
   opt.smoothscroll = true

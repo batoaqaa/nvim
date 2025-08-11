@@ -131,7 +131,7 @@ for _, file in ipairs(vim.fn.globpath(lsp_dir, '*.lua', false, true)) do
   -- lsps will be configured regarless it starts with "--" or not
   -- Only include the file if it doesn't start with "-- disable" (space characters or no)
   if not first_line:match('^%-%-%s*disable.*') then --https://www.lua.org/pil/20.2.html
-    local name = vim.fn.fnamemodify(file, ':t:r')   -- `:t` gets filename, `:r` removes extension
+    local name = vim.fn.fnamemodify(file, ':t:r') -- `:t` gets filename, `:r` removes extension
     table.insert(lsp_serverss, name)
   end
 end
@@ -156,8 +156,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
   --desc = 'LSP actions',
   callback = function(args)
-    local client_id = args.data.client_id
-    local client = vim.lsp.get_client_by_id(client_id)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
     if client then
@@ -206,27 +205,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
       if not client:supports_method('textDocument/willSaveWaitUntil', { bufnr = bufnr }) then
         vim.api.nvim_create_autocmd('BufWritePre', {
           group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
-          buffer = args.buf,
-          callback = function()
-            if client:supports_method('textDocument/formatting', { bufnr = bufnr }) then
-              vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-            end
-            if client:supports_method('textDocument/codeAction', { bufnr = bufnr }) then
-              local function apply_code_action(action_type)
-                local ctx = { only = action_type, diagnostics = {} }
-                local actions = vim.lsp.buf.code_action({ context = ctx, apply = true, return_actions = true })
-
-                -- only apply if code action is available
-                if actions and #actions > 0 then
-                  vim.lsp.buf.code_action({ context = ctx, apply = true })
-                end
-              end
-              apply_code_action({ 'source.fixAll' })
-              apply_code_action({ 'source.organizeImports' })
-            end
+          buffer = bufnr,
+          callback = function(iargs)
+            -- using conform.nvim
+            -- if client:supports_method('textDocument/formatting', { bufnr = bufnr }) then
+            --     vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+            -- end
+            -- if client:supports_method('textDocument/codeAction', { bufnr = iargs.buf, id = client.id }) then
+            --   local function apply_code_action(action_type)
+            --     local ctx = { only = { action_type }, diagnostics = {} }
+            --     local actions = vim.lsp.buf.code_action({ context = ctx, apply = true, return_actions = true })
+            --     -- only apply if code action is available
+            --     if actions and #actions > 0 then
+            --       vim.lsp.buf.code_action({ context = ctx, apply = true })
+            --     end
+            --   end
+            --   apply_code_action({ 'quickfix' })
+            --   apply_code_action({ 'source.fixAll' })
+            --   apply_code_action({ 'source.organizeImports' })
+            -- end
           end,
         })
       end
+      --]]
       ------------------------------------------------------------------
       if client.server_capabilities.documentHighlightProvider then
         local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })

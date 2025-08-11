@@ -1,48 +1,66 @@
 -- uses: core.utils.text_manipulation
-local function fallback_format(bufnr)
-  bufnr = bufnr or 0
-
-  -- Check buffer valid state
-  if not vim.api.nvim_buf_is_loaded(bufnr) then
-    return
-  end
-  if not vim.api.nvim_buf_get_option(bufnr, 'modifiable') then
-    return
-  end
-  if vim.api.nvim_buf_get_option(bufnr, 'buftype') ~= '' then
-    return
-  end
-  if vim.api.nvim_buf_get_option(bufnr, 'readonly') then
-    return
-  end
-  if vim.api.nvim_buf_get_option(bufnr, 'filetype') == '' then
-    return
-  end
-  if vim.api.nvim_buf_get_option(bufnr, 'binary') then
-    return
-  end
-
-  -- Now do trimming and squeezing blank lines, etc
-  local with_preserved_view = require('core.utils.nvim_utils').with_preserved_view
-  local utils = require('core.utils.text_manipulation')
-
-  -- utils.trim_whitespace(bufnr)
-  -- utils.squeeze_blank_lines(bufnr)
-  utils.clean_buffer(bufnr)
-
-  -- Try LSP formatting if any client attached
-  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
-  if #clients > 0 then
-    vim.lsp.buf.format({ bufnr = bufnr, async = false })
-  else
-    -- fallback manual indent reformat
-    vim.api.nvim_buf_call(bufnr, function()
-      with_preserved_view(function()
-        vim.cmd('normal! gg=G')
-      end)
-    end)
-  end
-end
+-- local function fallback_format(bufnr)
+--   -- Get the buffer number of the current buffer
+--   local current_buf = vim.api.nvim_get_current_buf()
+--   bufnr = bufnr or current_buf
+--
+--   vim.api.nvim_echo({
+--     { 'fall!', 'ErrorMsg' },
+--   }, true, {})
+--   -- Check buffer valid state
+--   if not vim.api.nvim_buf_is_loaded(bufnr) then
+--     return
+--   end
+--   -- if not vim.api.nvim_buf_get_option(bufnr, 'modifiable') then
+--   if not vim.api.nvim_get_option_value('modifiable', { buf = bufnr }) then
+--     return
+--   end
+--   if vim.api.nvim_get_option_value('buftype', { buf = bufnr }) ~= '' then
+--     return
+--   end
+--   if vim.api.nvim_get_option_value('readonly', { buf = bufnr }) then
+--     return
+--   end
+--   if vim.api.nvim_get_option_value('filetype', { buf = bufnr }) == '' then
+--     return
+--   end
+--   if vim.api.nvim_get_option_value('binary', { buf = bufnr }) then
+--     return
+--   end
+--
+--   -- Now do trimming and squeezing blank lines, etc
+--   local with_preserved_view = require('core.utils.nvim_utils').with_preserved_view
+--   local utils = require('core.utils.text_manipulation')
+--
+--   -- utils.trim_whitespace(bufnr)
+--   -- utils.squeeze_blank_lines(bufnr)
+--   utils.clean_buffer(bufnr)
+--
+--   -- Try LSP formatting if any client attached
+--   local clients = vim.lsp.get_clients({ bufnr = bufnr })
+--   if #clients > 0 then
+--     if
+--         not clients[1]:supports_method('textDocument/willSaveWaitUntil', { bufnr = bufnr })
+--         and clients[1]:supports_method('textDocument/formatting', { bufnr = bufnr })
+--     then
+--       vim.lsp.buf.format({ bufnr = bufnr, id = clients[1].id, timeout_ms = 1000 })
+--     end
+--     -- vim.lsp.buf.format({ bufnr = bufnr, async = false })
+--     -- vim.api.nvim_echo({
+--     --     { 'if!', 'ErrorMsg' },
+--     -- }, true, {})
+--   else
+--     -- fallback manual indent reformat
+--     vim.api.nvim_buf_call(bufnr, function()
+--       with_preserved_view(function()
+--         vim.cmd('normal! gg=G')
+--       end)
+--     end)
+--     vim.api.nvim_echo({
+--       { 'else!', 'ErrorMsg' },
+--     }, true, {})
+--   end
+-- end
 
 return {
   'stevearc/conform.nvim',
@@ -53,7 +71,7 @@ return {
       -- Customize or remove this keymap to your liking
       '<leader>f',
       function()
-        require('conform').format({ async = true, lsp_fallback = true })
+        require('conform').format({ async = true, lsp_format = 'fallback' })
       end,
       mode = '',
       desc = 'Format buffer',
@@ -64,7 +82,7 @@ return {
   ---@type conform.setupOpts
   opts = {
     -- Define your formatters
-    lsp_fallback = true,
+    -- lsp_fallback = true,
 
     formatters_by_ft = {
       cpp = { 'clang-format' },
@@ -80,6 +98,7 @@ return {
       javascript = { 'prettierd' }, -- 'prettier' },
       javascriptreact = { 'prettierd' },
       json = { 'prettierd' },
+      -- lua = { 'stylua', lsp_format = 'fallback' },
       lua = { 'stylua' },
       markdown = { 'prettierd' },
       python = { 'isort', 'black' },
@@ -98,8 +117,8 @@ return {
 
     format_on_save = {
 
-      lsp_fallback = fallback_format,
-      timeout_ms = 2500,
+      -- lsp_fallback = fallback_format,
+      timeout_ms = 500,
       lsp_format = 'fallback',
       async = false,
     },
