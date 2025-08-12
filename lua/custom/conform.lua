@@ -85,11 +85,11 @@ return {
     -- lsp_fallback = true,
 
     formatters_by_ft = {
-      cpp = { 'clang-format' },
+      cpp = { 'clang_format' },
       c = { 'clang-format' },
       css = { 'prettierd' }, -- 'prettier' },
       -- Conform can also run multiple formatters sequentially
-      scss = { 'prettierd', 'prettier' },
+      scss = { 'prettier', 'prettierd' },
       dosini = { 'prettier' },
       go = { 'goimports', 'gofmt' },
       graphql = { 'prettierd' },
@@ -128,29 +128,67 @@ return {
       shfmt = {
         prepend_args = { '-i', '2' },
       },
-      --clang_format = {
-      --  command = 'clang-format',
-      --   args = {
-      --     '--style={'
-      --       .. 'BasedOnStyle: microsoft,'
-      --       .. 'PointerAlignment: Left,'
-      --       .. 'BreakStringLiterals: false,'
-      --       .. 'ColumnLimit: 0,'
-      --       .. 'IndentWidth: 2,'
-      --       .. 'ObjCBlockIndentWidth: 2,'
-      --       .. 'ConstructorInitializerIndentWidth: 2 ,'
-      --       .. 'ContinuationIndentWidth: 2 ,'
-      --       .. 'ObjCSpaceBeforeProtocolList: false,'
-      --       .. 'PenaltyBreakComment: 0,'
-      --       .. 'SortIncludes: true,'
-      --       .. 'TabWidth: 2,'
-      --       .. 'UseTab: Never' --ForIndentation'
-      --       .. '}',
-      --     '--fallback-style=LLVM',
-      --   },
-      --   -- prepend_args = { '--style=file', '--fallback-style=LLVM' },         --OK
-      --   -- prepend_args = { '--style=mozilla', '--fallback-style=LLVM' },    --OK
-      --},
+      clang_format = {
+        command = 'clang-format',
+        args = {
+          '--style={'
+            .. 'AlignAfterOpenBracket: Align,'
+            .. 'BasedOnStyle: mozilla,'
+            --     --
+            -- .. 'AlwaysBreakAfterDefinitionReturnType: TopLevel,' --deprecated use BreakAfterReturnType with TopLevelDefinitions
+            -- .. 'BreakAfterReturnType: None,'
+            -- .. 'BreakAfterReturnType: All,'
+            -- .. 'BreakAfterReturnType: AllDefinitions,'
+            .. 'BreakAfterReturnType: TopLevelDefinitions,'
+            -- .. 'BreakAfterReturnType: TopLevel,'
+            --     --
+            --     .. 'BraceWrapping:{'
+            --     .. 'AfterCaseLabel:  false,'
+            --     .. 'AfterClass:      true,'
+            --     .. 'AfterControlStatement: Never,'
+            --     .. 'AfterEnum:       true,'
+            --     .. 'AfterExternBlock: true,'
+            --     .. 'AfterFunction:   true,'
+            --     .. 'AfterNamespace:  false,'
+            --     .. 'AfterObjCDeclaration: false,'
+            --     .. 'AfterStruct:     true,'
+            --     .. 'AfterUnion:      true,'
+            --     .. 'BeforeCatch:     false,'
+            --     .. 'BeforeElse:      false,'
+            --     .. 'BeforeLambdaBody: false,'
+            --     .. 'BeforeWhile:     false,'
+            --     .. 'IndentBraces:    false,'
+            --     .. 'SplitEmptyFunction: true,'
+            --     .. 'SplitEmptyRecord: false,'
+            --     .. 'SplitEmptyNamespace: true,'
+            --     .. '},'
+            --     --
+            --     .. 'BreakStringLiterals: false,'
+            .. 'ColumnLimit: 120,'
+            --     .. 'ConstructorInitializerIndentWidth: 2 ,'
+            --     .. 'ContinuationIndentWidth: 2 ,'
+            --     .. 'IndentWidth: 2,'
+            --     .. 'ObjCBlockIndentWidth: 2,'
+            --     .. 'ObjCSpaceBeforeProtocolList: false,'
+            --     .. 'PenaltyBreakComment: 0,'
+            --     .. 'PointerAlignment: Right,'
+            --     .. 'SortIncludes: true,'
+            --     .. 'TabWidth: 2,'
+            --     .. 'UseTab: Never' --ForIndentation'
+            .. '}',
+          '--fallback-style=LLVM',
+        }, --OK
+        --
+        -- prepend_args = { '--style=file', '--fallback-style=LLVM' },         --OK
+        --
+        -- prepend_args = { '--style=mozilla', '--fallback-style=LLVM' }, --OK
+        -- prepend_args = { '--style=google', '--fallback-style=LLVM' }, --OK
+        -- prepend_args = { '--style=microsoft', '--fallback-style=LLVM' }, --OK
+        -- prepend_args = { '--style=LLVM', '--fallback-style=LLVM' }, --OK
+        -- prepend_args = { '--style=Chromium', '--fallback-style=LLVM' }, --OK
+        -- prepend_args = { '--style=WebKit', '--fallback-style=LLVM' }, --OK
+        -- prepend_args = { '--style=GNU', '--fallback-style=LLVM' }, --OK
+      },
     },
   },
   config = function(_, opts)
