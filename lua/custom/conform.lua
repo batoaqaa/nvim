@@ -133,7 +133,7 @@ return {
         args = {
           '--style={'
             .. 'AlignAfterOpenBracket: Align,'
-            .. 'BasedOnStyle: mozilla,'
+            .. 'BasedOnStyle: Chromium,'
             --     --
             -- .. 'AlwaysBreakAfterDefinitionReturnType: TopLevel,' --deprecated use BreakAfterReturnType with TopLevelDefinitions
             -- .. 'BreakAfterReturnType: None,'
