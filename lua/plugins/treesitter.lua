@@ -56,7 +56,7 @@ return {
       -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
       --  If you are experiencing weird indenting issues, add the language to
       --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-      additional_vim_regex_highlighting = { 'ruby' },
+      additional_vim_regex_highlighting = false,
     },
     indent = { enable = true, disable = { 'ruby' } },
 
@@ -85,7 +85,7 @@ return {
     playground = {
       enable = true,
       disable = {},
-      updatetime = 25,        -- Debounced time for highlighting nodes in the playground from source code
+      updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
       persist_queries = true, -- Whether the query persists across vim sessions
       keybindings = {
         toggle_query_editor = 'o',

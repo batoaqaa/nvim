@@ -1,5 +1,5 @@
 local overrides = function() --// colors)
-  local p = require("custom.colors")
+  local p = require('custom.colors')
   --// local p = colors.palette
   return {
     CursorLine = {
@@ -11,21 +11,21 @@ local overrides = function() --// colors)
       bold = true,
     },
     TreesitterContextBottom = {
-      link = "Visual",
+      link = 'Visual',
     },
     IlluminatedCurWord = {
       italic = true,
     },
     IlluminatedWordText = {
-      link = "CursorLine",
+      link = 'CursorLine',
       italic = true,
     },
     IlluminatedWordRead = {
-      link = "CursorLine",
+      link = 'CursorLine',
       italic = true,
     },
     IlluminatedWordWrite = {
-      link = "CursorLine",
+      link = 'CursorLine',
       italic = true,
     },
     Folded = {
@@ -96,7 +96,7 @@ local conf = {
       dragon = {},
       all = {
         ui = {
-          bg_gutter = "none",
+          bg_gutter = 'none',
         },
       },
     },
@@ -107,18 +107,18 @@ local conf = {
   native_lsp = {
     enabled = true,
     virtual_text = {
-      errors = { "italic" },
-      hints = { "italic" },
-      warnings = { "italic" },
-      information = { "italic" },
-      ok = { "italic" },
+      errors = { 'italic' },
+      hints = { 'italic' },
+      warnings = { 'italic' },
+      information = { 'italic' },
+      ok = { 'italic' },
     },
     underlines = {
-      errors = { "underline" },
-      hints = { "underline" },
-      warnings = { "underline" },
-      information = { "underline" },
-      ok = { "underline" },
+      errors = { 'underline' },
+      hints = { 'underline' },
+      warnings = { 'underline' },
+      information = { 'underline' },
+      ok = { 'underline' },
     },
     inlay_hints = {
       background = true,
@@ -128,7 +128,7 @@ local conf = {
   flash = true,
   mini = {
     enabled = true,
-    indentscope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+    indentscope_color = '', -- catppuccin color (eg. `lavender`) Default: text
   },
   neotree = false,
   dap = true,
@@ -144,8 +144,29 @@ return {
   --//   priority = 1000,
   --// }
   priority = 1000, -- Make sure to load this before all the other start plugins.
-  lazy = false,   -- make sure we load this during startup if it is your main colorscheme
+  lazy = false, -- make sure we load this during startup if it is your main colorscheme
 
+  --[[
+  'rose-pine/neovim',
+  name = 'rose-pine',
+  config = function()
+    vim.cmd('colorscheme rose-pine-dawn')
+    --]]
+  --[[
+  'rose-pine/neovim',
+  name = 'rose-pine',
+  config = function()
+    require('rose-pine').setup({
+      variant = 'dawn', -- Light variant
+      disable_italics = false,
+      styles = {
+        bold = true,
+        italic = true,
+        transparency = false,
+      },
+    })
+    vim.cmd.colorscheme('rose-pine')
+    --]]
   --[[ github colorscheme /
   -- github_dark
   -- github_dark_default
@@ -177,15 +198,15 @@ return {
   --//{ 'savq/melange-nvim', opts = { conf } },
   'savq/melange-nvim',
   config = function()
-    vim.cmd.colorscheme 'melange'
-  --end,
-  --]]
+    vim.cmd.colorscheme('melange')
+    --end,
+    --]]
 
   --[[ kanagawa colorscheme /
   'rebelot/kanagawa.nvim',
   opts = conf,
   config = function()
-    vim.cmd.colorscheme 'kanagawa'
+    vim.cmd.colorscheme('kanagawa')
     --end,
     --]]
 
@@ -205,33 +226,146 @@ return {
   --]]
 
   ---[[ catppuccin colorscheme /
-  "catppuccin/nvim",
+  'catppuccin/nvim',
   opts = conf,
-  name = "catppuccin",
+  name = 'catppuccin',
   config = function()
-    require("catppuccin").setup({
-      flavour = "mocha",
-      color_overrides = {
-        mocha = {
-          base = "#000000",
-          mantle = "#000000",
-          crust = "#000000",
-        },
+    require('catppuccin').setup({
+      flavour = 'latte', -- light theme
+
+      float = {
+        transparent = false, -- enable transparent floating windows
+        solid = false, -- use solid styling for floating windows, see |winborder|
       },
-      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" }),
-      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+      -- ... other options ...
+      styles = {
+        comments = { 'italic' },
+        conditionals = { 'italic' },
+      },
+
+      -- This is where you configure integrations and their floating windows
+      integrations = {
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        treesitter = true,
+        mason = true,
+        mini = true,
+        telescope = {
+          enabled = true,
+          -- style = "nvchad" -- optional: makes telescope borderless
+        },
+        which_key = true,
+        barbar = true,
+        markdown = true,
+        lightspeed = true,
+        ts_rainbow = true,
+        leap = true,
+
+        -- Native LSP: Customize the appearance of LSP-related floats
+        native_lsp = {
+          enabled = true,
+          virtual_text = {
+            errors = { 'italic' },
+            hints = { 'italic' },
+            warnings = { 'italic' },
+            information = { 'italic' },
+          },
+          underlines = {
+            errors = { 'underline' },
+            hints = { 'underline' },
+            warnings = { 'underline' },
+            information = { 'underline' },
+          },
+          inlay_hints = {
+            background = true, -- gives inlay hints a background color
+          },
+        },
+
+        -- LSP Saga: Another popular LSP UI plugin that uses floats extensively
+        lsp_saga = true,
+
+        -- Notify: For customizing notification popups (floats)
+        notify = true,
+
+        -- Noice: Modern UI plugin that replaces cmdline and messages (uses floats)
+        noice = true,
+
+        -- DAP: Debug Adapter Protocol UI
+        dap = true,
+        dap_ui = true,
+      },
+
+      -- Custom highlights specifically for floating windows
+      custom_highlights = function(colors)
+        return {
+          -- Customize the floating window border color
+          FloatBorder = { fg = colors.lavender, bg = colors.base },
+
+          -- Customize the background of floating windows
+          NormalFloat = { bg = colors.base },
+
+          -- Customize the title of floating windows
+          FloatTitle = { fg = colors.text, bg = colors.surface1, style = { 'bold' } },
+
+          -- For Telescope floating window specifically
+          TelescopeBorder = { fg = colors.lavender, bg = colors.base },
+          TelescopeNormal = { bg = colors.base },
+          TelescopePreviewBorder = { fg = colors.peach, bg = colors.base },
+          TelescopePreviewTitle = { fg = colors.base, bg = colors.peach },
+          TelescopePromptBorder = { fg = colors.sapphire, bg = colors.mantle },
+          TelescopePromptNormal = { fg = colors.text, bg = colors.mantle },
+          TelescopePromptTitle = { fg = colors.mantle, bg = colors.sapphire },
+          TelescopeResultsBorder = { fg = colors.base, bg = colors.base },
+          TelescopeResultsTitle = { fg = colors.base, bg = colors.base },
+
+          -- For Noice.nvim floating windows
+          NoicePopupmenu = { bg = colors.mantle },
+          NoicePopupmenuBorder = { fg = colors.lavender },
+
+          -- For LSP Saga floating windows
+          SagaBorder = { fg = colors.mauve },
+          SagaNormal = { bg = colors.mantle },
+        }
+      end,
     })
     -- Enable theme
-    require("catppuccin").load()
-    -- vim.cmd.colorscheme('catppuccin')
+    -- require('catppuccin').load()
+    vim.cmd.colorscheme('catppuccin')
     --end,
     --]]
 
     --[[ tokyonight colorscheme /
   'folke/tokyonight.nvim',
   opts = conf,
-  init = function()
-    vim.cmd.colorscheme('tokyonight-night')
+  config = function()
+    require('tokyonight').setup({
+      transparent = false,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = { bold = true },
+        variables = {},
+      },
+      on_colors = function(colors)
+        colors.bg_statusline = colors.fg_gutter -- Custom statusline background
+      end,
+      on_highlights = function(hl, colors)
+        -- Custom highlights
+        hl.LineNr = { fg = colors.comment }
+        hl.CursorLineNr = { fg = colors.fg, bold = true }
+        hl.Visual = { bg = colors.fg_gutter }
+
+        -- Better contrast for search results
+        hl.IncSearch = { bg = colors.orange, fg = colors.bg }
+        hl.Search = { bg = colors.orange, fg = colors.bg }
+
+        -- Custom telescope highlights
+        hl.TelescopeSelection = { bg = colors.fg_gutter }
+        hl.TelescopeBorder = { fg = colors.fg_gutter, bg = colors.bg }
+      end,
+    })
+    vim.cmd('colorscheme tokyonight-day')
     --end,
     --]]
 
