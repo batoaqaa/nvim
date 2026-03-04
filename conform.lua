@@ -79,7 +79,7 @@ return {
   },
   -- This will provide type hinting with LuaLS
   ---@module "conform"
-  --@type conform.setupOpts
+  ---@type conform.setupOpts
   opts = {
     -- Define your formatters
     -- lsp_fallback = true,
@@ -139,7 +139,7 @@ return {
             -- .. 'BreakAfterReturnType: None,'
             -- .. 'BreakAfterReturnType: All,'
             -- .. 'BreakAfterReturnType: AllDefinitions,'
-            -- .. 'BreakAfterReturnType: TopLevelDefinitions,'
+            .. 'BreakAfterReturnType: TopLevelDefinitions,'
             -- .. 'BreakAfterReturnType: TopLevel,'
             --     --
             --     .. 'BraceWrapping:{'

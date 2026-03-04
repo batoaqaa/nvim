@@ -58,6 +58,7 @@ return {
     --   if pok then
     --     platformio.setup({
     lsp = 'clangd', --default: ccls, other option: clangd
+    clangd_source = 'compiledb', -- value: ccls | compiledb, For detailed explation check :help platformio-clangd_source
     -- If you pick clangd, it also creates compile_commands.json
 
     -- Uncomment out following line to enable platformio menu.
