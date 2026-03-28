@@ -3,6 +3,7 @@ return {
     cmd = { 'arduino-language-server' },
     filetypes = { 'arduino' },
     root_markers = { '*.ino' },
+    workspace_required = true,
   },
   biome = {
     cmd = { 'biome', 'lsp-proxy' },

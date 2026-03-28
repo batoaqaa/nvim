@@ -1,3 +1,4 @@
+-- disable
 ---@type vim.lsp.Config
 return {
   name = 'basedpyright',
@@ -13,7 +14,8 @@ return {
   },
   settings = {
     python = {
-      venvPath = vim.env.VIRTUAL_ENV,
+      pythonPath = vim.env.VIRTUAL_ENV,
+      -- venvPath = vim.env.VIRTUAL_ENV,
     },
     basedpyright = {
       disableOrganizeImports = true,

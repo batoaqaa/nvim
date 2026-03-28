@@ -231,7 +231,10 @@ return {
   name = 'catppuccin',
   config = function()
     require('catppuccin').setup({
-      flavour = 'latte', -- light theme
+      -- flavour = 'latte', -- light theme
+      -- flavour = 'frappe', -- darker than latte
+      -- flavour = 'macchiato', -- medium
+      flavour = 'mocha', -- dark theme
 
       float = {
         transparent = false, -- enable transparent floating windows
@@ -365,7 +368,8 @@ return {
         hl.TelescopeBorder = { fg = colors.fg_gutter, bg = colors.bg }
       end,
     })
-    vim.cmd('colorscheme tokyonight-day')
+    -- vim.cmd('colorscheme tokyonight-day')
+    vim.cmd('colorscheme tokyonight')
     --end,
     --]]
 

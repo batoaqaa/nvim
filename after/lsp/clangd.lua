@@ -1,6 +1,6 @@
 --[[
 clangd depends on compile_commands.json file to be in the project working directory.
-Also, for project base configuratin, you should add another file "clangd.json" in the project working directory.
+Also, for project base configuratin, you should add another file ".clangd_cmd" in the project working directory.
 A sample file provided in the nvim configuration folder,
 {
     "cmd": [
@@ -102,6 +102,12 @@ end
 ---@type vim.lsp.Config
 return {
   cmd = cmd,
+  -- cmd = {
+  --   'clangd',
+  --   '--header-insertion=never',
+  --   '--query-driver=C:\\Users\\batoaqaa\\.platformio\\esp32c3\\packages\\toolchain-riscv32-esp\\bin\\riscv32-esp-elf-*',
+  --   '--clang-tidy',
+  -- },
   filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
   root_markers = {
     'CMakeLists.txt',
@@ -114,6 +120,7 @@ return {
     '.git',
     vim.uv.cwd(),
   },
+  workspace_required = true,
   single_file_support = true,
   init_options = {
     usePlaceholders = true,
