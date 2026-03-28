@@ -102,12 +102,6 @@ end
 ---@type vim.lsp.Config
 return {
   cmd = cmd,
-  -- cmd = {
-  --   'clangd',
-  --   '--header-insertion=never',
-  --   '--query-driver=C:\\Users\\batoaqaa\\.platformio\\esp32c3\\packages\\toolchain-riscv32-esp\\bin\\riscv32-esp-elf-*',
-  --   '--clang-tidy',
-  -- },
   filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
   root_markers = {
     'CMakeLists.txt',
