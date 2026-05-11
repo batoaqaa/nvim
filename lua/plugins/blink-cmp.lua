@@ -148,6 +148,7 @@ return {
       default = { 'snippets', 'lsp', 'lazydev', 'buffer' },
       providers = {
         lazydev = {
+          name = 'lazyDev',
           module = 'lazydev.integrations.blink',
           score_offset = 100,
         },
@@ -209,6 +210,11 @@ return {
     },
   },
 }
+-- { -- optional blink completion source for require statements and module annotations
+--   "saghen/blink.cmp",
+--   opts = {
+--   },
+-- }
 -- vim: set ts=2 sw=2 tw=78 et fenc=utf-8 ft=lua nospell:
 -- return {
 --   'saghen/blink.cmp',

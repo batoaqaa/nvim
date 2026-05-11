@@ -49,7 +49,7 @@ require('config.options')
 require('config.keymaps')
 
 -- [[ Configure python env ]]
-require('config.pynvim')
+-- require('config.pynvim')
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 require('config.lazyboot')

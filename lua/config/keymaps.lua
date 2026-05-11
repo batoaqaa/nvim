@@ -47,6 +47,8 @@ keymap('n', '<C-Down>', ':resize +2<CR>')
 keymap('n', '<C-Left>', ':vertical resize -2<CR>')
 keymap('n', '<C-Right>', ':vertical resize +2<CR>')
 
+keymap('n', '<leader>a', '<cmd>AerialToggle!<CR>')
+
 -- Naviagate buffers
 -- keymap('n', '<S-l>', ':bnext<CR>', { desc = 'Next Buffer' })
 -- keymap('n', '<S-h>', ':bprevious<CR>', { desc = 'Prev Buffer' })
@@ -61,7 +63,23 @@ keymap('n', '<leader>bb', ':bprevious<CR>', { desc = '[B]efore Buffer' })
 keymap('n', '<leader>ba', ':bnext<CR>', { desc = '[A]fter Buffer' })
 keymap('n', '<leader>bs', ':ball<CR>', { desc = '[S]how AllOpened Buffers' })
 keymap('n', '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', { desc = 'Toggle Pin' })
-keymap('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = '[D]elete Buffer' })
+
+-- keymap('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = '[D]elete Buffer' })
+keymap('n', '<leader>bd', function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local bufs = vim.fn.getbufinfo({ buflisted = 1 })
+
+  if #bufs <= 1 then
+    -- Create a new empty buffer
+    vim.cmd('enew')
+  else
+    -- Switch to the previous buffer
+    vim.cmd('bp')
+  end
+  -- Delete the buffer we started with (using pcall to ignore "No buffers deleted" errors)
+  pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
+end, { desc = '[D]elete Buffer' })
+
 keymap('n', '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', { desc = 'Delete Non-Pinned Buffers' })
 keymap('n', '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', { desc = 'Delete Other Buffers' })
 keymap('n', '<leader>br', '<Cmd>BufferLineCloseRight<CR>', { desc = 'Delete Buffers to the Right' })
@@ -119,7 +137,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 --
-keymap({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yank' })      -- delete without yank
+keymap({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without yank' }) -- delete without yank
 keymap({ 'n', 'v' }, '<leader>c', '"_c', { desc = 'Change text without yank' }) -- Change text without yank
 -- keymap('x', 'p', 'pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })
 -- keymap('x', 'P', 'Pgv"+y', { desc = 'Paste and keep original yank in unnamed register' })

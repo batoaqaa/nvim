@@ -43,7 +43,15 @@ return {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { 'filename' },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_x = {
+          function()
+            return _G.pio_install_status or ''
+          end,
+          'encoding',
+          'fileformat',
+          'filetype',
+        },
+        -- lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },

@@ -1,20 +1,36 @@
+local fok, fidget = pcall(require, 'fidget')
+if fok then
+  fidget.setup({
+    notification = {
+      override_vim_notify = true, -- This redirect vim.notify to fidget
+      -- How to configure notification groups when instantiated
+      configs = { default = require('fidget.notification').default_config },
+    },
+    progress = {
+      -- Clear notification group when LSP server detaches
+      clear_on_detach = function(client_id)
+        local client = vim.lsp.get_client_by_id(client_id)
+        return client and client.name or nil
+      end,
+      -- How to get a progress message's notification group key
+      notification_group = function(msg)
+        return msg.lsp_client.name
+      end,
+      -- Options related to Neovim's built-in LSP client
+      lsp = {
+        progress_ringbuf_size = 0, -- Configure the nvim's LSP progress ring buffer size
+        log_handler = false, -- Log `$/progress` handler invocations (for debugging)
+      },
+    },
+  })
+end
 ---------------------------------------------------------------------------------
 -- INFO: Mason packages install for lint and formater
 local mason = require('mason')
 
 -- mason.setup()
 
-mason.setup({
-  PATH = 'append',
-  ui = {
-    border = 'single',
-    icons = {
-      package_installed = '✓',
-      package_pending = '➜',
-      package_uninstalled = '✗',
-    },
-  },
-})
+mason.setup({})
 -- List of packages you want Mason to ensure are installed
 local ensure_installed = {
   'black',
@@ -112,7 +128,15 @@ local opts = require('custom.lsp-config.opts')
 -- INFO: 1
 vim.lsp.config('*', {
   capabilities = opts.capabilities,
-  root_markers = { '.git' },
+  -- root_markers = { '.git' },
+  root_markers = { '.git', 'platformio.ini', 'init.lua', '.luarc.json' },
+  settings = {
+    -- Example for Lua; adjust for other servers
+    Lua = {
+      workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file('', true) },
+      diagnostics = { globals = { 'vim' } },
+    },
+  },
 })
 --
 -- INFO: 2 Defined in <rtp>/lsp/clangd.lua        override 1

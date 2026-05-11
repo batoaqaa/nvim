@@ -18,18 +18,22 @@ vim.g.lazyvim_statuscolumn = {
   folds_githl = false, -- highlight fold sign with git sign color
 }
 
--- Optionally setup the terminal to use
--- This sets `vim.o.shell` and does some additional configuration for:
--- * pwsh
--- * powershell
--- LazyVim.terminal.setup("pwsh")
-vim.g.shell = vim.fn.executable('pwsh') and 'pwsh' or 'powershell'
-vim.g.shellcmdflag =
-  '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[Out-File:Encoding]=utf8;Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
-vim.g.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
-vim.g.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
-vim.g.shellquote = ''
-vim.g.shellxquote = ''
+local isWindows = jit.os == 'Windows'
+if not isWindows then
+  vim.opt.shell = '/bin/bash' -- or '/bin/zsh', '/usr/bin/fish', etc.
+  vim.opt.shellcmdflag = '-c' -- Executes the command passed as a string
+  vim.opt.shellpipe = '|' -- Pipes output of external commands
+  vim.opt.shellredir = '> ' -- Redirects output of external commands
+else
+  local pwsh = vim.fn.executable('pwsh') == 1 and 'pwsh' or 'powershell'
+  vim.opt.shell = pwsh
+  vim.opt.shellcmdflag =
+    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();'
+  vim.opt.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  vim.opt.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  vim.opt.shellquote = ''
+  vim.opt.shellxquote = ''
+end
 
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false
@@ -46,6 +50,10 @@ vim.g.trouble_lualine = true
 vim.o.exrc = true -- loading local configuration files using the 'exrc' option
 
 local opt = vim.opt
+
+-- Example: Wait 500ms instead of requiring "press enter", keep 1000 messages
+-- vim.opt.messagesopt = 'wait:500,history:1000'
+
 opt.autowrite = true -- Enable auto write
 -- only set clipboard if not in ssh, to make sure the OSC 52
 -- integration works automatically. Requires Neovim >= 0.10.0

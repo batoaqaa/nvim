@@ -45,6 +45,63 @@ autocmd({
   end,
   desc = 'Disable relative number in insert mode',
 })
+
+-- AUTO-CLEANUP ON EXIT
+-- SELECTIVE CLEANUP ON EXIT (Keeps plugins, deletes temp files)
+-- stylua: ignore
+-- SELECTIVE CLEANUP FOR WINDOWS
+--vim.api.nvim_create_autocmd("VimLeavePre", { -- Use VimLeavePre to act before the write attempt
+--  callback = function()
+--    -- 1. Tell Neovim NOT to write the history file on exit to avoid E138
+--    vim.opt.shadafile = "NONE"
+--
+--    -- 2. Define target paths
+--    local state_path = vim.fn.stdpath("state")
+--    local cache_path = vim.fn.stdpath("cache")
+--
+--    local targets = {
+--      state_path .. "/shada",
+--      cache_path,
+--    }
+--
+--    -- 3. Delete the directories cross-platform
+--    for _, path in ipairs(targets) do
+--      if vim.fn.isdirectory(path) == 1 then
+--        -- Native Neovim function (0.9+) that handles Windows/macOS/Linux paths automatically
+--        vim.fs.rm(path, { recursive = true, force = true })
+--      end
+--    end
+--  end,
+--})
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    vim.opt.shadafile = "NONE"
+
+    local state_path = vim.fn.stdpath("state")
+    local cache_path = vim.fn.stdpath("cache")
+
+    -- 1. Wipe Shada (History)
+    local shada_dir = state_path .. "/shada"
+    if vim.fn.isdirectory(shada_dir) == 1 then
+      vim.fs.rm(shada_dir, { recursive = true, force = true })
+    end
+
+    -- 2. Wipe Cache safely
+    -- We delete contents of cache but avoid deleting the root 'luac' 
+    -- folder immediately to prevent the 'vim/loader.lua' crash.
+    if vim.fn.isdirectory(cache_path) == 1 then
+      for name, type in vim.fs.dir(cache_path) do
+        if name ~= "luac" then -- Skip the compiled bytecode folder
+          vim.fs.rm(cache_path .. "/" .. name, { recursive = true, force = true })
+        end
+      end
+    end
+  end,
+})
+
+
+
 -- In your init.lua or a loaded config file
 
 -- vim.api.nvim_create_autocmd('ModeChanged', {

@@ -182,9 +182,12 @@ return {
   'projekt0n/github-nvim-theme',
   config = function()
     require('github-theme').setup()
-    vim.cmd.colorscheme 'github_dark_tritanopia'
-  --end,
-  --]]
+    -- vim.cmd.colorscheme 'github_dark_tritanopia'
+    vim.cmd.colorscheme('github_light_tritanopia')
+    -- vim.cmd.colorscheme('github_light')
+    -- vim.cmd.colorscheme('github_light_default')
+    --end,
+    --]]
 
   --[[ winteriscoming colorscheme /
   'atmosuwiryo/vim-winteriscoming',
@@ -194,7 +197,7 @@ return {
     -- end,
     --]]
 
-  --[[ Melange colorscheme /
+  ---[[ Melange colorscheme /
   --//{ 'savq/melange-nvim', opts = { conf } },
   'savq/melange-nvim',
   config = function()
@@ -202,30 +205,33 @@ return {
     --end,
     --]]
 
-  --[[ kanagawa colorscheme /
+    --[[ kanagawa colorscheme /
   'rebelot/kanagawa.nvim',
   opts = conf,
   config = function()
-    vim.cmd.colorscheme('kanagawa')
+    -- vim.cmd.colorscheme('kanagawa')
+    -- vim.cmd('colorscheme kanagawa-wave')
+    vim.cmd('colorscheme kanagawa-dragon')
+    -- vim.cmd('colorscheme kanagawa-lotus')
     --end,
     --]]
 
-  --[[ material colorscheme /
+    --[[ material colorscheme /
   'sainnhe/sonokai',
   init = function()
     vim.cmd.colorscheme 'sonokai'
   --end,
   --]]
 
-  --[[ palenight colorscheme /
+    --[[ palenight colorscheme /
   'drewtempelmeyer/palenight.vim',
   opts = {},
   config = function()
-    vim.cmd.colorscheme 'palenight'
-  --end,
-  --]]
+    vim.cmd.colorscheme('palenight')
+    --end,
+    --]]
 
-  ---[[ catppuccin colorscheme /
+    --[[ catppuccin colorscheme /
   'catppuccin/nvim',
   opts = conf,
   name = 'catppuccin',
@@ -233,8 +239,8 @@ return {
     require('catppuccin').setup({
       -- flavour = 'latte', -- light theme
       -- flavour = 'frappe', -- darker than latte
-      -- flavour = 'macchiato', -- medium
-      flavour = 'mocha', -- dark theme
+      flavour = 'macchiato', -- medium
+      -- flavour = 'mocha', -- dark theme
 
       float = {
         transparent = false, -- enable transparent floating windows
@@ -369,8 +375,26 @@ return {
       end,
     })
     -- vim.cmd('colorscheme tokyonight-day')
-    vim.cmd('colorscheme tokyonight')
+    -- vim.cmd('colorscheme tokyonight-moon')
+    vim.cmd('colorscheme tokyonight-storm')
+    -- vim.cmd('colorscheme tokyonight')
     --end,
+    --]]
+
+    --[[ material.nvimonedark
+  'marko-cerovac/material.nvim',
+  config = function()
+    -- require('material').setup({
+    --   style = 'deep',
+    -- })
+    -- vim.g.material_style = 'darker'
+    vim.g.material_style = 'lighter'
+    -- vim.g.material_style = 'oceanic'
+    -- vim.g.material_style = 'palenight'
+    -- vim.g.material_style = 'deep ocean'
+    vim.cmd('colorscheme material')
+    -- Enable theme
+    -- require('onedark').load()
     --]]
 
     --[[ onedark
@@ -384,33 +408,33 @@ return {
     --]]
 
     --[[ gruvbox colorscheme /
-  -- 'sainnhe/gruvbox-material',
-  -- config = function()
-  --   vim.g.gruvbox_material_enable_italic = true
-  --   vim.cmd.colorscheme('gruvbox-material')
-
-  -- 'sainnhe/edge',
-  -- config = function()
-  --   vim.g.edge_enable_italic = true
-  --   vim.cmd.colorscheme('edge')
-
-  'sainnhe/everforest',
+  'sainnhe/gruvbox-material',
   config = function()
-    -- require('everforest').setup {
-    --   contrast = "hard",
-    --   palette_overrides = {
-    --     dark0_hard = "#000000",
-    --   },
-    -- }
-    vim.g.everforest_background = 'hard'     -- 'medium'  'soft'
-    vim.g.everforest_foreground = 'material' -- 'original'  'mix'
-    -- vim.g.everforest_colors_override = { bg0 = { '#202020', '234' }, bg2 = { '#282828', '235' } }
-    -- vim.g.everforest_colors_override = { bg0 = { '#11111b', '234' }, bg2 = { '#11111b', '235' } }
-    -- vim.g.everforest_enable_bold = '1'
-    -- vim.g.everforest_transparent_background = '2'
+    vim.g.gruvbox_material_enable_italic = true
+    vim.cmd.colorscheme('gruvbox-material')
 
-    vim.g.everforest_enable_italic = true
-    vim.cmd.colorscheme('everforest')
+    -- 'sainnhe/edge',
+    -- config = function()
+    --   vim.g.edge_enable_italic = true
+    --   vim.cmd.colorscheme('edge')
+
+    -- 'sainnhe/everforest',
+    -- config = function()
+    --   -- require('everforest').setup {
+    --   --   contrast = "hard",
+    --   --   palette_overrides = {
+    --   --     dark0_hard = "#000000",
+    --   --   },
+    --   -- }
+    --   vim.g.everforest_background = 'hard'     -- 'medium'  'soft'
+    --   vim.g.everforest_foreground = 'material' -- 'original'  'mix'
+    --   -- vim.g.everforest_colors_override = { bg0 = { '#202020', '234' }, bg2 = { '#282828', '235' } }
+    --   -- vim.g.everforest_colors_override = { bg0 = { '#11111b', '234' }, bg2 = { '#11111b', '235' } }
+    --   -- vim.g.everforest_enable_bold = '1'
+    --   -- vim.g.everforest_transparent_background = '2'
+    --
+    --   vim.g.everforest_enable_italic = true
+    --   vim.cmd.colorscheme('everforest')
 
     -- 'sainnhe/sonokai',
     -- config = function()

@@ -42,8 +42,8 @@ function K.lspKeymaps(client, bufnr)
     bufkeymap('n', 'glD', vim.lsp.buf.declaration, 'Goto [D]eclaration')
   end
   if client.server_capabilities.definitionProvider then
-    bufkeymap('n', 'gld', vim.lsp.buf.definition, 'Go to [d]efinition')
-    -- bufkeymap('n', 'gld', '<Cmd>Telescope lsp_definitions<CR>', '[G]oto [D]efinition')
+    -- bufkeymap('n', 'gld', vim.lsp.buf.definition, 'Go to [d]efinition')
+    bufkeymap('n', 'gld', '<Cmd>Telescope lsp_definitions<CR>', '[G]oto [D]efinition')
   end
   if client.server_capabilities.typeDefinitionProvider then
     bufkeymap('n', 'glt', vim.lsp.buf.type_definition, 'Goto [t]ype definition')
@@ -69,12 +69,21 @@ function K.lspKeymaps(client, bufnr)
   end
 
   if client.server_capabilities.documentSymbolProvider then
-    bufkeymap('n', 'glwd', vim.lsp.buf.document_symbol, '[D]ocument symbols')
+    -- bufkeymap('n', 'glwd', vim.lsp.buf.document_symbol, '[D]ocument symbols')
+    -- SEARCH CURRENT: Find functions in the active file only
+    vim.keymap.set('n', 'glwd', require('telescope.builtin').lsp_document_symbols, { desc = '[D]ocument [S]ymbols' })
+
     -- bufkeymap('n', 'glwd', <Cmd>Telescope lsp_document_symbols<CR>, '[D]ocument [S]ymbols')
   end
   if client:supports_method('workspace/symbol') then
     -- if client.server_capabilities.workspaceSymbolProvider then
-    bufkeymap('n', 'glww', vim.lsp.buf.workspace_symbol, 'List [w]orkspace symbols')
+    -- bufkeymap('n', 'glww', vim.lsp.buf.workspace_symbol, 'List [w]orkspace symbols')
+    -- Suggested keymap: <leader>fs for "Find Symbols"
+    bufkeymap('n', 'glww', function()
+      require('telescope.builtin').lsp_dynamic_workspace_symbols({
+        symbols = { 'function', 'method', 'class' }, -- Pre-filter to only show functions and methods
+      })
+    end, 'Find [W]orkspace Symbols (Functions)')
     -- bufkeymap('n', 'glww', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
   end
   if client.server_capabilities.workspace then
@@ -85,11 +94,11 @@ function K.lspKeymaps(client, bufnr)
     end, '[W]orkspace [L]ist folders')
   end
   --
-  if client.supports_method('textDocument/switchSourceHeader') then
+  if client:supports_method('textDocument/switchSourceHeader') then
     bufkeymap('n', 'glws', '<cmd>LspClangdSwitchSourceHeader<cr>', '[S]witch Source/Header (C/C++)')
   end
 
-  if client.supports_method('textDocument/formatting') then
+  if client:supports_method('textDocument/formatting') then
     -- if client.server_capabilities.documentFormattingProvider then
     bufkeymap({ 'n', 'x' }, 'glf', function()
       vim.lsp.buf.format({ bufnr = bufnr, async = true })
