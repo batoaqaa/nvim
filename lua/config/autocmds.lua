@@ -46,6 +46,13 @@ autocmd({
   desc = 'Disable relative number in insert mode',
 })
 
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
+
 -- AUTO-CLEANUP ON EXIT
 -- SELECTIVE CLEANUP ON EXIT (Keeps plugins, deletes temp files)
 -- stylua: ignore
@@ -99,8 +106,6 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
     end
   end,
 })
-
-
 
 -- In your init.lua or a loaded config file
 
