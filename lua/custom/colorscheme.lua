@@ -197,7 +197,7 @@ return {
     -- end,
     --]]
 
-  ---[[ Melange colorscheme /
+  --[[ Melange colorscheme /
   --//{ 'savq/melange-nvim', opts = { conf } },
   'savq/melange-nvim',
   config = function()
@@ -205,7 +205,7 @@ return {
     --end,
     --]]
 
-    --[[ kanagawa colorscheme /
+  ---[[ kanagawa colorscheme /
   'rebelot/kanagawa.nvim',
   opts = conf,
   config = function()

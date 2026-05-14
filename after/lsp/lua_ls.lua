@@ -23,7 +23,7 @@ return {
         setType = true,
       },
       telemetry = { enable = false },
-      diagnostics = { globals = { 'vim' } },
+      diagnostics = { globals = { 'vim', 'OS' } },
       runtime = {
         -- Specify LuaJIT for Neovim
         version = 'LuaJIT',
@@ -33,10 +33,10 @@ return {
       workspace = {
         checkThirdParty = false,
         library = {
-          vim.env.VIMRUNTIME,
+          -- vim.env.VIMRUNTIME,
+          vim.api.nvim_get_runtime_file('', true),
           '${3rd}/luv/library',
           './lua',
-          vim.api.nvim_get_runtime_file('', true),
           -- Depending on the usage, you might want to add additional paths here.
           -- "${3rd}/busted/library",
         },

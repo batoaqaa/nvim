@@ -47,6 +47,7 @@ local ensure_installed = {
   'debugpy',
   'mypy',
   'pylint',
+  'pyrefly',
 }
 
 -- Mason function to install or ensure formatters/linters are installed
@@ -56,27 +57,27 @@ mr.refresh(function()
     local ok, p = pcall(mr.get_package, tool)
     if ok and p then
       if not p:is_installed() then
-        if not p:is_installing() then
-          p:install({}, function(success, _)
-            if not success then
-              vim.defer_fn(function()
-                vim.notify(tool .. ' failed to install', vim.log.levels.ERROR)
-              end, 0)
-              -- else
-              --   -- trigger FileType event to possibly load this newly installed package
-              --   vim.defer_fn(function()
-              --     require('lazy.core.handler.event').trigger({
-              --       event = 'FileType',
-              --       buf = vim.api.nvim_get_current_buf(),
-              --     })
-              --   end, 0)
-            end
-          end)
-        else
-          vim.defer_fn(function()
-            vim.notify(tool .. ' already installed', vim.log.levels.WARN)
-          end, 0)
-        end
+        -- if not p:is_installing() then
+        p:install({}, function(success, _)
+          if not success then
+            vim.defer_fn(function()
+              vim.notify(tool .. ' failed to install', vim.log.levels.ERROR)
+            end, 0)
+            -- else
+            --   -- trigger FileType event to possibly load this newly installed package
+            --   vim.defer_fn(function()
+            --     require('lazy.core.handler.event').trigger({
+            --       event = 'FileType',
+            --       buf = vim.api.nvim_get_current_buf(),
+            --     })
+            --   end, 0)
+          end
+        end)
+      else
+        vim.defer_fn(function()
+          vim.notify(tool .. ' already installed', vim.log.levels.WARN)
+        end, 0)
+        -- end
       end
     else
       vim.defer_fn(function()
