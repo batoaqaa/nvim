@@ -74,9 +74,9 @@ mr.refresh(function()
           end
         end)
       else
-        vim.defer_fn(function()
-          vim.notify(tool .. ' already installed', vim.log.levels.WARN)
-        end, 0)
+        -- vim.defer_fn(function()
+        --   vim.notify(tool .. ' already installed', vim.log.levels.WARN)
+        -- end, 0)
         -- end
       end
     else
