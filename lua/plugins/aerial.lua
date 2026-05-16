@@ -1,5 +1,7 @@
 return {
   'stevearc/aerial.nvim',
+  branch = 'nvim-0.11',
+  -- tag = 'v2.7.0',
   opts = {
     on_attach = function(bufnr)
       -- Jump forwards/backwards with '{' and '}'

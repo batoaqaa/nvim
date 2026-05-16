@@ -22,8 +22,8 @@ return {
     local nvimpio = require('nvimpio')
     nvimpio.setup({
       pio = {
-        auto_update_path = true,
-        notify_on_missing = true,
+        pio_runtime_dir = '~/.platformio',
+        pio_storage_dir = '~/.platformio',
       },
       clangd = {
         support = true,

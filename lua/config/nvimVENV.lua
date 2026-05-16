@@ -41,7 +41,7 @@ end
 setup_xdg_paths()
 
 local pynvim_env, pynvim_python, pynvim_bin, pynvim_activate
-pynvim_env = vim.env.XDG_DATA_HOME .. '/nenv'
+pynvim_env = vim.env.XDG_DATA_HOME .. 'nenv'
 if isWindows then
   pynvim_bin = pynvim_env .. '/Scripts'
   pynvim_python = pynvim_bin .. '/python.exe'
