@@ -1,16 +1,17 @@
 return {
   'batoaqaa/nvim-pio',
-  lazy = true,
-  init = function(self)
-    if vim.fn.filereadable('platformio.ini') == 1 then
-      require('lazy').load({ plugins = { self.name } })
-    else
-      vim.api.nvim_create_user_command('Pioinit', function()
-        require('lazy').load({ plugins = { self.name } })
-        vim.cmd('Pioinit')
-      end, { nargs = '*' })
-    end
-  end,
+  -- lazy = true,
+  lazy = false,
+  -- init = function(self)
+  --   if vim.fn.filereadable('platformio.ini') == 1 then
+  --     require('lazy').load({ plugins = { self.name } })
+  --   else
+  --     vim.api.nvim_create_user_command('Pioinit', function()
+  --       require('lazy').load({ plugins = { self.name } })
+  --       vim.cmd('Pioinit')
+  --     end, { nargs = '*' })
+  --   end
+  -- end,
   dependencies = {
     { 'akinsho/toggleterm.nvim' },
     { 'nvim-telescope/telescope.nvim' },
