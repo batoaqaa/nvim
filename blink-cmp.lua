@@ -30,7 +30,7 @@ return {
         require('luasnip.loaders.from_lua').load({ paths = vim.fn.stdpath('config') .. '/luasnip/' })
       end,
     },
-    'folke/lazydev.nvim',
+    { 'folke/lazydev.nvim' },
     { 'hrsh7th/cmp-buffer' },
     { 'hrsh7th/cmp-path' },
     { 'hrsh7th/nvim-cmp' },

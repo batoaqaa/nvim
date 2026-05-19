@@ -2,14 +2,16 @@ return {
   {
     'folke/lazydev.nvim',
     ft = 'lua', -- only load on lua files
-    cmd = 'LazyDev',
     opts = {
       library = {
         -- See the configuration section for more details
         -- Load luvit types when the `vim.uv` word is found
         { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-        { path = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ':h:h:h'), words = { 'platformio' } },
+        -- { path = vim.fn.fnamemodify(debug.getinfo(1).source:sub(2), ':h:h:h'), words = { 'platformio' } },
       },
+      enabled = function(root_dir)
+        return vim.fs.root(root_dir, { 'lua' }) ~= nil
+      end,
     },
   },
 }

@@ -56,6 +56,7 @@ require('config.lazyboot')
 require('config.lazysetup')
 require('config.autocmds')
 
+-- vim.cmd("set statusline+=%{v:lua.require('nvimpio.statusline').get_status_string()}")
 ------------------------
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

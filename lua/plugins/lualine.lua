@@ -45,10 +45,8 @@ return {
         lualine_c = { 'filename' },
         lualine_x = {
           function()
-            return _G.pio_install_status or ''
+            return require('nvimpio.statusline').get_status_string()
           end,
-          'encoding',
-          'fileformat',
           'filetype',
         },
         -- lualine_x = { 'encoding', 'fileformat', 'filetype' },
