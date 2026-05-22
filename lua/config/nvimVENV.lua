@@ -42,15 +42,15 @@ setup_xdg_paths()
 
 local pynvim_env, pynvim_python, pynvim_bin, pynvim_activate
 if isWindows then
-  pynvim_env = vim.env.XDG_DATA_HOME .. 'nenv'
-  pynvim_bin = pynvim_env .. 'Scripts'
-  pynvim_python = pynvim_bin .. 'python.exe'
-  pynvim_activate = pynvim_bin .. 'Activate.ps1'
+  pynvim_env = vim.fs.joinpath(vim.env.XDG_DATA_HOME, 'nenv')
+  pynvim_bin = vim.fs.joinpath(pynvim_env, 'Scripts')
+  pynvim_python = vim.fs.joinpath(pynvim_bin, 'python.exe')
+  pynvim_activate = vim.fs.joinpath(pynvim_bin, 'Activate.ps1')
 else
-  pynvim_env = vim.env.XDG_DATA_HOME .. '/nenv'
-  pynvim_bin = pynvim_env .. '/bin'
-  pynvim_python = pynvim_bin .. '/python'
-  pynvim_activate = pynvim_bin .. '/activate'
+  pynvim_env = vim.fs.joinpath(vim.env.XDG_DATA_HOME, 'nenv')
+  pynvim_bin = vim.fs.joinpath(pynvim_env, 'bin')
+  pynvim_python = vim.fs.joinpath(pynvim_bin, 'python')
+  pynvim_activate = vim.fs.joinpath(pynvim_bin, 'activate')
 end
 
 vim.g.python_host_prog = pynvim_python

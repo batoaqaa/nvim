@@ -3,24 +3,24 @@ local isWindows = vim.fn.has('win32') == 1 --jit.os == 'Windows'
 local isMac = vim.fn.has('mac') == 1
 local platformio_core_dir, pynvim_env, pynvim_python, pynvim_lib, pynvim_bin, pynvim_activate
 if isWindows then
-  platformio_core_dir = vim.env.HOME .. '/.platformio'
-  pynvim_env = platformio_core_dir .. '/penv'
-  pynvim_bin = pynvim_env .. '/Scripts'
-  pynvim_python = pynvim_bin .. '/python.exe'
-  pynvim_activate = pynvim_bin .. '/Activate.ps1'
+  platformio_core_dir = vim.fs.joinpath(vim.fn.fsvim.env.HOME, '.platformio')
+  pynvim_env = vim.fs.joinpath(platformio_core_dir, 'penv')
+  pynvim_bin = vim.fs.joinpath(pynvim_env, 'Scripts')
+  pynvim_python = vim.fs.joinpath(pynvim_bin, 'python.exe')
+  pynvim_activate = vim.fs.joinpath(pynvim_bin, 'Activate.ps1')
 else
-  platformio_core_dir = vim.env.HOME .. '/.platformio'
-  pynvim_env = platformio_core_dir .. '/penv'
-  pynvim_bin = pynvim_env .. '/bin'
-  pynvim_python = pynvim_bin .. '/python3'
-  pynvim_activate = pynvim_bin .. '/activate'
+  platformio_core_dir = vim.fs.joinpath(vim.env.HOME, '.platformio')
+  pynvim_env = vim.fs.joinpath(platformio_core_dir, 'penv')
+  pynvim_bin = vim.fs.joinpath(pynvim_env, 'bin')
+  pynvim_python = vim.fs.joinpath(pynvim_bin, 'python3')
+  pynvim_activate = vim.fs.joinpath(pynvim_bin, 'activate')
 end
 
 --Toolchain inclusion forced in Global Environment
 -- vim.uv.os_setenv('PLATFORMIO_SETTING_COMPILATIONDB_INCLUDE_TOOLCHAIN', 'true')
 vim.uv.os_setenv('PLATFORMIO_CORE_DIR', platformio_core_dir)
-vim.g.python_host_prog = pynvim_python
-vim.g.python3_host_prog = pynvim_python
+-- vim.g.python_host_prog = pynvim_python
+-- vim.g.python3_host_prog = pynvim_python
 
 local sep = (vim.fn.has('win32') == 1 and ';' or ':')
 vim.env.PATH = pynvim_bin .. sep .. vim.env.PATH
