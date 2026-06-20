@@ -1,0 +1,9 @@
+{
+  "clangd.arguments": [
+    "--query-driver=C:/Users/batoaqaa/.platformio/esp32s3/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-*",
+    "--compile-commands-dir=.",
+    "--background-index=false",
+    "--limit-results=100"
+  ],
+  "diagnostic.displayBySeverity": true
+}

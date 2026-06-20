@@ -24,11 +24,11 @@ return {
           },
         },
         -- pickers = {}
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown({ initial_mode = 'normal' }),
-          },
-        },
+        -- extensions = {
+        --   ['ui-select'] = {
+        --     require('telescope.themes').get_dropdown({ initial_mode = 'normal' }),
+        --   },
+        -- },
       })
       local builtin = require('telescope.builtin')
       -- Keymaps using native LSP under the hood

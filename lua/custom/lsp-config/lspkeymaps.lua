@@ -71,21 +71,25 @@ function K.lspKeymaps(client, bufnr)
   if client.server_capabilities.documentSymbolProvider then
     -- bufkeymap('n', 'glwd', vim.lsp.buf.document_symbol, '[D]ocument symbols')
     -- SEARCH CURRENT: Find functions in the active file only
-    vim.keymap.set('n', 'glwd', require('telescope.builtin').lsp_document_symbols, { desc = '[D]ocument [S]ymbols' })
+    -- vim.keymap.set('n', 'glwd', require('telescope.builtin').lsp_document_symbols, { desc = '[D]ocument [S]ymbols' })
+    bufkeymap('n', 'glwd', function()
+      require('telescope.builtin').lsp_document_symbols({
+        symbols = { 'function', 'method' }, -- Pre-filter to only show functions and methods
+      })
+    end, 'Find [W]orkspace Symbols (Functions)')
 
     -- bufkeymap('n', 'glwd', <Cmd>Telescope lsp_document_symbols<CR>, '[D]ocument [S]ymbols')
   end
   if client:supports_method('workspace/symbol') then
-    -- if client.server_capabilities.workspaceSymbolProvider then
-    -- bufkeymap('n', 'glww', vim.lsp.buf.workspace_symbol, 'List [w]orkspace symbols')
-    -- Suggested keymap: <leader>fs for "Find Symbols"
     bufkeymap('n', 'glww', function()
+      vim.cmd('stopinsert')
       require('telescope.builtin').lsp_dynamic_workspace_symbols({
-        symbols = { 'function', 'method', 'class' }, -- Pre-filter to only show functions and methods
+        symbols = { 'function', 'method' }, -- Pre-filter to only show functions and methods
+        query = ' ',
       })
     end, 'Find [W]orkspace Symbols (Functions)')
-    -- bufkeymap('n', 'glww', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
   end
+
   if client.server_capabilities.workspace then
     bufkeymap('n', 'glwa', vim.lsp.buf.add_workspace_folder, 'Workspace [a]dd folder')
     bufkeymap('n', 'glwr', vim.lsp.buf.remove_workspace_folder, 'Workspace [r]emove folder')

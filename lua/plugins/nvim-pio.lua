@@ -18,6 +18,14 @@ return {
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-lua/plenary.nvim' },
     { 'folke/which-key.nvim' },
+    {
+      'mason-org/mason-lspconfig.nvim',
+      dependencies = {
+        { 'mason-org/mason.nvim' },
+        { 'folke/trouble.nvim' },
+        { 'j-hui/fidget.nvim' }, -- status bottom right
+      },
+    },
   },
   config = function()
     local nvimpio = require('nvimpio')
@@ -30,6 +38,8 @@ return {
         support = true,
         install = false,
       },
+      menu_key = '<leader>\\', -- replace this menu key  to your convenience
+      menu_name = 'PlatformIO', -- replace this menu name to your convenience
     })
   end,
 }

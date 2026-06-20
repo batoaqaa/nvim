@@ -67,18 +67,47 @@ keymap('n', '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', { desc = 'Toggle Pin' 
 -- keymap('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = '[D]elete Buffer' })
 keymap('n', '<leader>bd', function()
   local bufnr = vim.api.nvim_get_current_buf()
+  local current_win = vim.api.nvim_get_current_win()
+
+  -- 1. DYNAMIC PROPERTY INTERROGATION (No plugin strings)
+  local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
+  local buflisted = vim.api.nvim_get_option_value('buflisted', { buf = bufnr })
+  local win_type = vim.fn.win_gettype(current_win)
+
+  -- 2. DYNAMIC SIDEBAR AND UTILITY GUARD
+  -- If the window is a special split (like a sidebar) or the buffer is a non-standard
+  -- file type ('nofile', 'terminal', etc.), cleanly dismiss the buffer/window natively.
+  if not buflisted or buftype ~= '' or win_type ~= '' then
+    -- Low-level Lua API replacing legacy ':bd' or ':q' logic for sidebars
+    pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
+    return
+  end
+
+  -- 3. STANDARD CODE FILE BUFFER SWITCH MATRIX
+  -- Compile a strict list of active, listing-eligible file buffers
   local bufs = vim.fn.getbufinfo({ buflisted = 1 })
 
   if #bufs <= 1 then
-    -- Create a new empty buffer
-    vim.cmd('enew')
+    -- Low-level Lua implementation replacing legacy vim.cmd('enew')
+    local new_buf = vim.api.nvim_create_buf(true, false)
+    vim.api.nvim_set_current_buf(new_buf)
   else
-    -- Switch to the previous buffer
-    vim.cmd('bp')
+    -- Safe sequential fallback indexing (Replaces brittle vim.cmd('bp'))
+    local current_idx = 1
+    for i, b in ipairs(bufs) do
+      if b.bufnr == bufnr then
+        current_idx = i
+        break
+      end
+    end
+
+    local prev_idx = (current_idx == 1) and #bufs or (current_idx - 1)
+    vim.api.nvim_set_current_buf(bufs[prev_idx].bufnr)
   end
-  -- Delete the buffer we started with (using pcall to ignore "No buffers deleted" errors)
+
+  -- 4. Final Execution Closure Drop (Delete the file buffer we started with)
   pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
-end, { desc = '[D]elete Buffer' })
+end, { desc = 'Buffer: [D]elete Cleanly (Dynamic)' })
 
 keymap('n', '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', { desc = 'Delete Non-Pinned Buffers' })
 keymap('n', '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', { desc = 'Delete Other Buffers' })

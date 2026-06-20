@@ -76,8 +76,8 @@ local cmd = {
   '--header-insertion-decorators',
   -- '--inlay-hints',
   '-j=12',
-  '--log=verbose', -- for debugging
-  --   '--log=error',
+  -- '--log=verbose', -- for debugging
+  '--log=error',
   '--offset-encoding=utf-8',
   '--pch-storage=memory',
   '--pretty',
@@ -119,8 +119,8 @@ return {
   init_options = {
     usePlaceholders = true,
     completeUnimported = true,
-    fallback_flags = { '-std=c++17' },
+    fallbackFlags = { '-std=c++17' },
     clangdFileStatus = true,
-    compilationDatabasePath = vim.fn.getcwd(),
+    compilationDatabasePath = vim.uv.cwd(),
   },
 }
